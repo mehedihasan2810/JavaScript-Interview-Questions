@@ -4,9 +4,80 @@
 
 ## Table Of Contents
 
-- [Coding Questions](#coding-questions)
+- [NeetCode 150 Questions & Solutions](#neetcode-150-questions--solutions)
+- [General JS Coding Questions & Solutions](#general-js-coding-questions--solutions)
 
-## Coding Questions
+<!--------------------------------------
+NeetCode 150 Questions & Solutions start
+---------------------------------------->
+
+## NeetCode 150 Questions & Solutions
+
+1. ### ❓ Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+
+    <details>
+    <summary>Examples</summary>
+
+   ```smart
+
+   Example 1:
+   Input: nums = [1,2,3,1]
+   Output: true
+
+   Example 2:
+   Input: nums = [1,2,3,4]
+   Output: false
+   ```
+
+    </details>
+
+     <br>
+
+      <details>
+
+    <summary>Solutions 👉</summary>
+
+   ```js
+   function containsDuplicate(nums) {
+     // Create a set to store unique elements
+     const uniqueSet = new Set();
+
+     // Iterate through the array
+     for (const num of nums) {
+       // If the set already contains the current element, it's a duplicate
+       if (uniqueSet.has(num)) {
+         return true;
+       }
+
+       // Add the current element to the set
+       uniqueSet.add(num);
+     }
+
+     // No duplicates found
+     return false;
+   }
+
+   // Example usage:
+   const array1 = [1, 2, 3, 4, 5];
+   console.log(containsDuplicate(array1)); // Output: false
+
+   const array2 = [1, 2, 3, 4, 1];
+   console.log(containsDuplicate(array2)); // Output: true
+   ```
+
+   > This function uses a set to efficiently check for duplicates as it has constant time complexity for insertions and lookups. If the set already contains an element, it means that the element is a duplicate, and the function returns true. Otherwise, it continues iterating through the array. If the loop completes without finding any duplicates, the function returns false.
+
+   [Original Problem in LeetCode](https://leetcode.com/problems/contains-duplicate/)
+
+    </details>
+
+    <br>
+
+<!--------------------------------------
+NeetCode 150 Questions & Solutions end
+---------------------------------------->
+
+## General JS Coding Questions & Solutions
 
 1. ### ❓ Given a string, reverse each word in the sentence
 
@@ -152,5 +223,32 @@ console.log(a);
 `'1undefined'`
 
 > The function `f` is indeed defined within the if statement, but it's not invoked, and its reference is not accessible outside the if block. As a result, when you try to access the `typeof f` outside the block, it will be `'undefined'` because the function declaration doesn't affect the scope outside the block.
+
+</details>
+
+<br>
+
+7. ### ❓ Guess the outputs of the following codes
+
+```js
+function func1() {
+  setTimeout(() => {
+    console.log(x);
+    console.log(y);
+  }, 3000);
+
+  var x = 2;
+  let y = 12;
+}
+func1();
+```
+
+<details>
+<summary>Answer & Explanation 👉</summary>
+
+`2`
+`12`
+
+> Outputs `2` and `12`. Since, even though let variables are not hoisted, due to the async nature of javascript, the complete function code runs before the setTimeout function. Therefore, it has access to both x and y.
 
 </details>

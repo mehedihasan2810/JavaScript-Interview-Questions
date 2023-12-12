@@ -1,6 +1,6 @@
 # JavaScript Interview Questions
 
-> [For DSA related questions checkout this doc](https://github.com/mehedihasan2810/JavaScript-Data-Structures-and-Algorithms)
+[Want to get a good grasp on **_DSA_** in JavaScript? Check out this doc.](https://github.com/mehedihasan2810/JavaScript-Data-Structures-and-Algorithms)
 
 ## Table Of Contents
 
@@ -15,11 +15,10 @@ NeetCode 150 Questions & Solutions start
 
 1. ### ❓ Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
 
-    <details>
-    <summary>Examples</summary>
+   <details>
+   <summary>Examples 👉</summary>
 
    ```smart
-
    Example 1:
    Input: nums = [1,2,3,1]
    Output: true
@@ -29,13 +28,10 @@ NeetCode 150 Questions & Solutions start
    Output: false
    ```
 
-    </details>
+   </details>
 
-     <br>
-
-      <details>
-
-    <summary>Solutions 👉</summary>
+   <details>
+   <summary>Solutions 👉</summary>
 
    ```js
    function containsDuplicate(nums) {
@@ -69,9 +65,57 @@ NeetCode 150 Questions & Solutions start
 
    [Original Problem in LeetCode](https://leetcode.com/problems/contains-duplicate/)
 
-    </details>
+   </details>
 
-    <br>
+2. ### ❓ Given two strings `s` and `t`, return `true` if `t` is an anagram of `s`, and `false` otherwise.
+
+   <details>
+   <summary>Examples 👉</summary>
+
+   ```smart
+   Example 1:
+
+   Input: s = "anagram", t = "nagaram"
+   Output: true
+   Example 2:
+
+   Input: s = "rat", t = "car"
+   Output: false
+   ```
+
+   </details>
+
+   <details>
+   <summary>Solutions 👉</summary>
+
+   ```js
+   function isAnagram(s, t) {
+     // Check if the lengths are different, if yes, they can't be anagrams
+     if (s.length !== t.length) {
+       return false;
+     }
+
+     // Sort the characters of each string and compare the sorted strings
+     const sortedS = s.split("").sort().join("");
+     const sortedT = t.split("").sort().join("");
+
+     return sortedS === sortedT;
+   }
+
+   // Example usage:
+   const string1 = "listen";
+   const string2 = "silent";
+
+   console.log(isAnagram(string1, string2)); // Output: true
+   ```
+
+   > In this example, the isAnagram function first checks if the lengths of the two strings are different. If they are, the function returns false because strings of different lengths cannot be anagrams. Then, it sorts the characters of each string and compares the sorted strings. If the sorted strings are equal, the function returns true; otherwise, it returns false.
+
+   [Original Problem in LeetCode](https://leetcode.com/problems/valid-anagram/)
+
+   </details>
+
+<br>
 
 <!--------------------------------------
 NeetCode 150 Questions & Solutions end

@@ -6,7 +6,7 @@
 
 ## Coding Questions
 
-### ❓ Given a string, reverse each word in the sentence
+1. ### ❓ <span style="color: #c4dfdf;"> Given a string, reverse each word in the sentence </span> 
 
 > For example `Welcome to javascript interview questions` should be become `emocleW ot tpircsavaj weivretni snoitseuq`
 
@@ -31,7 +31,7 @@ console.log(reverseEachWord); // emocleW ot tpircsavaj weivretni snoitseuq
 
 <br>
 
-### ❓ How to empty an array in javascript?
+2. ### ❓ How to empty an array in javascript?
 
 <details>
    <summary>
@@ -60,7 +60,7 @@ while (arr.length) {
 
 <br>
 
-### ❓ FizzBuzz Challenge
+3. ### ❓ FizzBuzz Challenge
 
 > Create a loop which iterates up to 100 while outputting `fizz` at multiples of `3`, `buzz` at multiples of `5` and `fizzbuzz` at multiples of `3` and `5`
 
@@ -86,7 +86,7 @@ fizzBuzz(100);
 
 <br>
 
-### ❓ Check if two strings are anagrams of one another
+4. ### ❓ Check if two strings are anagrams of one another
 
 > **_Anagrams_** - A word, phrase, or name formed by rearranging the letters of another, such as `spar`, formed from `rasp`.
 
@@ -108,7 +108,7 @@ console.log(checkAnagrams("Mary", "Arma")); // false
 
 <br>
 
-### ❓ Check if a string is palindrome or not
+5. ### ❓ Check if a string is palindrome or not
 
 > **_Palindrome_** - a word, phrase, or sequence that reads the same backwards as forwards, e.g. madam or nurses run.
 
@@ -132,7 +132,7 @@ console.log(checkPalindrome("mehedi")); // false
 
 <br>
 
-### ❓ What will be the out of the following output?
+6. ### ❓ What will be the out of the following output?
 
 ```js
 let a = 1;
@@ -145,10 +145,10 @@ console.log(a);
 ```
 
 <details>
-<summary>Answer 👉</summary>
+<summary>Answer & Explanation 👉</summary>
 
-`1undefined`
+`'1undefined'`
 
-> The function f is indeed defined within the if statement, but it's not invoked, and its reference is not accessible outside the if block. As a result, when you try to access the typeof f outside the block, it will be 'undefined' because the function declaration doesn't affect the scope outside the block.
+> The function `f` is indeed defined within the if statement, but it's not invoked, and its reference is not accessible outside the if block. As a result, when you try to access the `typeof f` outside the block, it will be `'undefined'` because the function declaration doesn't affect the scope outside the block.
 
 </details>

@@ -83,3 +83,72 @@ fizzBuzz(100);
 ```
 
 </details>
+
+<br>
+
+### ❓ Check if two strings are anagrams of one another
+
+> **_Anagrams_** - A word, phrase, or name formed by rearranging the letters of another, such as `spar`, formed from `rasp`.
+
+<details>
+<summary>Answer 👉</summary>
+
+```js
+function checkAnagrams(str1, str2) {
+  const a = str1.toLowerCase().split("").sort().join("");
+  const b = str2.toLowerCase().split("").sort().join("");
+  return a === b;
+}
+
+console.log(checkAnagrams("Mary", "Army")); // true
+console.log(checkAnagrams("Mary", "Arma")); // false
+```
+
+</details>
+
+<br>
+
+### ❓ Check if a string is palindrome or not
+
+> **_Palindrome_** - a word, phrase, or sequence that reads the same backwards as forwards, e.g. madam or nurses run.
+
+<details>
+<summary>Answer 👉</summary>
+
+```js
+function checkPalindrome(str) {
+  const str2 = str.replace(/\W/gi, "").toLowerCase();
+  return str2.split("").reverse().join("") === str2;
+}
+
+console.log(checkPalindrome("level")); // true
+console.log(checkPalindrome("level!")); // true
+console.log(checkPalindrome("mehedi")); // false
+```
+
+</details>
+
+[🔝 Back to top](#coding-questions)
+
+<br>
+
+### ❓ What will be the out of the following output?
+
+```js
+let a = 1;
+
+if (function f() {}) {
+  a += typeof f;
+}
+
+console.log(a);
+```
+
+<details>
+<summary>Answer 👉</summary>
+
+`1undefined`
+
+> The function f is indeed defined within the if statement, but it's not invoked, and its reference is not accessible outside the if block. As a result, when you try to access the typeof f outside the block, it will be 'undefined' because the function declaration doesn't affect the scope outside the block.
+
+</details>

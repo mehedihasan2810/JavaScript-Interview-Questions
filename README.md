@@ -1,12 +1,14 @@
 # JavaScript Interview Questions
 
+> [For DSA related questions checkout this doc](https://github.com/mehedihasan2810/JavaScript-Data-Structures-and-Algorithms)
+
 ## Table Of Contents
 
 - [Coding Questions](#coding-questions)
 
 ## Coding Questions
 
-1. ### ❓ <span style="color: #c4dfdf;"> Given a string, reverse each word in the sentence </span> 
+1. ### ❓ Given a string, reverse each word in the sentence
 
 > For example `Welcome to javascript interview questions` should be become `emocleW ot tpircsavaj weivretni snoitseuq`
 

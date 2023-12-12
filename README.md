@@ -8,9 +8,7 @@
 
 - ### Given a string, reverse each word in the sentence
 
-  ```smart
-  For example `Welcome to javascript interview questions` should  be become `emocleW ot tpircsavaj weivretni snoitseuq`
-  ```
+  > For example `Welcome to javascript interview questions` should be become `emocleW ot tpircsavaj weivretni snoitseuq`
 
     <details>
     <summary>Answer 👉</summary>

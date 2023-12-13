@@ -68,8 +68,6 @@ NeetCode 150 Questions & Solutions start
 
    </details>
 
-    <br>
-
    [Original Problem in LeetCode](https://leetcode.com/problems/contains-duplicate/)
 
 2. ### ❓ **_Valid Anagram:-_** Given two strings `s` and `t`, return `true` if `t` is an anagram of `s`, and `false` otherwise.
@@ -117,8 +115,6 @@ NeetCode 150 Questions & Solutions start
    > In this example, the isAnagram function first checks if the lengths of the two strings are different. If they are, the function returns false because strings of different lengths cannot be anagrams. Then, it sorts the characters of each string and compares the sorted strings. If the sorted strings are equal, the function returns true; otherwise, it returns false.
 
    </details>
-
-   <br>
 
    [Original Problem in LeetCode](https://leetcode.com/problems/valid-anagram/)
 
@@ -181,9 +177,7 @@ NeetCode 150 Questions & Solutions start
 
    </details>
 
-   <br>
-    
-    [Original Problem in LeetCode](https://leetcode.com/problems/two-sum/)
+   [Original Problem in LeetCode](https://leetcode.com/problems/two-sum/)
 
 4. ### ❓ **_Group Anagrams:-_** Given an array of strings strs, group the anagrams together. You can return the answer in any order.
 
@@ -241,8 +235,6 @@ NeetCode 150 Questions & Solutions start
    > This solution has a time complexity of O(n _ k _ log(k)), where n is the number of strings and k is the maximum length of any string in the array. The dominant factor is the sorting of characters in each string.
 
     </details>
-     
-     <br>
 
    [Original Problem in LeetCode](https://leetcode.com/problems/group-anagrams/)
 

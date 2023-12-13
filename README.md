@@ -1,6 +1,6 @@
 # JavaScript Interview Questions
 
-[Want to get a good grasp on **_DSA_** in JavaScript? Check out this doc.](https://github.com/mehedihasan2810/JavaScript-Data-Structures-and-Algorithms)
+[Want to get a good grasp on <mark>**_DSA_**</mark> in JavaScript? Check out this doc.](https://github.com/mehedihasan2810/JavaScript-Data-Structures-and-Algorithms)
 
 ## Table Of Contents
 
@@ -237,6 +237,70 @@ NeetCode 150 Questions & Solutions start
     </details>
 
    [Original Problem in LeetCode](https://leetcode.com/problems/group-anagrams/)
+
+5. ### ❓ **_Top K Frequent Elements:-_** Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
+
+   <details>
+   <summary>Examples 👉</summary>
+
+   ```smart
+   Example 1:
+   Input: nums = [1,1,1,2,2,3], k = 2
+   Output: [1,2]
+
+   Example 2:
+   Input: nums = [1], k = 1
+   Output: [1]
+   ```
+
+   </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+   ```js
+   function topKFrequent(nums, k) {
+     // Create a frequency map to store the count of each number
+     const frequencyMap = new Map();
+
+     // Populate the frequency map
+     for (const num of nums) {
+       frequencyMap.set(num, (frequencyMap.get(num) || 0) + 1);
+     }
+
+     // Create an array of buckets to store numbers with the same frequency
+     const buckets = new Array(nums.length + 1).fill(null).map(() => []);
+
+     // Distribute numbers into buckets based on their frequency
+     for (const [num, frequency] of frequencyMap) {
+       buckets[frequency].push(num);
+     }
+
+     // Iterate through buckets in reverse order to get the top k frequent elements
+     const result = [];
+     for (let i = buckets.length - 1; i >= 0 && result.length < k; i--) {
+       if (buckets[i].length > 0) {
+         result.push(...buckets[i]);
+       }
+     }
+
+     return result;
+   }
+
+   // Example usage:
+   const nums = [1, 1, 1, 2, 2, 3];
+   const k = 2;
+
+   console.log(topKFrequent(nums, k)); // Output: [1, 2]
+   ```
+
+   > In this function, we first create a frequency map to count the occurrences of each number in the input array. Then, we use buckets to group numbers with the same frequency together. Finally, we iterate through the buckets in reverse order to get the top k frequent elements.
+
+   > This solution has a time complexity of O(n), where n is the size of the input array. The bucket sort step takes O(n) time, and iterating through the buckets in reverse order ensures that we get the top k frequent elements efficiently.
+
+    </details>
+
+   [Original Problem in LeetCode](https://leetcode.com/problems/top-k-frequent-elements/)
 
 <br>
 

@@ -5,6 +5,7 @@
 ## Table Of Contents
 
 - [NeetCode 150 Questions & Solutions](#neetcode-150-questions--solutions)
+  - [Arrays & Hashing](#arrays--hashing)
 - [General JS Coding Questions & Solutions](#general-js-coding-questions--solutions)
 
 <!--------------------------------------
@@ -13,7 +14,9 @@ NeetCode 150 Questions & Solutions start
 
 ## NeetCode 150 Questions & Solutions
 
-1. ### ❓ Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+### **Arrays & Hashing:-**
+
+1. ### ❓ **_Contains Duplicate:-_** Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
 
    <details>
    <summary>Examples 👉</summary>
@@ -63,11 +66,13 @@ NeetCode 150 Questions & Solutions start
 
    > This function uses a set to efficiently check for duplicates as it has constant time complexity for insertions and lookups. If the set already contains an element, it means that the element is a duplicate, and the function returns true. Otherwise, it continues iterating through the array. If the loop completes without finding any duplicates, the function returns false.
 
-   [Original Problem in LeetCode](https://leetcode.com/problems/contains-duplicate/)
-
    </details>
 
-2. ### ❓ Given two strings `s` and `t`, return `true` if `t` is an anagram of `s`, and `false` otherwise.
+    <br>
+
+   [Original Problem in LeetCode](https://leetcode.com/problems/contains-duplicate/)
+
+2. ### ❓ **_Valid Anagram:-_** Given two strings `s` and `t`, return `true` if `t` is an anagram of `s`, and `false` otherwise.
 
    <details>
    <summary>Examples 👉</summary>
@@ -111,9 +116,135 @@ NeetCode 150 Questions & Solutions start
 
    > In this example, the isAnagram function first checks if the lengths of the two strings are different. If they are, the function returns false because strings of different lengths cannot be anagrams. Then, it sorts the characters of each string and compares the sorted strings. If the sorted strings are equal, the function returns true; otherwise, it returns false.
 
+   </details>
+
+   <br>
+
    [Original Problem in LeetCode](https://leetcode.com/problems/valid-anagram/)
 
+3. ### ❓ **_Two Sum:-_** Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+
+   <details>
+   <summary>Examples 👉</summary>
+
+   ```smart
+   Example 1:
+   Input: nums = [2,7,11,15], target = 9
+   Output: [0,1]
+   Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
+
+   Example 2:
+   Input: nums = [3,2,4], target = 6
+   Output: [1,2]
+
+   Example 3:
+   Input: nums = [3,3], target = 6
+   Output: [0,1]
+   ```
+
    </details>
+
+   <details>
+   <summary>Solutions 👉</summary>
+
+   ```js
+   function twoSum(nums, target) {
+     const numIndicesMap = new Map();
+
+     for (let i = 0; i < nums.length; i++) {
+       const complement = target - nums[i];
+
+       // Check if the complement is in the map
+       if (numIndicesMap.has(complement)) {
+         // Return the indices of the two numbers
+         return [numIndicesMap.get(complement), i];
+       }
+
+       // Add the current number and its index to the map
+       numIndicesMap.set(nums[i], i);
+     }
+
+     // No solution found
+     return [];
+   }
+
+   // Example usage:
+   const nums = [2, 7, 11, 15];
+   const target = 9;
+
+   console.log(twoSum(nums, target)); // Output: [0, 1] (indices of numbers 2 and 7)
+   ```
+
+   > In this function, we iterate through the array of numbers (nums). For each number, we calculate its complement (the difference between the target and the current number). We then check if the complement is already in the numIndicesMap. If it is, we have found the pair, and we return the indices of the two numbers. If not, we add the current number and its index to the map. If no solution is found during the loop, we return an empty array.
+
+   > This solution has a time complexity of O(n), where n is the length of the input array.
+
+   </details>
+
+   <br>
+    
+    [Original Problem in LeetCode](https://leetcode.com/problems/two-sum/)
+
+4. ### ❓ **_Group Anagrams:-_** Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+
+   <details>
+   <summary>Examples 👉</summary>
+
+   ```smart
+   Example 1:
+   Input: strs = ["eat","tea","tan","ate","nat","bat"]
+   Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+
+   Example 2:
+   Input: strs = [""]
+   Output: [[""]]
+
+   Example 3:
+   Input: strs = ["a"]
+   Output: [["a"]]
+   ```
+
+   </details>
+
+   <details>
+   <summary>Solutions 👉</summary>
+
+   ```js
+   function groupAnagrams(strs) {
+     const anagramGroups = new Map();
+
+     for (const str of strs) {
+       // Sort the characters of the string
+       const sortedStr = str.split("").sort().join("");
+
+       // If the sorted string is not in the map, add it with an empty array
+       if (!anagramGroups.has(sortedStr)) {
+         anagramGroups.set(sortedStr, []);
+       }
+
+       // Add the original string to the group of anagrams
+       anagramGroups.get(sortedStr).push(str);
+     }
+
+     // Convert the values (groups of anagrams) to an array and return
+     return Array.from(anagramGroups.values());
+   }
+
+   // Example usage:
+   const strs = ["eat", "tea", "tan", "ate", "nat", "bat"];
+   console.log(groupAnagrams(strs));
+   // Output: [["eat","tea","ate"],["tan","nat"],["bat"]]
+   ```
+
+   > In this function, we iterate through the array of strings (strs). For each string, we sort its characters and use the sorted string as a key in the hash map. If the key doesn't exist, we add it with an empty array as the value. We then push the original string to the array associated with that key. Finally, we convert the values (groups of anagrams) to an array and return it.
+
+   > This solution has a time complexity of O(n _ k _ log(k)), where n is the number of strings and k is the maximum length of any string in the array. The dominant factor is the sorting of characters in each string.
+
+    </details>
+     
+     <br>
+
+   [Original Problem in LeetCode](https://leetcode.com/problems/group-anagrams/)
 
 <br>
 

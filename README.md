@@ -15,7 +15,7 @@ NeetCode 150 Questions & Solutions start
 
 ## NeetCode 150 Questions & Solutions
 
-### **Arrays & Hashing:-**
+## Arrays & Hashing:-
 
 1. ### ❓ **_Contains Duplicate:-_** Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
 
@@ -460,7 +460,9 @@ NeetCode 150 Questions & Solutions start
 
    [Original Problem in LeetCode](https://leetcode.com/problems/longest-consecutive-sequence/)
 
-### **Two Pointers:-**
+<br>
+
+## Two Pointers:-
 
 9. ### ❓ **_Valid Palindrome:-_** A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers. Given a string s, return true if it is a palindrome, or false otherwise.
 

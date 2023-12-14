@@ -358,6 +358,47 @@ NeetCode 150 Questions & Solutions start
 
    [Original Problem in LeetCode](https://leetcode.com/problems/product-of-array-except-self/)
 
+7. ### ❓ **_Encode and Decode Strings:-_** Design an algorithm to encode a lists of strings to string and the encoded string is then sent over the network and is decoded back to original list of strings.
+
+     <details>
+     <summary>Solutions 👉</summary>
+
+   ```js
+   class StringEncoderDecoder {
+     constructor() {
+       this.delimiter = ";";
+     }
+
+     // Encode a list of strings to a single string
+     encode(strList) {
+       return strList.join(this.delimiter);
+     }
+
+     // Decode a string to a list of strings
+     decode(encodedStr) {
+       return encodedStr.split(this.delimiter);
+     }
+   }
+
+   // Example usage:
+   const stringEncoderDecoder = new StringEncoderDecoder();
+
+   const originalStrings = ["apple", "banana", "orange"];
+   const encodedString = stringEncoderDecoder.encode(originalStrings);
+   console.log("Encoded String:", encodedString); // Encoded String: apple;banana;orange
+
+   const decodedStrings = stringEncoderDecoder.decode(encodedString);
+   console.log("Decoded Strings:", decodedStrings); // Decoded Strings: [ 'apple', 'banana', 'orange' ]
+   ```
+
+   > In this example, the StringEncoderDecoder class has encode and decode methods. The encode method takes an array of strings, joins them using a delimiter (in this case, ';'), and returns the encoded string. The decode method takes an encoded string, splits it using the same delimiter, and returns an array of strings.
+
+   > This is a simple representation, and you might want to consider additional techniques or encoding formats based on your specific requirements and constraints (e.g., dealing with special characters, handling empty strings, etc.). If security is a concern, you might also want to explore more robust encoding/decoding methods.
+
+    </details>
+
+   [Original Problem in LeetCode](https://leetcode.com/problems/encode-and-decode-strings/)
+
 <br>
 
 <!--------------------------------------
@@ -370,8 +411,8 @@ NeetCode 150 Questions & Solutions end
 
 > For example `Welcome to javascript interview questions` should be become `emocleW ot tpircsavaj weivretni snoitseuq`
 
-   <details>
-   <summary>Answer 👉</summary>
+<details>
+<summary>Answer 👉</summary>
 
 ```js
 function reverseBySeparator(str, separator) {

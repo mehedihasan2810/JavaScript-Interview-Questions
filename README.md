@@ -6,6 +6,7 @@
 
 - [NeetCode 150 Questions & Solutions](#neetcode-150-questions--solutions)
   - [Arrays & Hashing](#arrays--hashing)
+  - [Two Pointers](#two-pointers)
 - [General JS Coding Questions & Solutions](#general-js-coding-questions--solutions)
 
 <!--------------------------------------
@@ -459,7 +460,93 @@ NeetCode 150 Questions & Solutions start
 
    [Original Problem in LeetCode](https://leetcode.com/problems/longest-consecutive-sequence/)
 
-<br>
+### **Two Pointers:-**
+
+9. ### ❓ **_Valid Palindrome:-_** A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers. Given a string s, return true if it is a palindrome, or false otherwise.
+
+    <details>
+   <summary>Examples 👉</summary>
+
+   ```smart
+   Example 1:
+
+   Input: s = "A man, a plan, a canal: Panama"
+   Output: true
+   Explanation: "amanaplanacanalpanama" is a palindrome.
+   Example 2:
+
+   Input: s = "race a car"
+   Output: false
+   Explanation: "raceacar" is not a palindrome.
+   Example 3:
+
+   Input: s = " "
+   Output: true
+   Explanation: s is an empty string "" after removing non-alphanumeric characters.
+   Since an empty string reads the same forward and backward, it is a palindrome.
+   ```
+
+   </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+   ```js
+   // Array - Filter && Clone && Reverse
+   // Time O(N) | Space O(N)
+   function isPalindrome(str) {
+     const alphaNumericChars = str.toLowerCase().replace(/[^a-z-9]/gi, "");
+     return (
+       alphaNumericChars === alphaNumericChars.split("").reverse().join("")
+     );
+   }
+
+   console.log(isPalindrome("A man, a plan, a canal: Panama")); // true
+   console.log(isPalindrome("race a car")); // false
+   console.log(isPalindrome(" ")); // true
+
+   // -----------------------------------------------------------------------
+
+   // 2 Pointer | Midde Convergence
+   // Time O(N) | Space O(1)
+   function isPalindrome(s) {
+     if (s.length <= 1) return true;
+
+     let [left, right] = [0, s.length - 1];
+     let leftChar, rightChar;
+     while (left < right) {
+       leftChar = s[left];
+       rightChar = s[right];
+
+       // skip char if non-alphanumeric
+       if (!/[a-zA-Z0-9]/.test(leftChar)) {
+         left++;
+       } else if (!/[a-zA-Z0-9]/.test(rightChar)) {
+         right--;
+       } else {
+         // compare letters
+         if (leftChar.toLowerCase() != rightChar.toLowerCase()) {
+           return false;
+         }
+         left++;
+         right--;
+       }
+     }
+     return true;
+   }
+
+   console.log(isPalindrome("A man, a plan, a canal: Panama")); // true
+   console.log(isPalindrome("race a car")); // false
+   console.log(isPalindrome(" ")); // true
+   ```
+
+   > The two-pointer approach involves initializing two pointers (left and right) at the beginning and end of the cleaned string, respectively. We then iterate towards the center while comparing characters. If there is a mismatch at any point, the string is not a palindrome.
+
+   > This solution has a time complexity of O(n), where n is the length of the cleaned string.
+
+   </details>
+
+   [Original Problem in LeetCode](https://leetcode.com/problems/valid-palindrome/)
 
 <!--------------------------------------
 NeetCode 150 Questions & Solutions end

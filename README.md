@@ -1,6 +1,6 @@
 # JavaScript Interview Questions
 
-[Want to get a good grasp on <mark>**_DSA_**</mark> in JavaScript? Check out this doc.](https://github.com/mehedihasan2810/JavaScript-Data-Structures-and-Algorithms)
+[Want to get a good grasp on **_DSA_** in JavaScript? Check out this doc.](https://github.com/mehedihasan2810/JavaScript-Data-Structures-and-Algorithms)
 
 ## Table Of Contents
 
@@ -301,6 +301,62 @@ NeetCode 150 Questions & Solutions start
     </details>
 
    [Original Problem in LeetCode](https://leetcode.com/problems/top-k-frequent-elements/)
+
+6. ### ❓ **_Product of Array Except Self:-_** Given an integer array nums, return an array answer such that `answer[i]` is equal to the product of all the elements of nums except `nums[i]`.
+
+   <details>
+   <summary>Examples 👉</summary>
+
+   ```smart
+   Example 1:
+   Input: nums = [1,2,3,4]
+   Output: [24,12,8,6]
+
+   Example 2:
+   Input: nums = [-1,1,0,-3,3]
+   Output: [0,0,9,0,0]
+   ```
+
+   </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+   ```js
+   function productExceptSelf(nums) {
+     const n = nums.length;
+
+     // Initialize the result array
+     const result = new Array(n).fill(1);
+
+     // Calculate the product to the left of each element and update the result array
+     let leftProduct = 1;
+     for (let i = 0; i < n; i++) {
+       result[i] *= leftProduct;
+       leftProduct *= nums[i];
+     }
+
+     // Calculate the product to the right of each element and update the result array
+     let rightProduct = 1;
+     for (let i = n - 1; i >= 0; i--) {
+       result[i] *= rightProduct;
+       rightProduct *= nums[i];
+     }
+
+     return result;
+   }
+
+   // Example usage:
+   const nums = [1, 2, 3, 4];
+   console.log(productExceptSelf(nums));
+   // Output: [24, 12, 8, 6]
+   ```
+
+   > This approach has a time complexity of O(n) as required. we use the result array to store the products to the left and right of each element as we iterate through the array. This eliminates the need for separate left and right product arrays, resulting in O(1) extra space complexity.
+
+    </details>
+
+   [Original Problem in LeetCode](https://leetcode.com/problems/product-of-array-except-self/)
 
 <br>
 

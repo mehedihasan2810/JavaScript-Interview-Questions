@@ -399,6 +399,66 @@ NeetCode 150 Questions & Solutions start
 
    [Original Problem in LeetCode](https://leetcode.com/problems/encode-and-decode-strings/)
 
+8. ### ❓ **_Longest Consecutive Sequence:-_** Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
+
+    <details>
+   <summary>Examples 👉</summary>
+
+   ```smart
+   Example 1:
+   Input: nums = [100,4,200,1,3,2]
+   Output: 4
+   Explanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefore its length is 4.
+
+   Example 2:
+   Input: nums = [0,3,7,2,5,8,4,6,0,1]
+   Output: 9
+   ```
+
+   </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+   ```js
+   function longestConsecutive(nums) {
+     if (nums.length === 0) {
+       return 0;
+     }
+
+     const numSet = new Set(nums);
+     let longestStreak = 1;
+
+     for (const num of numSet) {
+       if (!numSet.has(num - 1)) {
+         let currentNum = num;
+         let currentStreak = 1;
+
+         while (numSet.has(currentNum + 1)) {
+           currentNum += 1;
+           currentStreak += 1;
+         }
+
+         longestStreak = Math.max(longestStreak, currentStreak);
+       }
+     }
+
+     return longestStreak;
+   }
+
+   // Example usage:
+   const nums = [100, 4, 200, 1, 3, 2];
+   console.log(longestConsecutive(nums)); // Output: 4 (the sequence is 1, 2, 3, 4)
+   ```
+
+   > In this implementation, we use a set (numSet) to store the unique elements in the array. We iterate through the array and, for each element, check if it is the start of a sequence by verifying that there is no previous consecutive element in the set. If it is the start, we iterate forward to find the consecutive elements and update the longest streak accordingly.
+
+   > This algorithm has O(n) time complexity because each element is processed at most twice (once when identified as a possible start, and once when part of a sequence), and set operations are generally O(1) on average.
+
+    </details>
+
+   [Original Problem in LeetCode](https://leetcode.com/problems/longest-consecutive-sequence/)
+
 <br>
 
 <!--------------------------------------

@@ -699,6 +699,70 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/)
 
+12. ### ❓ **_Container With Most Water:-_** You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are `(i, 0)` and `(i, height[i])`. Find two lines that together with the x-axis form a container, such that the container contains the most water. Return the maximum amount of water a container can store. Notice that you may not slant the container.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: height = [1,8,6,2,5,4,8,3,7]
+    Output: 49
+    Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
+
+    Example 2:
+    Input: height = [1,1]
+    Output: 1
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    function maxArea(height) {
+      let maxWater = 0;
+      let left = 0;
+      let right = height.length - 1;
+
+      while (left < right) {
+        const hLeft = height[left];
+        const hRight = height[right];
+        const h = Math.min(hLeft, hRight);
+        const w = right - left;
+        const area = h * w;
+
+        maxWater = Math.max(maxWater, area);
+
+        if (hLeft < hRight) {
+          left++;
+        } else {
+          right--;
+        }
+      }
+
+      return maxWater;
+    }
+
+    // Example usage:
+    const height = [1, 8, 6, 2, 5, 4, 8, 3, 7];
+    console.log(maxArea(height)); // Output: 49
+    ```
+
+    **In this implementation:**
+
+    - left and right are the two pointers initialized at the beginning and end of the array.
+    - The while loop continues until left is less than right.
+    - Calculate the area using the minimum height of the two lines (h) and the width (w).
+    - Update maxWater if the current area is greater.
+    - Move the pointers toward each other based on the shorter line, as moving the pointer of the longer line won't possibly result in a larger area.
+    - This algorithm has a time complexity of O(n), where n is the length of the input array. The two-pointer approach ensures that we explore all possible combinations of lines.
+
+     </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/container-with-most-water/)
+
 <!--------------------------------------
 NeetCode 150 Questions & Solutions end
 ---------------------------------------->

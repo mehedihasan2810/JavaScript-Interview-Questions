@@ -763,6 +763,79 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/container-with-most-water/)
 
+13. ### ❓ **_Longest Substring Without Repeating Characters:-_** Given a string s, find the length of the longest substring without repeating characters.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+
+    Input: s = "abcabcbb"
+    Output: 3
+    Explanation: The answer is "abc", with the length of 3.
+    Example 2:
+
+    Input: s = "bbbbb"
+    Output: 1
+    Explanation: The answer is "b", with the length of 1.
+    Example 3:
+
+    Input: s = "pwwkew"
+    Output: 3
+    Explanation: The answer is "wke", with the length of 3.
+    Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    function lengthOfLongestSubstring(s) {
+      let maxLength = 0;
+      let windowStart = 0;
+      const charIndexMap = new Map();
+
+      for (let windowEnd = 0; windowEnd < s.length; windowEnd++) {
+        const currentChar = s[windowEnd];
+
+        if (charIndexMap.has(currentChar)) {
+          // If the current character is already in the substring, update the windowStart
+          windowStart = Math.max(
+            windowStart,
+            charIndexMap.get(currentChar) + 1
+          );
+        }
+
+        // Update the character's index in the map
+        charIndexMap.set(currentChar, windowEnd);
+
+        // Update the maximum length of the substring
+        maxLength = Math.max(maxLength, windowEnd - windowStart + 1);
+      }
+
+      return maxLength;
+    }
+
+    // Example usage:
+    const s = "abcabcbb";
+    console.log(lengthOfLongestSubstring(s)); // Output: 3
+    ```
+
+    **In this implementation:**
+
+    - windowStart represents the start index of the current substring.
+    - windowEnd represents the end index of the current substring.
+    - charIndexMap is a Map that stores the most recent index of each character in the substring.
+    - As the window slides to the right, the function updates windowStart whenever a repeating character is encountered and updates the charIndexMap accordingly.
+    - The maximum length of the substring is calculated and updated in each iteration.
+      > This algorithm has a time complexity of O(n), where n is the length of the input string, as each character is visited at most twice (once by the windowEnd and once by the windowStart). The space complexity is O(min(m, n)), where m is the size of the character set. In most cases, the character set is constant, so the space complexity is O(1).
+      </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/longest-substring-without-repeating-characters/)
+
 <!--------------------------------------
 NeetCode 150 Questions & Solutions end
 ---------------------------------------->

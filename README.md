@@ -625,6 +625,80 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/3sum/)
 
+11. ### ❓ **_Two Sum II - Input Array Is Sorted:-_** Given a 1-indexed array of integers numbers that is already sorted in non-decreasing order, find two numbers such that they add up to a specific target number. Let these two numbers be `numbers[index1]` and `numbers[index2]` where `1 <= index1 < index2 < numbers.length`. Return the indices of the two numbers, index1 and index2, added by one as an integer array `[index1, index2]` of length 2.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: numbers = [2,7,11,15], target = 9
+    Output: [1,2]
+    Explanation: The sum of 2 and 7 is 9. Therefore, index1 = 1, index2 = 2. We return [1, 2].
+
+    Example 2:
+    Input: numbers = [2,3,4], target = 6
+    Output: [1,3]
+    Explanation: The sum of 2 and 4 is 6. Therefore index1 = 1, index2 = 3. We return [1, 3].
+
+    Example 3:
+    Input: numbers = [-1,0], target = -1
+    Output: [1,2]
+    Explanation: The sum of -1 and 0 is -1. Therefore index1 = 1, index2 = 2. We return [1, 2].
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    function twoSum(numbers, target) {
+      let left = 0;
+      let right = numbers.length - 1;
+
+      while (left < right) {
+        const sum = numbers[left] + numbers[right];
+
+        if (sum === target) {
+          return [left + 1, right + 1]; // Adding 1 to convert from 0-based to 1-based indices
+        } else if (sum < target) {
+          left++;
+        } else {
+          right--;
+        }
+      }
+
+      // No solution found, but the problem statement guarantees exactly one solution
+      return [];
+    }
+
+    // Example usage:
+    const numbers = [2, 7, 11, 15];
+    const target = 9;
+    console.log(twoSum(numbers, target)); // Output: [1, 2]
+    ```
+
+    **Explanation:**
+
+    - Initialize two pointers (left and right) at the beginning and end of the array.
+
+    - Calculate the sum of the elements at the current pointers.
+
+    - If the sum is equal to the target, return the indices of the two numbers.
+
+    - If the sum is less than the target, increment the left pointer to explore larger values.
+
+    - If the sum is greater than the target, decrement the right pointer to explore smaller values.
+
+    - Repeat steps 2-5 until the pointers meet or the solution is found.
+
+    > The time complexity of this solution is O(n), where n is the length of the input array, because each pointer moves at most n times. The space complexity is O(1) since only a constant amount of extra space is used.
+
+     </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/)
+
 <!--------------------------------------
 NeetCode 150 Questions & Solutions end
 ---------------------------------------->

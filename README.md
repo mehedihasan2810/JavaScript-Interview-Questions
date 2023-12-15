@@ -770,17 +770,16 @@ NeetCode 150 Questions & Solutions start
 
     ```smart
     Example 1:
-
     Input: s = "abcabcbb"
     Output: 3
     Explanation: The answer is "abc", with the length of 3.
-    Example 2:
 
+    Example 2:
     Input: s = "bbbbb"
     Output: 1
     Explanation: The answer is "b", with the length of 1.
-    Example 3:
 
+    Example 3:
     Input: s = "pwwkew"
     Output: 3
     Explanation: The answer is "wke", with the length of 3.
@@ -835,6 +834,76 @@ NeetCode 150 Questions & Solutions start
       </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/longest-substring-without-repeating-characters/)
+
+14. ### ❓ **_Longest Repeating Character Replacement:-_** You are given a string s and an integer k. You can choose any character of the string and change it to any other uppercase English character. You can perform this operation at most k times. Return the length of the longest substring containing the same letter you can get after performing the above operations.
+
+      <details>
+      <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: s = "ABAB", k = 2
+    Output: 4
+    Explanation: Replace the two 'A's with two 'B's or vice versa.
+
+    Example 2:
+    Input: s = "AABABBA", k = 1
+    Output: 4
+    Explanation: Replace the one 'A' in the middle with 'B' and form "AABBBBA".
+    The substring "BBBB" has the longest repeating letters, which is 4.
+    There may exists other ways to achieve this answer too.
+    ```
+
+      </details>
+
+      <details>
+      <summary>Solutions 👉</summary>
+
+    ```js
+    function characterReplacement(s, k) {
+      let maxLength = 0;
+      let maxCount = 0;
+      let windowStart = 0;
+      const charCount = new Array(26).fill(0); // Assuming only uppercase English characters
+
+      for (let windowEnd = 0; windowEnd < s.length; windowEnd++) {
+        const charIndex = s.charCodeAt(windowEnd) - "A".charCodeAt(0);
+        charCount[charIndex]++;
+
+        maxCount = Math.max(maxCount, charCount[charIndex]);
+
+        // If the number of characters to change (window size - maxCount) exceeds the allowed operations (k), shrink the window
+        if (windowEnd - windowStart + 1 - maxCount > k) {
+          charCount[s.charCodeAt(windowStart) - "A".charCodeAt(0)]--;
+          windowStart++;
+        }
+
+        // Update the maxLength
+        maxLength = Math.max(maxLength, windowEnd - windowStart + 1);
+      }
+
+      return maxLength;
+    }
+
+    // Example usage:
+    const s = "ABAB";
+    const k = 2;
+    console.log(characterReplacement(s, k)); // Output: 4
+    ```
+
+    **In this implementation:**
+
+    - windowStart and windowEnd represent the sliding window indices.
+    - charCount is an array to store the count of characters within the current window.
+    - maxCount keeps track of the maximum count of a single character within the window.
+    - If the number of characters to change (window size - maxCount) exceeds the allowed operations (k), shrink the window from the left.
+    - Update maxLength in each iteration.
+    - This algorithm has a time complexity of O(n), where n is the length of the input string, as it iterates through the string only once. The space complexity is O(1) since the size of the character set is constant.
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/longest-repeating-character-replacement/)
+
+    [Video Explanation](https://youtu.be/gqXU1UyA8pk?si=2LShGEILILSJm94a)
 
 <!--------------------------------------
 NeetCode 150 Questions & Solutions end

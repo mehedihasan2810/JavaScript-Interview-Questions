@@ -7,6 +7,7 @@
 - [NeetCode 150 Questions & Solutions](#neetcode-150-questions--solutions)
   - [Arrays & Hashing](#arrays--hashing)
   - [Two Pointers](#two-pointers)
+  - [Stack](#stack)
 - [General JS Coding Questions & Solutions](#general-js-coding-questions--solutions)
 
 <!--------------------------------------
@@ -904,6 +905,109 @@ NeetCode 150 Questions & Solutions start
     [Original Problem in LeetCode](https://leetcode.com/problems/longest-repeating-character-replacement/)
 
     [Video Explanation](https://youtu.be/gqXU1UyA8pk?si=2LShGEILILSJm94a)
+
+<br>
+
+## Stack
+
+15. ### ❓ **_Valid Parentheses:-_** Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+
+    Input: s = "()"
+    Output: true
+    Example 2:
+
+    Input: s = "()[]{}"
+    Output: true
+    Example 3:
+
+    Input: s = "(]"
+    Output: false
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    function isValid(s) {
+      const stack = [];
+      const bracketMap = {
+        "(": ")",
+        "{": "}",
+        "[": "]",
+      };
+
+      for (let i = 0; i < s.length; i++) {
+        const currentBracket = s[i];
+
+        if (bracketMap[currentBracket]) {
+          // If it's an opening bracket, push it onto the stack
+          stack.push(currentBracket);
+        } else {
+          // If it's a closing bracket, check if it matches the top of the stack
+          const lastOpeningBracket = stack.pop();
+
+          if (currentBracket !== bracketMap[lastOpeningBracket]) {
+            // If not, the string is invalid
+            return false;
+          }
+        }
+      }
+
+      // After iterating through the string, the string is valid if the stack is empty
+      return stack.length === 0;
+    }
+
+    // Example usage:
+    console.log(isValid("()")); // Output: true
+    console.log(isValid("()[]{}")); // Output: true
+    console.log(isValid("(]")); // Output: false
+    console.log(isValid("([)]")); // Output: false
+    console.log(isValid("{[]}")); // Output: true
+
+    // ----------------------------------------------
+
+    //-------------
+    // With Regexp
+    //-------------
+    function isValid(s) {
+      const bracketRegex = /(\(\)|\{\}|\[\])+/g;
+
+      // Replace valid bracket pairs with an empty string until no more valid pairs can be found
+      while (bracketRegex.test(s)) {
+        s = s.replace(bracketRegex, "");
+      }
+
+      // If the resulting string is empty, the original string was valid
+      return s.length === 0;
+    }
+
+    // Example usage:
+    console.log(isValid("()")); // Output: true
+    console.log(isValid("()[]{}")); // Output: true
+    console.log(isValid("(]")); // Output: false
+    console.log(isValid("([)]")); // Output: false
+    console.log(isValid("{[]}")); // Output: true
+    ```
+
+    **In this implementation:**
+
+    - The stack is used to keep track of the opening brackets.
+    - The bracketMap is a mapping of opening brackets to their corresponding closing brackets.
+    - When iterating through the string, if an opening bracket is encountered, it is pushed onto the stack.
+    - If a closing bracket is encountered, it is checked against the top of the stack to ensure that the brackets match.
+    - After iterating through the string, the string is considered valid if the stack is empty.
+      > This algorithm has a time complexity of O(n), where n is the length of the input string, as it iterates through the string once. The space complexity is also O(n) in the worst case when all opening brackets are at the beginning of the string.
+        </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/valid-parentheses/)
 
 <!--------------------------------------
 NeetCode 150 Questions & Solutions end

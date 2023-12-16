@@ -464,7 +464,7 @@ NeetCode 150 Questions & Solutions start
 
 <br>
 
-[🔼 Back to top](#arrays--hashing)
+[🔼 Back to top](#table-of-contents)
 
 ## Two Pointers
 
@@ -911,7 +911,7 @@ NeetCode 150 Questions & Solutions start
 
 <br>
 
-[🔼 Back to top](#two-pointers)
+[🔼 Back to top](#table-of-contents)
 
 ## Stack
 
@@ -1470,7 +1470,7 @@ NeetCode 150 Questions & Solutions start
 
 <br>
 
-[🔼 Back to top](#data-structures)
+[🔼 Back to top](#table-of-contents)
 
 ## Binary Search
 
@@ -1549,7 +1549,7 @@ NeetCode 150 Questions & Solutions start
 
 <br>
 
-[🔼 Back to top](#data-structures)
+[🔼 Back to top](#table-of-contents)
 
 <!--------------------------------------
 NeetCode 150 Questions & Solutions end

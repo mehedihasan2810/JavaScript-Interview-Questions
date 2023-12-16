@@ -1320,8 +1320,6 @@ NeetCode 150 Questions & Solutions start
     console.log(result); // [ '((()))', '(()())', '(())()', '()(())', '()()()' ]
     ```
 
-     </details>
-
     **In this code:**
 
     - The generateParenthesis function initializes an empty array result to store the generated combinations.
@@ -1329,9 +1327,76 @@ NeetCode 150 Questions & Solutions start
     - The base case checks if the length of the current combination is equal to 2 \* n. If so, it adds the combination to the result.
     - The recursive cases handle adding an open parenthesis '(' if the count of open parentheses is less than n, and adding a close parenthesis ')' if the count of close parentheses is less than the count of open parentheses.
     - The function is called initially with an empty string and counts for open and close parentheses set to 0.
+
       > This approach generates all possible combinations by exploring valid paths in the recursion tree. The resulting result array contains all well-formed parentheses combinations for the given value of n.
 
+      </details>
+
     [Original Problem in LeetCode](https://leetcode.com/problems/generate-parentheses/)
+
+19. ### ❓ **_Daily Temperatures:-_** Given an array of integers temperatures represents the daily temperatures, return an array answer such that `answer[i]` is the number of days you have to wait after the ith day to get a warmer temperature. If there is no future day for which this is possible, keep answer`[i] == 0` instead.
+
+     <details>
+     <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: temperatures = [73,74,75,71,69,72,76,73]
+    Output: [1,1,4,2,1,1,0,0]
+
+    Example 2:
+    Input: temperatures = [30,40,50,60]
+    Output: [1,1,1,0]
+
+    Example 3:
+    Input: temperatures = [30,60,90]
+    Output: [1,1,0]
+    ```
+
+     </details>
+
+     <details>
+     <summary>Solutions 👉</summary>
+
+    ```js
+    function dailyTemperatures(temperatures) {
+      const n = temperatures.length;
+      const result = new Array(n).fill(0);
+      const stack = [];
+
+      for (let i = 0; i < n; i++) {
+        while (
+          stack.length > 0 &&
+          temperatures[i] > temperatures[stack[stack.length - 1]]
+        ) {
+          const prevIndex = stack.pop();
+          result[prevIndex] = i - prevIndex;
+        }
+        stack.push(i);
+      }
+
+      return result;
+    }
+
+    // Example usage:
+    const temperatures = [73, 74, 75, 71, 69, 72, 76, 73];
+    const result = dailyTemperatures(temperatures);
+    console.log(result); // [ 1, 1, 4, 2, 1, 1, 0, 0 ]
+    ```
+
+    **In this code:**
+
+    - We use a stack (stack) to keep track of the indices of the temperatures.
+    - We iterate through the temperatures array and pop the stack until the current temperature is greater than the temperature at the top of the stack.
+    - For each popped index, we calculate the difference between the current index and the popped index, representing the number of days to wait for a warmer temperature.
+    - We push the current index onto the stack.
+    - The result array is updated with the number of days to wait for a warmer temperature for each day.
+
+      > This solution has a time complexity of O(n), where n is the length of the temperatures array, and a space complexity of O(n).
+
+      </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/daily-temperatures/)
 
 <!--------------------------------------
 NeetCode 150 Questions & Solutions end

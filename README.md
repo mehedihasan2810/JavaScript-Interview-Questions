@@ -1398,6 +1398,71 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/daily-temperatures/)
 
+20. ### ❓ **_Largest Rectangle in Histogram:-_** Given an array of integers heights representing the histogram's bar height where the width of each bar is 1, return the area of the largest rectangle in the histogram.
+
+     <details>
+     <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: heights = [2,1,5,6,2,3]
+    Output: 10
+    Explanation: The above is a histogram where width of each bar is 1.
+    The largest rectangle is shown in the red area, which has an area = 10 units.
+
+    Example 2:
+    Input: heights = [2,4]
+    Output: 4
+    ```
+
+     </details>
+
+     <details>
+     <summary>Solutions 👉</summary>
+
+    ```js
+    function largestRectangleArea(heights) {
+      const stack = [];
+      let maxArea = 0;
+
+      for (let i = 0; i <= heights.length; i++) {
+        while (
+          stack.length > 0 &&
+          (i === heights.length ||
+            heights[i] < heights[stack[stack.length - 1]])
+        ) {
+          const height = heights[stack.pop()];
+          const width =
+            stack.length === 0 ? i : i - stack[stack.length - 1] - 1;
+          maxArea = Math.max(maxArea, height * width);
+        }
+        stack.push(i);
+      }
+
+      return maxArea;
+    }
+
+    // Example usage:
+    const heights = [2, 1, 5, 6, 2, 3];
+    const result = largestRectangleArea(heights);
+    console.log(result);
+    ```
+
+    **In this code:**
+
+    - We use a stack (stack) to maintain the indices of the histogram bars.
+    - We iterate through the histogram bars and pop the stack until the current bar is taller than the bar at the top of the stack. For each popped bar, we calculate the area of the rectangle formed with that bar as the smallest bar.
+    - The width of the rectangle is determined by the difference between the current index and the index at the top of the stack. If the stack is empty, the width is the current index.
+    - We update the maxArea with the maximum area encountered during the process.
+    - We push the current index onto the stack.
+
+      > The final result is the maximum area of the rectangle in the histogram.
+      > This solution has a time complexity of O(n), where n is the length of the heights array, and a space complexity of O(n).
+
+        </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/largest-rectangle-in-histogram/)
+
 <!--------------------------------------
 NeetCode 150 Questions & Solutions end
 ---------------------------------------->

@@ -1146,17 +1146,16 @@ NeetCode 150 Questions & Solutions start
 
     ```smart
     Example 1:
-
     Input: tokens = ["2","1","+","3","*"]
     Output: 9
     Explanation: ((2 + 1) * 3) = 9
-    Example 2:
 
+    Example 2:
     Input: tokens = ["4","13","5","/","+"]
     Output: 6
     Explanation: (4 + (13 / 5)) = 6
-    Example 3:
 
+    Example 3:
     Input: tokens = ["10","6","9","3","+","-11","*","/","*","17","+","5","+"]
     Output: 22
     Explanation: ((10 * (6 / ((9 + 3) * -11))) + 17) + 5
@@ -1231,6 +1230,108 @@ NeetCode 150 Questions & Solutions start
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/evaluate-reverse-polish-notation/)
+
+18. ### ❓ **_Generate Parentheses:-_** Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+    ![image graph of how generate parentheses algorithm works](/assets/validP.webp)
+    <br>
+    Image Credit: [Dev Genius](https://blog.devgenius.io/10-daily-practice-problems-day-18-f7293b55224d)
+
+     <details>
+     <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: n = 3
+    Output: ["((()))","(()())","(())()","()(())","()()()"]
+
+    Example 2:
+    Input: n = 1
+    Output: ["()"]
+    ```
+
+     </details>
+
+     <details>
+     <summary>Solutions 👉</summary>
+
+    ```js
+    // Time O(2^N) Space O(n)
+    function generateParenthesis(n) {
+      const result = [];
+
+      function backtrack(current, openCount, closeCount) {
+        if (current.length === 2 * n) {
+          result.push(current);
+          return;
+        }
+
+        if (openCount < n) {
+          backtrack(current + "(", openCount + 1, closeCount);
+        }
+
+        if (closeCount < openCount) {
+          backtrack(current + ")", openCount, closeCount + 1);
+        }
+      }
+
+      backtrack("", 0, 0);
+      return result;
+    }
+
+    // Example usage:
+    const n = 3;
+    const result = generateParenthesis(n);
+    console.log(result); // [ '((()))', '(()())', '(())()', '()(())', '()()()' ]
+
+    // --------------------------------------------------------
+
+    // Stack Approach
+    // Time O(2^N) Space O(n)
+    var generateParenthesis = function (n) {
+      const stack = [];
+      const res = [];
+
+      function backtrack(openN, closedN) {
+        if (openN === closedN && openN === n) {
+          res.push(stack.join(""));
+          return;
+        }
+
+        if (openN < n) {
+          stack.push("(");
+          backtrack(openN + 1, closedN);
+          stack.pop();
+        }
+
+        if (closedN < openN) {
+          stack.push(")");
+          backtrack(openN, closedN + 1);
+          stack.pop();
+        }
+      }
+
+      backtrack(0, 0);
+      return res;
+    };
+
+    // Example usage:
+    const result = generateParenthesis(3);
+    console.log(result); // [ '((()))', '(()())', '(())()', '()(())', '()()()' ]
+    ```
+
+     </details>
+
+    **In this code:**
+
+    - The generateParenthesis function initializes an empty array result to store the generated combinations.
+    - The backtrack function is a recursive function that explores all possible combinations.
+    - The base case checks if the length of the current combination is equal to 2 \* n. If so, it adds the combination to the result.
+    - The recursive cases handle adding an open parenthesis '(' if the count of open parentheses is less than n, and adding a close parenthesis ')' if the count of close parentheses is less than the count of open parentheses.
+    - The function is called initially with an empty string and counts for open and close parentheses set to 0.
+      > This approach generates all possible combinations by exploring valid paths in the recursion tree. The resulting result array contains all well-formed parentheses combinations for the given value of n.
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/generate-parentheses/)
 
 <!--------------------------------------
 NeetCode 150 Questions & Solutions end

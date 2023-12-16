@@ -1009,6 +1009,136 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/valid-parentheses/)
 
+16. ### ❓ **_Min Stack:-_** Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input
+    ["MinStack","push","push","push","getMin","pop","top","getMin"]
+    [[],[-2],[0],[-3],[],[],[],[]]
+
+    Output
+    [null,null,null,null,-3,null,0,-2]
+
+    Explanation
+    MinStack minStack = new MinStack();
+    minStack.push(-2);
+    minStack.push(0);
+    minStack.push(-3);
+    minStack.getMin(); // return -3
+    minStack.pop();
+    minStack.top();    // return 0
+    minStack.getMin(); // return -2
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    // LinkedList Approach
+    // Time O(1) | Space O(1)
+    class MinStack {
+      constructor() {
+        this.head = null;
+      }
+
+      push(val) {
+        this.head = !this.head /* Space O(1) */
+          ? new Node(val, val, null)
+          : new Node(val, Math.min(val, this.head.min), this.head);
+      }
+
+      pop() {
+        this.head = this.head.next; /* Time O(1) */
+      }
+
+      top() {
+        return this.head.val; /* Time O(1) */
+      }
+
+      getMin() {
+        return this.head.min; /* Time O(1) */
+      }
+    }
+
+    class Node {
+      constructor(val, min, next) {
+        this.val = val;
+        this.min = min;
+        this.next = next;
+      }
+    }
+
+    const minStack = new MinStack();
+    minStack.push(-2);
+    minStack.push(0);
+    minStack.push(-3);
+    console.log(minStack.getMin()); // return -3
+    minStack.pop();
+    console.log(minStack.top()); // return 0
+    console.log(minStack.getMin()); // return -2
+
+    // --------------------------------------------
+
+    // Array Approach
+    // Time O(1) | Space O(n)
+    class MinStack {
+      constructor() {
+        this.stack = [];
+        this.minStack = [];
+      }
+
+      push(val, { minStack } = this) {
+        this.stack.push(val); /* Space O(N) */
+
+        const isMinEmpty = !minStack.length;
+        const hasNewMin = val <= this.top(minStack);
+        const canAddMin = isMinEmpty || hasNewMin;
+        if (canAddMin) minStack.push(val); /* Space O(N) */
+      }
+
+      pop({ stack, minStack } = this) {
+        const top = stack.pop(); /* Time O(1) */
+
+        const canPopMin = top === this.getMin();
+        if (canPopMin) minStack.pop(); /* Time O(1) */
+      }
+
+      top(stack = this.stack) {
+        return stack.length ? stack[stack.length - 1] /* Time O(1) */ : null;
+      }
+
+      getMin(minStack = this.minStack) {
+        return this.top(minStack); /* Time O(1) */
+      }
+    }
+
+    const minStack = new MinStack();
+    minStack.push(-2);
+    minStack.push(0);
+    minStack.push(-3);
+    console.log(minStack.getMin()); // return -3
+    minStack.pop();
+    console.log(minStack.top()); // return 0
+    console.log(minStack.getMin()); // return -2
+    ```
+
+    In this implementation:
+
+    - The Node class represents each node in the linked list, storing the value, minimum, and a reference to the next node.
+    - The MinStack class uses the head pointer to represent the top of the stack.
+    - When pushing a new element, a new node is created with the current value, the minimum of the current value and the minimum of the previous node, and a reference to the previous node.
+    - The pop, top, and getMin functions then operate based on the current head node.
+      > This implementation maintains the minimum value at each node, allowing constant time retrieval of the minimum element.
+          </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/min-stack/)
+
 <!--------------------------------------
 NeetCode 150 Questions & Solutions end
 ---------------------------------------->

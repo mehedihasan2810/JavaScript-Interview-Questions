@@ -464,6 +464,8 @@ NeetCode 150 Questions & Solutions start
 
 <br>
 
+[🔼 Back to top](#arrays--hashing)
+
 ## Two Pointers
 
 9. ### ❓ **_Valid Palindrome:-_** A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers. Given a string s, return true if it is a palindrome, or false otherwise.
@@ -908,6 +910,8 @@ NeetCode 150 Questions & Solutions start
     [Video Explanation](https://youtu.be/gqXU1UyA8pk?si=2LShGEILILSJm94a)
 
 <br>
+
+[🔼 Back to top](#two-pointers)
 
 ## Stack
 
@@ -1464,6 +1468,10 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/largest-rectangle-in-histogram/)
 
+<br>
+
+[🔼 Back to top](#data-structures)
+
 ## Binary Search
 
 21. ### ❓ **_Search a 2D Matrix:-_** You are given an m x n integer matrix matrix with the following two properties: Each row is sorted in non-decreasing order. The first integer of each row is greater than the last integer of the previous row. Given an integer target, return true if target is in matrix or false otherwise. You must write a solution in O(log(m \* n)) time complexity.
@@ -1538,6 +1546,10 @@ NeetCode 150 Questions & Solutions start
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/search-a-2d-matrix/)
+
+<br>
+
+[🔼 Back to top](#data-structures)
 
 <!--------------------------------------
 NeetCode 150 Questions & Solutions end

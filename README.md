@@ -8,6 +8,7 @@
   - [Arrays & Hashing](#arrays--hashing)
   - [Two Pointers](#two-pointers)
   - [Stack](#stack)
+  - [Binary Search](#binary-search)
 - [General JS Coding Questions & Solutions](#general-js-coding-questions--solutions)
 
 <!--------------------------------------
@@ -1445,7 +1446,7 @@ NeetCode 150 Questions & Solutions start
     // Example usage:
     const heights = [2, 1, 5, 6, 2, 3];
     const result = largestRectangleArea(heights);
-    console.log(result);
+    console.log(result); // 10
     ```
 
     **In this code:**
@@ -1462,6 +1463,81 @@ NeetCode 150 Questions & Solutions start
         </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/largest-rectangle-in-histogram/)
+
+## Binary Search
+
+21. ### ❓ **_Search a 2D Matrix:-_** You are given an m x n integer matrix matrix with the following two properties: Each row is sorted in non-decreasing order. The first integer of each row is greater than the last integer of the previous row. Given an integer target, return true if target is in matrix or false otherwise. You must write a solution in O(log(m \* n)) time complexity.
+
+     <details>
+     <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3
+    Output: true
+
+    Example 2:
+    Input: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13
+    Output: false
+    ```
+
+     </details>
+
+     <details>
+     <summary>Solutions 👉</summary>
+
+    ```js
+    function searchMatrix(matrix, target) {
+      if (!matrix || matrix.length === 0 || matrix[0].length === 0) {
+        return false;
+      }
+
+      const m = matrix.length;
+      const n = matrix[0].length;
+
+      let left = 0;
+      let right = m * n - 1;
+
+      while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+        const midElement = matrix[Math.floor(mid / n)][mid % n];
+
+        if (midElement === target) {
+          return true;
+        } else if (midElement < target) {
+          left = mid + 1;
+        } else {
+          right = mid - 1;
+        }
+      }
+
+      return false;
+    }
+
+    // Example usage:
+    const matrix = [
+      [1, 3, 5, 7],
+      [10, 11, 16, 20],
+      [23, 30, 34, 60],
+    ];
+    const target = 3;
+    const result = searchMatrix(matrix, target);
+    console.log(result); // true
+    ```
+
+    **In this code:**
+
+    - The binary search is performed on the flattened array of the matrix.
+    - The midElement is calculated using the formula matrix[Math.floor(mid / n)][mid % n].
+    - If midElement is equal to the target, we return true.
+    - If midElement is less than the target, we update the left pointer.
+    - If midElement is greater than the target, we update the right pointer.
+    - The loop continues until the left pointer is greater than the right pointer.
+      > This solution has a time complexity of O(log(m \* n)) as required.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/search-a-2d-matrix/)
 
 <!--------------------------------------
 NeetCode 150 Questions & Solutions end

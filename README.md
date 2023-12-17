@@ -1547,6 +1547,80 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/search-a-2d-matrix/)
 
+22. ### ❓ **_Koko Eating Bananas:-_** Koko loves to eat bananas. There are n piles of bananas, the ith pile has piles[i] bananas. The guards have gone and will come back in h hours. Koko can decide her bananas-per-hour eating speed of k. Each hour, she chooses some pile of bananas and eats k bananas from that pile. If the pile has less than k bananas, she eats all of them instead and will not eat any more bananas during this hour. Koko likes to eat slowly but still wants to finish eating all the bananas before the guards return. Return the minimum integer k such that she can eat all the bananas within h hours.
+
+     <details>
+     <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: piles = [3,6,7,11], h = 8
+    Output: 4
+
+    Example 2:
+    Input: piles = [30,11,23,4,20], h = 5
+    Output: 30
+
+    Example 3:
+    Input: piles = [30,11,23,4,20], h = 6
+    Output: 23
+    ```
+
+     </details>
+
+     <details>
+     <summary>Solutions 👉</summary>
+
+    ```js
+    function minEatingSpeed(piles, h) {
+      let left = 1;
+      let right = Math.max(...piles);
+
+      while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+
+        if (canEatAll(piles, h, mid)) {
+          // If it's possible to eat all bananas at this speed, try a lower speed.
+          right = mid - 1;
+        } else {
+          // If it's not possible to eat all bananas at this speed, try a higher speed.
+          left = mid + 1;
+        }
+      }
+
+      return left;
+    }
+
+    // Helper function to check if it's possible to eat all bananas at a given speed.
+    function canEatAll(piles, h, speed) {
+      let hoursNeeded = 0;
+
+      for (const pile of piles) {
+        hoursNeeded += Math.ceil(pile / speed);
+      }
+
+      return hoursNeeded <= h;
+    }
+
+    // Example usage:
+    const piles = [3, 6, 7, 11];
+    const h = 8;
+    const result = minEatingSpeed(piles, h);
+    console.log(result); // 4
+    ```
+
+    **In this code:**
+
+    - The binary search is performed on the possible values of k (speed).
+    - The canEatAll function checks if it's possible to eat all bananas at a given speed within h hours.
+    - If it's possible, we try a lower speed; otherwise, we try a higher speed.
+    - The final result is the minimum speed required to eat all bananas within h hours.
+      > This solution has a time complexity of O(n log m), where n is the length of the piles array and m is the maximum number of bananas in any pile.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/koko-eating-bananas/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

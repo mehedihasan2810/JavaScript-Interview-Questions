@@ -1691,6 +1691,91 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/)
 
+24. ### ❓ **_Search in Rotated Sorted Array:-_** There is an integer array nums sorted in ascending order (with distinct values). Prior to being passed to your function, nums is possibly rotated at an unknown pivot index k (1 <= k < nums.length) such that the resulting array is `[nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]` (0-indexed). For example, `[0,1,2,4,5,6,7]` might be rotated at pivot index 3 and become `[4,5,6,7,0,1,2]`. Given the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums. You must write an algorithm with `O(log n)` runtime complexity.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+
+    Input: nums = [4,5,6,7,0,1,2], target = 0
+    Output: 4
+    Example 2:
+
+    Input: nums = [4,5,6,7,0,1,2], target = 3
+    Output: -1
+    Example 3:
+
+    Input: nums = [1], target = 0
+    Output: -1
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    function search(nums, target) {
+      let left = 0;
+      let right = nums.length - 1;
+
+      while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+
+        if (nums[mid] === target) {
+          return mid;
+        }
+
+        if (nums[left] <= nums[mid]) {
+          // Left half is sorted.
+          if (target >= nums[left] && target < nums[mid]) {
+            // Target is in the left sorted half.
+            right = mid - 1;
+          } else {
+            // Target is in the rotated half.
+            left = mid + 1;
+          }
+        } else {
+          // Right half is sorted.
+          if (target > nums[mid] && target <= nums[right]) {
+            // Target is in the right sorted half.
+            left = mid + 1;
+          } else {
+            // Target is in the rotated half.
+            right = mid - 1;
+          }
+        }
+      }
+
+      return -1; // Target not found.
+    }
+
+    // Example usage:
+    const rotatedArray1 = [4, 5, 6, 7, 0, 1, 2];
+    const target1 = 0;
+    const result1 = search(rotatedArray1, target1);
+    console.log(result1); // Output: 4
+
+    const rotatedArray2 = [4, 5, 6, 7, 0, 1, 2];
+    const target2 = 3;
+    const result2 = search(rotatedArray2, target2);
+    console.log(result2); // Output: -1
+    ```
+
+    **In this code:**
+
+    - We use binary search to find the target in the rotated sorted array.
+    - We check whether the left or right half is sorted.
+    - Depending on whether the target is in the sorted half or the rotated half, we adjust the search space accordingly.
+    - The loop continues until left and right converge, or the target is found.
+      > This solution has a time complexity of O(log n), where n is the length of the array.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/search-in-rotated-sorted-array/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

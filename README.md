@@ -1958,6 +1958,158 @@ NeetCode 150 Questions & Solutions start
 
 [🔼 Back to top](#table-of-contents)
 
+## LinkedList
+
+27. ### ❓ **_Reverse Linked List:-_** Given the head of a singly linked list, reverse the list, and return the reversed list.
+
+     <details>
+     <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: head = [1,2,3,4,5]
+    Output: [5,4,3,2,1]
+
+    Example 2:
+    Input: head = [1,2]
+    Output: [2,1]
+
+    Example 3:
+    Input: head = []
+    Output: []
+    ```
+
+     </details>
+
+     <details>
+     <summary>Solutions 👉</summary>
+
+    ```js
+    function reverseList(head) {
+      let prev = null;
+      let curr = head;
+      let next = null;
+
+      while (curr !== null) {
+        next = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = next;
+      }
+
+      return prev;
+    }
+    ```
+
+    **In this implementation:**
+
+    > The time complexity of this algorithm is O(n), where n is the length of the linked list, as we traverse the list once. The space complexity is O(1), as we use a constant amount of extra space regardless of the input size.
+
+     </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/reverse-linked-list/)
+
+28. ### ❓ **_Merge Two Sorted Lists:-_** You are given the heads of two sorted linked lists list1 and list2. Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists. Return the head of the merged linked list.
+
+     <details>
+     <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: list1 = [1,2,4], list2 = [1,3,4]
+    Output: [1,1,2,3,4,4]
+
+    Example 2:
+    Input: list1 = [], list2 = []
+    Output: []
+
+    Example 3:
+    Input: list1 = [], list2 = [0]
+    Output: [0]
+    ```
+
+     </details>
+
+     <details>
+     <summary>Solutions 👉</summary>
+
+    ```js
+    // Time O(N + M) | Space O(1)
+    class ListNode {
+      constructor(val, next = null) {
+        this.val = val;
+        this.next = next;
+      }
+    }
+
+    function mergeTwoLists(list1, list2) {
+      // Create a dummy node to simplify the code
+      const dummy = new ListNode(0);
+      let current = dummy;
+
+      while (list1 !== null && list2 !== null) {
+        if (list1.val < list2.val) {
+          current.next = list1;
+          list1 = list1.next;
+        } else {
+          current.next = list2;
+          list2 = list2.next;
+        }
+        current = current.next;
+      }
+
+      // If one of the lists is not empty, append the remaining nodes
+      current.next = list1 || list2;
+
+      // OR
+
+      // if (list1 !== null) {
+      //  current.next = list1;
+      // } else {
+      //  current.next = list2;
+      // }
+
+      return dummy.next;
+    }
+
+    // Example usage:
+    const list1 = new ListNode(1, new ListNode(2, new ListNode(4)));
+    const list2 = new ListNode(1, new ListNode(3, new ListNode(4)));
+    const mergedList = mergeTwoLists(list1, list2);
+    console.log(mergedList);
+
+    ////////////////////////
+    // Recursive solution
+    // Time O(N + M) | Space O(N + M)
+    ///////////////////////
+    function mergeTwoLists(list1, list2) {
+      if (!list1) return list2;
+      if (!list2) return list1;
+
+      if (list1.val <= list2.val) {
+        list1.next = mergeTwoLists(list1.next, list2);
+        return list1;
+      } else {
+        list2.next = mergeTwoLists(list1, list2.next);
+        return list2;
+      }
+    }
+    ```
+
+    **In this implementation:**
+
+    > This implementation uses a dummy node to simplify handling of the merged list. The mergeTwoLists function iterates through both lists, comparing the values of the current nodes, and appends the smaller node to the merged list. The process continues until one of the lists is exhausted. Finally, if one of the lists still has remaining nodes, they are appended to the merged list.
+
+    > The time complexity of this algorithm is O(m + n), where m and n are the lengths of the input linked lists. This is because we iterate through both lists once. The space complexity is O(1), as we use a constant amount of extra space regardless of the input sizes.
+
+     </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/merge-two-sorted-lists/)
+
+<br>
+
+[🔼 Back to top](#table-of-contents)
+
 ## Misc
 
 - ### ❓ **_Encode and Decode TinyURL:-_** TinyURL is a URL shortening service where you enter a URL such as https://leetcode.com/problems/design-tinyurl and it returns a short URL such as http://tinyurl.com/4e9iAk. Design a class to encode a URL and decode a tiny URL.

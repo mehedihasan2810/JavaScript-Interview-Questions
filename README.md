@@ -9,6 +9,8 @@
   - [Two Pointers](#two-pointers)
   - [Stack](#stack)
   - [Binary Search](#binary-search)
+  - [Linked List](#linkedlist)
+  - [Misc](#misc)
 - [General JS Coding Questions & Solutions](#general-js-coding-questions--solutions)
 
 <!--------------------------------------
@@ -2105,6 +2107,122 @@ NeetCode 150 Questions & Solutions start
      </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/merge-two-sorted-lists/)
+
+29. ### ❓ **_Reorder List:-_** You are given the head of a singly linked-list. The list can be represented as:
+
+    ```smart
+    L0 → L1 → … → Ln - 1 → Ln
+    Reorder the list to be on the following form:
+
+    L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+    You may not modify the values in the list's nodes. Only nodes themselves may be changed.
+    ```
+
+     <details>
+     <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: head = [1,2,3,4]
+    Output: [1,4,2,3]
+
+    Example 2:
+    Input: head = [1,2,3,4,5]
+    Output: [1,5,2,4,3]
+    ```
+
+     </details>
+
+     <details>
+     <summary>Solutions 👉</summary>
+
+    ```js
+    class ListNode {
+      constructor(val, next = null) {
+        this.val = val;
+        this.next = next;
+      }
+    }
+
+    function reorderList(head) {
+      if (!head || !head.next) {
+        return head; // Handling empty or single-node list
+      }
+
+      // Step 1: Find the middle of the linked list
+      let slow = head;
+      let fast = head;
+
+      while (fast.next && fast.next.next) {
+        slow = slow.next;
+        fast = fast.next.next;
+      }
+
+      // Step 2: Reverse the second half of the linked list
+      let secondHalf = reverseList(slow.next);
+      slow.next = null; // Cut off the first half
+
+      // Step 3: Merge the first half and the reversed second half
+      mergeLists(head, secondHalf);
+    }
+
+    function reverseList(head) {
+      let prev = null;
+      let current = head;
+
+      while (current !== null) {
+        const nextNode = current.next;
+        current.next = prev;
+        prev = current;
+        current = nextNode;
+      }
+
+      return prev;
+    }
+
+    function mergeLists(first, second) {
+      while (second !== null) {
+        const nextFirst = first.next;
+        const nextSecond = second.next;
+
+        first.next = second;
+        second.next = nextFirst;
+
+        first = nextFirst;
+        second = nextSecond;
+      }
+    }
+
+    // Example usage:
+    const originalList = new ListNode(
+      1,
+      new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))
+    );
+    console.log("Original List:", getListValues(originalList)); // Original List: [ 1, 2, 3, 4, 5 ]
+
+    reorderList(originalList);
+    console.log("Reordered List:", getListValues(originalList)); // Reordered List: [ 1, 5, 2, 4, 3 ]
+
+    function getListValues(head) {
+      const values = [];
+      let current = head;
+      while (current !== null) {
+        values.push(current.val);
+        current = current.next;
+      }
+      return values;
+    }
+    ```
+
+    **In this implementation:**
+
+    - reverseList function reverses a linked list.
+    - mergeLists function merges two linked lists, alternating nodes from each list.
+      > The time complexity is O(n), where n is the length of the linked list, and the space complexity is O(1), as we use a constant amount of extra space.
+
+     </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/reorder-list/)
 
 <br>
 

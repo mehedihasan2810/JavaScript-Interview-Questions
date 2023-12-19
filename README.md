@@ -2356,6 +2356,70 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/linked-list-cycle-ii/)
 
+32. ### ❓ **_Remove Nth Node From End of List:-_** Given the head of a linked list, remove the nth node from the end of the list and return its head.
+
+     <details>
+     <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: head = [1,2,3,4,5], n = 2
+    Output: [1,2,3,5]
+
+    Example 2:
+    Input: head = [1], n = 1
+    Output: []
+
+    Example 3:
+    Input: head = [1,2], n = 1
+    Output: [1]
+    ```
+
+     </details>
+
+     <details>
+     <summary>Solutions 👉</summary>
+
+    ```js
+    function removeNthFromEnd(head, n) {
+      // Create a dummy node to simplify edge cases
+      const dummy = new ListNode(0);
+      dummy.next = head;
+
+      let first = dummy;
+      let second = dummy;
+
+      // Move the second pointer n+1 steps ahead
+      for (let i = 0; i <= n; i++) {
+        second = second.next;
+      }
+
+      // Move both pointers until the second pointer reaches the end
+      while (second !== null) {
+        first = first.next;
+        second = second.next;
+      }
+
+      // Remove the nth node from the end
+      first.next = first.next.next;
+
+      return dummy.next;
+    }
+    ```
+
+    **In this algorithm:**
+
+    - We use two pointers, first and second, initially pointing to the dummy node.
+    - We move the second pointer n+1 steps ahead.
+    - We move both pointers simultaneously until the second pointer reaches the end of the list.
+    - At this point, the first pointer is pointing to the node just before the nth node from the end.
+    - We remove the nth node by updating the next pointer of the first node.
+      > This algorithm has a time complexity of O(n), where n is the length of the linked list, and a space complexity of O(1).
+
+     </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/remove-nth-node-from-end-of-list/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

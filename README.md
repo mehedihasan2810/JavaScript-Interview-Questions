@@ -2779,6 +2779,201 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/lru-cache/)
 
+37. ### ❓ **_LFU Cache:-_** Design and implement a data structure for a Least Frequently Used (LFU) cache.
+
+    ```smart
+    Implement the LFUCache class:
+
+    - LFUCache(int capacity) Initializes the object with the capacity of the data structure.
+    - int get(int key) Gets the value of the key if the key exists in the cache. Otherwise, returns -1.
+    - void put(int key, int value) Update the value of the key if present, or inserts the key if not already present. When the cache reaches its capacity, it should invalidate and remove the least frequently used key before inserting a new item. For this problem, when there is a tie (i.e., two or more keys with the same frequency), the least recently used key would be invalidated.
+
+    To determine the least frequently used key, a use counter is maintained for each key in the cache. The key with the smallest use counter is the least frequently used key.
+
+    When a key is first inserted into the cache, its use counter is set to 1 (due to the put operation). The use counter for a key in the cache is incremented either a get or put operation is called on it.
+
+    The functions get and put must each run in O(1) average time complexity.
+    ```
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input
+    ["LFUCache", "put", "put", "get", "put", "get", "get", "put", "get", "get", "get"]
+    [[2], [1, 1], [2, 2], [1], [3, 3], [2], [3], [4, 4], [1], [3], [4]]
+    Output
+    [null, null, null, 1, null, -1, 3, null, -1, 3, 4]
+
+    Explanation
+    // cnt(x) = the use counter for key x
+    // cache=[] will show the last used order for tiebreakers (leftmost element is  most recent)
+    LFUCache lfu = new LFUCache(2);
+    lfu.put(1, 1);   // cache=[1,_], cnt(1)=1
+    lfu.put(2, 2);   // cache=[2,1], cnt(2)=1, cnt(1)=1
+    lfu.get(1);      // return 1
+                    // cache=[1,2], cnt(2)=1, cnt(1)=2
+    lfu.put(3, 3);   // 2 is the LFU key because cnt(2)=1 is the smallest, invalidate 2.
+                    // cache=[3,1], cnt(3)=1, cnt(1)=2
+    lfu.get(2);      // return -1 (not found)
+    lfu.get(3);      // return 3
+                    // cache=[3,1], cnt(3)=2, cnt(1)=2
+    lfu.put(4, 4);   // Both 1 and 3 have the same cnt, but 1 is LRU, invalidate 1.
+                    // cache=[4,3], cnt(4)=1, cnt(3)=2
+    lfu.get(1);      // return -1 (not found)
+    lfu.get(3);      // return 3
+                    // cache=[3,4], cnt(4)=1, cnt(3)=3
+    lfu.get(4);      // return 4
+                    // cache=[4,3], cnt(4)=2, cnt(3)=3
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    class Node {
+      constructor(key, value) {
+        this.key = key;
+        this.value = value;
+        this.frequency = 1;
+        this.prev = null;
+        this.next = null;
+      }
+    }
+
+    class LFUCache {
+      constructor(capacity) {
+        this.capacity = capacity;
+        this.keyToNode = new Map();
+        this.frequencyToBucket = new Map();
+        this.minFrequency = 1;
+      }
+
+      moveToNextFrequency(node) {
+        this.removeFromBucket(node);
+        node.frequency += 1;
+        this.addToBucket(node);
+        this.updateMinFrequency(node.frequency);
+      }
+
+      addToBucket(node) {
+        const frequency = node.frequency;
+        if (!this.frequencyToBucket.has(frequency)) {
+          this.frequencyToBucket.set(frequency, new DoublyLinkedList());
+        }
+        this.frequencyToBucket.get(frequency).addToHead(node);
+      }
+
+      removeFromBucket(node) {
+        const frequency = node.frequency;
+        const bucket = this.frequencyToBucket.get(frequency);
+        bucket.remove(node);
+        if (bucket.isEmpty()) {
+          this.frequencyToBucket.delete(frequency);
+          if (this.minFrequency === frequency) {
+            this.minFrequency += 1;
+          }
+        }
+      }
+
+      updateMinFrequency(newFrequency) {
+        if (this.minFrequency > newFrequency) {
+          this.minFrequency = newFrequency;
+        }
+      }
+
+      removeLeastFrequent() {
+        const leastFrequentBucket = this.frequencyToBucket.get(
+          this.minFrequency
+        );
+        const toRemove = leastFrequentBucket.removeFromTail();
+        this.keyToNode.delete(toRemove.key);
+      }
+
+      get(key) {
+        if (!this.keyToNode.has(key)) {
+          return -1;
+        }
+
+        const node = this.keyToNode.get(key);
+        this.moveToNextFrequency(node);
+        return node.value;
+      }
+
+      put(key, value) {
+        if (this.capacity === 0) {
+          return;
+        }
+
+        if (this.keyToNode.has(key)) {
+          const node = this.keyToNode.get(key);
+          node.value = value;
+          this.moveToNextFrequency(node);
+        } else {
+          const newNode = new Node(key, value);
+          if (this.keyToNode.size >= this.capacity) {
+            this.removeLeastFrequent();
+          }
+
+          this.keyToNode.set(key, newNode);
+          this.addToBucket(newNode);
+          this.updateMinFrequency(newNode.frequency);
+        }
+      }
+    }
+
+    class DoublyLinkedList {
+      constructor() {
+        this.head = new Node(null, null);
+        this.tail = new Node(null, null);
+        this.head.next = this.tail;
+        this.tail.prev = this.head;
+      }
+
+      addToHead(node) {
+        node.next = this.head.next;
+        node.prev = this.head;
+        this.head.next.prev = node;
+        this.head.next = node;
+      }
+
+      removeFromTail() {
+        const toRemove = this.tail.prev;
+        this.remove(toRemove);
+        return toRemove;
+      }
+
+      remove(node) {
+        const prevNode = node.prev;
+        const nextNode = node.next;
+        prevNode.next = nextNode;
+        nextNode.prev = prevNode;
+      }
+
+      isEmpty() {
+        return this.head.next === this.tail;
+      }
+    }
+
+    // Example Usage:
+    const lfuCache = new LFUCache(2);
+    lfuCache.put(1, 1);
+    lfuCache.put(2, 2);
+    console.log(lfuCache.get(1)); // Output: 1
+    lfuCache.put(3, 3); // evicts key 2
+    console.log(lfuCache.get(2)); // Output: -1 (not found)
+    console.log(lfuCache.get(3)); // Output: 3
+    ```
+
+    > This implementation includes the LFUCache class, Node class, and DoublyLinkedList class. The LFUCache uses a combination of a hash map (keyToNode) and a frequency-based doubly linked list (frequencyToBucket) to efficiently manage the cache. The example usage demonstrates the basic operations of putting and getting items from the LFUCache.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/lfu-cache/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

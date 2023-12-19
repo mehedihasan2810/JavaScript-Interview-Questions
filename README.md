@@ -2224,6 +2224,66 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/reorder-list/)
 
+30. ### ❓ **_Linked List Cycle:-_** Given head, the head of a linked list, determine if the linked list has a cycle in it. There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to. Note that pos is not passed as a parameter. Return true if there is a cycle in the linked list. Otherwise, return false.
+
+     <details>
+     <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: head = [3,2,0,-4], pos = 1
+    Output: true
+    Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
+
+    Example 2:
+    Input: head = [1,2], pos = 0
+    Output: true
+    Explanation: There is a cycle in the linked list, where the tail connects to the 0th node.
+
+    Example 3:
+    Input: head = [1], pos = -1
+    Output: false
+    Explanation: There is no cycle in the linked list.
+    ```
+
+     </details>
+
+     <details>
+     <summary>Solutions 👉</summary>
+
+    ```js
+    // Time O(n) | Space O(1)
+    function hasCycle(head) {
+      let slow = head;
+      let fast = head;
+
+      // Use the slow and fast algorithm to detect a cycle
+      while (fast.next && fast.next.next) {
+        slow = slow.next;
+        fast = fast.next.next;
+
+        // If there is a cycle, the slow and fast will eventually meet
+        if (slow === fast) {
+          return true;
+        }
+      }
+
+      // If fast reaches the end, there is no cycle
+      return false;
+    }
+    ```
+
+    In this algorithm:
+
+    - The tortoise and hare pointers are initialized at the head of the linked list.
+    - The hare moves twice as fast as the tortoise. If there is a cycle, the hare will eventually catch up to the tortoise within the cycle.
+    - If there is no cycle, the hare will reach the end of the list.
+      > If the hare and tortoise meet at some point during the traversal, it means there is a cycle in the linked list, and the function returns true. If the hare reaches the end of the list without meeting the tortoise, there is no cycle, and the function returns false.
+
+     </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/linked-list-cycle/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

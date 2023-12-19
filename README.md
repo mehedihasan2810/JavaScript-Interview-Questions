@@ -3124,6 +3124,76 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/design-most-recently-used-queue/)
 
+39. ### ❓ **_Merge k Sorted Lists:-_** You are given an array of k linked-lists lists, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: lists = [[1,4,5],[1,3,4],[2,6]]
+    Output: [1,1,2,3,4,4,5,6]
+    Explanation: The linked-lists are:
+    [
+      1->4->5,
+      1->3->4,
+      2->6
+    ]
+    merging them into one sorted list:
+    1->1->2->3->4->4->5->6
+
+    Example 2:
+    Input: lists = []
+    Output: []
+
+    Example 3:
+    Input: lists = [[]]
+    Output: []
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    // Time O(N) | Space O(N)
+    function mergeKLists(lists) {
+      let previous = null;
+
+      for (let i = 0; i < lists.length; i++) {
+        previous = mergeTwoLists(previous, lists[i]);
+      }
+
+      return previous;
+    }
+
+    function mergeTwoLists(list1, list2) {
+      let sentinel = (tail = new ListNode(0));
+
+      while (list1 && list2) {
+        const canAddL1 = list1.val <= list2.val;
+        if (canAddL1) {
+          tail.next = list1;
+          list1 = list1.next;
+        } else {
+          tail.next = list2;
+          list2 = list2.next;
+        }
+
+        tail = tail.next;
+      }
+
+      tail.next = list1 || list2;
+
+      return sentinel.next;
+    }
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/merge-k-sorted-lists/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

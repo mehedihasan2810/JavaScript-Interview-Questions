@@ -2420,6 +2420,229 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/remove-nth-node-from-end-of-list/)
 
+33. ### ❓ **_Copy List with Random Pointer:-_** A linked list of length n is given such that each node contains an additional random pointer, which could point to any node in the list, or null. Construct a deep copy of the list. The deep copy should consist of exactly n brand new nodes, where each new node has its value set to the value of its corresponding original node. Both the next and random pointer of the new nodes should point to new nodes in the copied list such that the pointers in the original list and copied list represent the same list state. None of the pointers in the new list should point to nodes in the original list.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: head = [[7,null],[13,0],[11,4],[10,2],[1,0]]
+    Output: [[7,null],[13,0],[11,4],[10,2],[1,0]]
+
+    Example 2:
+    Input: head = [[1,1],[2,1]]
+    Output: [[1,1],[2,1]]
+
+    Example 3:
+    Input: head = [[3,null],[3,0],[3,null]]
+    Output: [[3,null],[3,0],[3,null]]
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    //Time O(n) | Space O(1)
+    function copyRandomList(head) {
+      if (!head) {
+        return null;
+      }
+
+      // Step 1: Insert new nodes next to the original nodes
+      let current = head;
+      while (current) {
+        const newNode = new Node(current.val);
+        newNode.next = current.next;
+        current.next = newNode;
+        current = newNode.next;
+      }
+
+      // Step 2: Set random pointers for the new nodes
+      current = head;
+      while (current) {
+        if (current.random) {
+          current.next.random = current.random.next;
+        }
+        current = current.next.next;
+      }
+
+      // Step 3: Separate the combined list into two lists
+      const newHead = head.next;
+      let original = head;
+      let copied = newHead;
+
+      while (original) {
+        original.next = original.next ? original.next.next : null;
+        copied.next = copied.next ? copied.next.next : null;
+        original = original.next;
+        copied = copied.next;
+      }
+
+      return newHead;
+    }
+
+    // --------------------------------------------------------------
+
+    //////////////////////////////////
+    // HashMap and Recursive Approach
+    // Time O(n) | Space O(n)
+    //////////////////////////////////
+    function copyRandomList(head, map = new Map()) {
+      if (!head) return null;
+      if (map.has(head)) return map.get(head);
+
+      const clone = new Node(head.val);
+
+      map.set(head, clone);
+      clone.next = copyRandomList(head.next, map);
+      clone.random = copyRandomList(head.random, map);
+
+      return clone;
+    }
+    ```
+
+    To deep copy a linked list with random pointers, you can follow these steps:
+
+    - Iterate through the original linked list and create a new node for each node in the original list. Insert the new node next to its corresponding original node.
+    - Iterate again through the combined list (original and new nodes) to set the random pointers for the new nodes based on the random pointers of the original nodes.
+    - Separate the combined list into two separate lists: the original list and the copied list.
+
+      > This algorithm has a time complexity of O(n) where n is the number of nodes in the linked list, and it uses only constant extra space.
+
+      </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/copy-list-with-random-pointer/)
+
+34. ### ❓ **_Add Two Numbers:-_** You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list. You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: l1 = [2,4,3], l2 = [5,6,4]
+    Output: [7,0,8]
+    Explanation: 342 + 465 = 807.
+
+    Example 2:
+    Input: l1 = [0], l2 = [0]
+    Output: [0]
+
+    Example 3:
+    Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
+    Output: [8,9,9,9,0,0,0,1]
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    function addTwoNumbers(l1, l2) {
+      const dummy = new ListNode(0);
+      let current = dummy;
+      let carry = 0;
+
+      while (l1 || l2) {
+        const x = l1 ? l1.val : 0;
+        const y = l2 ? l2.val : 0;
+        const sum = x + y + carry;
+
+        carry = Math.floor(sum / 10);
+        current.next = new ListNode(sum % 10);
+        current = current.next;
+
+        if (l1) l1 = l1.next;
+        if (l2) l2 = l2.next;
+      }
+
+      if (carry > 0) {
+        current.next = new ListNode(carry);
+      }
+
+      return dummy.next;
+    }
+    ```
+
+    **Steps**
+
+    - Initialize a dummy node to keep track of the head of the result linked list.
+    - Initialize a carry variable to handle cases where the sum of two digits results in a carry.
+    - Traverse both linked lists simultaneously, adding corresponding digits along with the carry.
+    - If one linked list is longer than the other, consider it in the addition.
+    - Update the carry for the next iteration.
+    - Create a new node with the sum of digits (considering the carry) and update the result linked list.
+    - Move to the next nodes in both linked lists.
+    - After the traversal, if there is a carry left, create a new node with the carry and append it to the result linked list.
+    - Return the head of the result linked list.
+
+      </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/copy-list-with-random-pointer/)
+
+35. ### ❓ **_Find the Duplicate Number:-_** Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive. There is only one repeated number in nums, return this repeated number. You must solve the problem without modifying the array nums and uses only constant extra space.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+
+    Input: nums = [1,3,4,2,2]
+    Output: 2
+    Example 2:
+
+    Input: nums = [3,1,3,4,2]
+    Output: 3
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    function findDuplicate(nums) {
+      let slow = nums[0];
+      let fast = nums[0];
+
+      // Phase 1: Find the meeting point in the cycle
+      do {
+        slow = nums[slow];
+        fast = nums[nums[fast]];
+      } while (slow !== fast);
+
+      // Phase 2: Find the entrance to the cycle
+      slow = nums[0];
+      while (slow !== fast) {
+        slow = nums[slow];
+        fast = nums[fast];
+      }
+
+      // The meeting point is the entrance to the cycle
+      return slow;
+    }
+    ```
+
+    > To solve this problem without modifying the array and using constant extra space, you can apply the Floyd's Tortoise and Hare algorithm (Cycle Detection algorithm) to find the cycle in a linked list. Here, we consider the array as a linked list where the indices represent nodes and the values at those indices represent the next nodes.
+
+    **The steps are as follows:**
+
+    - Initialize two pointers, slow and fast, both starting at the first element (index 0).
+    - Move slow one step at a time and fast two steps at a time until they meet in the cycle.
+    - Reset one pointer (either slow or fast) to the start (index 0) and move both pointers one step at a time until they meet again. The meeting point is the entrance of the cycle.
+    - The value at the meeting point is the repeated number.
+
+      > This algorithm has a time complexity of O(n) and a space complexity of O(1), meeting the requirements of not modifying the array and using constant extra space.
+
+        </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/find-the-duplicate-number/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

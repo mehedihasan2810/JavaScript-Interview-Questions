@@ -2591,11 +2591,10 @@ NeetCode 150 Questions & Solutions start
 
     ```smart
     Example 1:
-
     Input: nums = [1,3,4,2,2]
     Output: 2
-    Example 2:
 
+    Example 2:
     Input: nums = [3,1,3,4,2]
     Output: 3
     ```
@@ -2642,6 +2641,143 @@ NeetCode 150 Questions & Solutions start
         </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/find-the-duplicate-number/)
+
+36. ### ❓ **_LRU Cache:-_** Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.
+
+    ```smart
+    Implement the LRUCache class:
+
+    - LRUCache(int capacity) Initialize the LRU cache with positive size capacity.
+    - int get(int key) Return the value of the key if the key exists, otherwise return -1.
+    - void put(int key, int value) Update the value of the key if the key exists. Otherwise, add the key-value pair to the cache. If the number of keys exceeds the capacity from this operation, evict the least recently used key.
+
+    The functions get and put must each run in O(1) average time complexity.
+    ```
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input
+    ["LRUCache", "put", "put", "get", "put", "get", "put", "get", "get", "get"]
+    [[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]]
+    Output
+    [null, null, null, 1, null, -1, null, -1, 3, 4]
+
+    Explanation
+    LRUCache lRUCache = new LRUCache(2);
+    lRUCache.put(1, 1); // cache is {1=1}
+    lRUCache.put(2, 2); // cache is {1=1, 2=2}
+    lRUCache.get(1);    // return 1
+    lRUCache.put(3, 3); // LRU key was 2, evicts key 2, cache is {1=1, 3=3}
+    lRUCache.get(2);    // returns -1 (not found)
+    lRUCache.put(4, 4); // LRU key was 1, evicts key 1, cache is {4=4, 3=3}
+    lRUCache.get(1);    // return -1 (not found)
+    lRUCache.get(3);    // return 3
+    lRUCache.get(4);    // return 4
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    class ListNode {
+      constructor(key, value) {
+        this.key = key;
+        this.value = value;
+        this.prev = null;
+        this.next = null;
+      }
+    }
+
+    class LRUCache {
+      constructor(capacity) {
+        this.capacity = capacity;
+        this.size = 0;
+        this.cache = new Map();
+        this.head = new ListNode(); // Dummy head
+        this.tail = new ListNode(); // Dummy tail
+        this.head.next = this.tail;
+        this.tail.prev = this.head;
+      }
+
+      moveToHead(node) {
+        // Remove the node from its current position
+        this.removeNode(node);
+        // Move the node to the front (next to dummy head)
+        this.addToHead(node);
+      }
+
+      addToHead(node) {
+        node.next = this.head.next;
+        node.prev = this.head;
+        this.head.next.prev = node;
+        this.head.next = node;
+      }
+
+      removeNode(node) {
+        const prevNode = node.prev;
+        const nextNode = node.next;
+        prevNode.next = nextNode;
+        nextNode.prev = prevNode;
+      }
+
+      removeTail() {
+        const tailNode = this.tail.prev;
+        this.removeNode(tailNode);
+        return tailNode;
+      }
+
+      get(key) {
+        if (this.cache.has(key)) {
+          const node = this.cache.get(key);
+          this.moveToHead(node);
+          return node.value;
+        }
+        return -1;
+      }
+
+      put(key, value) {
+        if (this.cache.has(key)) {
+          const node = this.cache.get(key);
+          node.value = value;
+          this.moveToHead(node);
+        } else {
+          if (this.size === this.capacity) {
+            const tailNode = this.removeTail();
+            this.cache.delete(tailNode.key);
+            this.size--;
+          }
+
+          const newNode = new ListNode(key, value);
+          this.cache.set(key, newNode);
+          this.addToHead(newNode);
+          this.size++;
+        }
+      }
+    }
+
+    // Example usage:
+    const lruCache = new LRUCache(2);
+    lruCache.put(1, 1);
+    lruCache.put(2, 2);
+    console.log(lruCache.get(1)); // Output: 1
+    lruCache.put(3, 3); // Evicts key 2
+    console.log(lruCache.get(2)); // Output: -1 (not found)
+    lruCache.put(4, 4); // Evicts key 1
+    console.log(lruCache.get(1)); // Output: -1 (not found)
+    console.log(lruCache.get(3)); // Output: 3
+    console.log(lruCache.get(4)); // Output: 4
+    ```
+
+    > To implement a Least Recently Used (LRU) cache, you can use a combination of a doubly linked list and a hash map. The doubly linked list helps maintain the order of recently used items, and the hash map provides quick access to items based on their keys.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/lru-cache/)
 
 <br>
 

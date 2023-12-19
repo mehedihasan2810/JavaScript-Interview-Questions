@@ -2978,6 +2978,140 @@ NeetCode 150 Questions & Solutions start
 
 [🔼 Back to top](#table-of-contents)
 
+ <!------------------
+ Design System Start
+ ------------------->
+
+## Design System
+
+- ### [❓ **_LRU Cache:-_** Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.](#❓-lru-cache--design-a-data-structure-that-follows-the-constraints-of-a-least-recently-used-lru-cache)
+
+- ### [❓ **_LFU Cache:-_** Design and implement a data structure for a Least Frequently Used (LFU) cache.](#❓-lfu-cache--design-and-implement-a-data-structure-for-a-least-frequently-used-lfu-cache)
+
+- ### ❓ **_Design In-Memory File System:-_** Design and implement a data structure for a In-Memory File System.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+  ```smart
+  // Example Usage:
+  const fileSystem = new FileSystem();
+  console.log(fileSystem.ls('/')); // Output: []
+  fileSystem.mkdir('/a/b/c');
+  fileSystem.addContentToFile('/a/b/c/d', 'hello');
+  console.log(fileSystem.ls('/')); // Output: ['a']
+  console.log(fileSystem.ls('/a/b')); // Output: ['c']
+  console.log(fileSystem.ls('/a/b/c')); // Output: ['d']
+  console.log(fileSystem.readContentFromFile('/a/b/c/d')); // Output: 'hello'
+  ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+  ```js
+  class File {
+    constructor(isDirectory = false) {
+      this.isDirectory = isDirectory;
+      this.children = new Map();
+      this.content = "";
+    }
+  }
+
+  class FileSystem {
+    constructor() {
+      this.root = new File(true);
+    }
+
+    separatePath(path) {
+      return path.split("/").filter((part) => part !== "");
+    }
+
+    ls(path) {
+      const parts = this.separatePath(path);
+      let current = this.root;
+
+      for (const part of parts) {
+        current = current.children.get(part);
+      }
+
+      if (current.isDirectory) {
+        return [...current.children.keys()].sort();
+      } else {
+        return [parts[parts.length - 1]];
+      }
+    }
+
+    mkdir(path) {
+      const parts = this.separatePath(path);
+      let current = this.root;
+
+      for (const part of parts) {
+        if (!current.children.has(part)) {
+          current.children.set(part, new File(true));
+        }
+        current = current.children.get(part);
+      }
+    }
+
+    addContentToFile(filePath, content) {
+      const parts = this.separatePath(filePath);
+      let current = this.root;
+
+      for (const part of parts.slice(0, -1)) {
+        if (!current.children.has(part)) {
+          current.children.set(part, new File(true));
+        }
+        current = current.children.get(part);
+      }
+
+      const fileName = parts[parts.length - 1];
+      if (!current.children.has(fileName)) {
+        current.children.set(fileName, new File());
+      }
+
+      current = current.children.get(fileName);
+      current.content += content;
+    }
+
+    readContentFromFile(filePath) {
+      const parts = this.separatePath(filePath);
+      let current = this.root;
+
+      for (const part of parts) {
+        current = current.children.get(part);
+      }
+
+      return current.content;
+    }
+  }
+
+  // Example Usage:
+  const fileSystem = new FileSystem();
+  console.log(fileSystem.ls("/")); // Output: []
+  fileSystem.mkdir("/a/b/c");
+  fileSystem.addContentToFile("/a/b/c/d", "hello");
+  console.log(fileSystem.ls("/")); // Output: ['a']
+  console.log(fileSystem.ls("/a/b")); // Output: ['c']
+  console.log(fileSystem.ls("/a/b/c")); // Output: ['d']
+  console.log(fileSystem.readContentFromFile("/a/b/c/d")); // Output: 'hello'
+  ```
+
+  > This implementation uses a tree structure to represent the file system. The File class represents a file or directory, and the FileSystem class provides methods for the required operations. The example usage demonstrates creating directories, adding content to files, and listing the contents of directories.
+
+    </details>
+
+  [Original Problem in LeetCode](https://leetcode.com/problems/design-in-memory-file-system/)
+
+<br>
+
+[🔼 Back to top](#table-of-contents)
+
+ <!------------------
+ Design System Ends
+ ------------------->
+
 ## Misc
 
 - ### ❓ **_Encode and Decode TinyURL:-_** TinyURL is a URL shortening service where you enter a URL such as https://leetcode.com/problems/design-tinyurl and it returns a short URL such as http://tinyurl.com/4e9iAk. Design a class to encode a URL and decode a tiny URL.

@@ -2273,7 +2273,7 @@ NeetCode 150 Questions & Solutions start
     }
     ```
 
-    In this algorithm:
+    **In this algorithm:**
 
     - The tortoise and hare pointers are initialized at the head of the linked list.
     - The hare moves twice as fast as the tortoise. If there is a cycle, the hare will eventually catch up to the tortoise within the cycle.
@@ -2283,6 +2283,78 @@ NeetCode 150 Questions & Solutions start
      </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/linked-list-cycle/)
+
+31. ### ❓ **_Linked List Cycle II:-_** Given the head of a linked list, return the node where the cycle begins. If there is no cycle, return null. There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to (0-indexed). It is -1 if there is no cycle. Note that pos is not passed as a parameter. Do not modify the linked list.
+
+     <details>
+     <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: head = [3,2,0,-4], pos = 1
+    Output: tail connects to node index 1
+    Explanation: There is a cycle in the linked list, where tail connects to the second node.
+
+    Example 2:
+    Input: head = [1,2], pos = 0
+    Output: tail connects to node index 0
+    Explanation: There is a cycle in the linked list, where tail connects to the first node.
+
+    Example 3:
+    Input: head = [1], pos = -1
+    Output: no cycle
+    Explanation: There is no cycle in the linked list.
+    ```
+
+     </details>
+
+     <details>
+     <summary>Solutions 👉</summary>
+
+    ```js
+    function detectCycle(head) {
+      let slow = head;
+      let fast = head;
+
+      // Detect the cycle
+      while (fast && fast.next) {
+        slow = slow.next;
+        fast = fast.next.next;
+
+        if (slow === fast) {
+          // Cycle detected, break the loop
+          break;
+        }
+      }
+
+      // If fast reached the end of the list, no cycle
+      if (!fast || !fast.next) {
+        return null;
+      }
+
+      // Move slow back to the head
+      slow = head;
+
+      // Move both slow and fast one step at a time until they meet
+      while (slow !== fast) {
+        slow = slow.next;
+        fast = fast.next;
+      }
+
+      // The meeting point is the start of the cycle
+      return slow;
+    }
+    ```
+
+    **In this algorithm:**
+
+    - The tortoise and hare pointers are used to detect the cycle. If there is a cycle, they will eventually meet at some point within the cycle.
+    - After detecting the cycle, the tortoise is moved back to the head, and both pointers move one step at a time until they meet again. The meeting point is the start of the cycle.
+    - If there is no cycle, the function returns null. If there is a cycle, it returns the node where the cycle begins.
+
+     </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/linked-list-cycle-ii/)
 
 <br>
 

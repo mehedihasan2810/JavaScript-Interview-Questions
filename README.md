@@ -10,6 +10,7 @@
   - [Stack](#stack)
   - [Binary Search](#binary-search)
   - [Linked List](#linkedlist)
+  - [Design System](#design-system)
   - [Misc](#misc)
 - [General JS Coding Questions & Solutions](#general-js-coding-questions--solutions)
 
@@ -2974,6 +2975,155 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/lfu-cache/)
 
+38. ### ❓ **_Most Recently Used (MRU) Queue:-_** Design and implement a data structure for Most Recently Used (MRU) Queue.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    // Example Usage:
+    const mruQueue = new MRUQueue(5);
+    mruQueue.add(1);
+    mruQueue.add(2);
+    mruQueue.add(3);
+    mruQueue.print(); // Output: 3 2 1
+
+    mruQueue.fetch(2);
+    mruQueue.print(); // Output: 2 3 1
+
+    mruQueue.add(4);
+    mruQueue.add(5);
+    mruQueue.add(6);
+    mruQueue.print(); // Output: 6 5 4 2 3
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    class Node {
+      constructor(value) {
+        this.value = value;
+        this.prev = null;
+        this.next = null;
+      }
+    }
+
+    class MRUQueue {
+      constructor(size) {
+        this.size = size;
+        this.head = null;
+        this.tail = null;
+        this.nodeMap = new Map(); // Map to store nodes by their values
+      }
+
+      fetch(k) {
+        if (this.nodeMap.has(k)) {
+          const node = this.nodeMap.get(k);
+          this.moveToFront(node);
+          return true;
+        }
+        return false;
+      }
+
+      add(k) {
+        if (this.nodeMap.has(k)) {
+          // If the element already exists, move it to the front
+          const node = this.nodeMap.get(k);
+          this.moveToFront(node);
+        } else {
+          // Add a new element to the front
+          const newNode = new Node(k);
+          this.nodeMap.set(k, newNode);
+          this.addToFront(newNode);
+
+          // Check if the size exceeds the specified limit, and remove the least recently used element if needed
+          if (this.nodeMap.size > this.size) {
+            const removedNode = this.removeFromEnd();
+            this.nodeMap.delete(removedNode.value);
+          }
+        }
+      }
+
+      moveToFront(node) {
+        if (node !== this.head) {
+          // Remove the node from its current position
+          node.prev.next = node.next;
+          if (node.next) {
+            node.next.prev = node.prev;
+          } else {
+            this.tail = node.prev;
+          }
+
+          // Add the node to the front
+          node.next = this.head;
+          node.prev = null;
+          this.head.prev = node;
+          this.head = node;
+        }
+      }
+
+      addToFront(node) {
+        if (!this.head) {
+          this.head = node;
+          this.tail = node;
+        } else {
+          node.next = this.head;
+          this.head.prev = node;
+          this.head = node;
+        }
+      }
+
+      removeFromEnd() {
+        if (!this.tail) {
+          return null;
+        }
+
+        const removedNode = this.tail;
+        this.tail = this.tail.prev;
+
+        if (this.tail) {
+          this.tail.next = null;
+        } else {
+          this.head = null;
+        }
+
+        return removedNode;
+      }
+
+      print() {
+        let current = this.head;
+        while (current) {
+          console.log(current.value);
+          current = current.next;
+        }
+      }
+    }
+
+    // Example Usage:
+    const mruQueue = new MRUQueue(5);
+    mruQueue.add(1);
+    mruQueue.add(2);
+    mruQueue.add(3);
+    mruQueue.print(); // Output: 3 2 1
+
+    mruQueue.fetch(2);
+    mruQueue.print(); // Output: 2 3 1
+
+    mruQueue.add(4);
+    mruQueue.add(5);
+    mruQueue.add(6);
+    mruQueue.print(); // Output: 6 5 4 2 3
+    ```
+
+    > This implementation uses a doubly linked list to maintain the order of elements and a map to quickly retrieve nodes based on their values. The fetch method moves an element to the front when accessed, and the add method adds a new element to the front while handling the size constraint. The print method is included for demonstration purposes.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/design-most-recently-used-queue/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)
@@ -2987,6 +3137,8 @@ NeetCode 150 Questions & Solutions start
 - ### [❓ **_LRU Cache:-_** Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.](#❓-lru-cache--design-a-data-structure-that-follows-the-constraints-of-a-least-recently-used-lru-cache)
 
 - ### [❓ **_LFU Cache:-_** Design and implement a data structure for a Least Frequently Used (LFU) cache.](#❓-lfu-cache--design-and-implement-a-data-structure-for-a-least-frequently-used-lfu-cache)
+
+- ### [❓ **_Most Recently Used (MRU) Queue:-_** Design and implement a data structure for Most Recently Used (MRU) Queue.](#❓-most-recently-used-mru-queue--design-and-implement-a-data-structure-for-most-recently-used-mru-queue)
 
 - ### ❓ **_Design In-Memory File System:-_** Design and implement a data structure for a In-Memory File System.
 

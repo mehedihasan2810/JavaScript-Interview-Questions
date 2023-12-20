@@ -3345,6 +3345,80 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/swap-nodes-in-pairs/)
 
+42. ### ❓ **_Swapping Nodes in a Linked List:-_** You are given the head of a linked list, and an integer k. Return the head of the linked list after swapping the values of the kth node from the beginning and the kth node from the end (the list is 1-indexed).
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: head = [1,2,3,4,5], k = 2
+    Output: [1,4,3,2,5]
+
+    Example 2:
+    Input: head = [7,9,6,6,7,8,3,0,9,5], k = 5
+    Output: [7,9,6,6,8,7,3,0,9,5]
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    class ListNode {
+      constructor(val, next = null) {
+        this.val = val;
+        this.next = next;
+      }
+    }
+
+    const swapNodes = function (head, k) {
+      let length = 0;
+      let current = head;
+
+      // Find the length of the linked list
+      while (current) {
+        length++;
+        current = current.next;
+      }
+
+      // Find the kth node from the beginning
+      let first = head;
+      for (let i = 1; i < k; i++) {
+        first = first.next;
+      }
+
+      // Find the kth node from the end
+      let second = head;
+      for (let i = 0; i < length - k; i++) {
+        second = second.next;
+      }
+
+      // Swap their values
+      const temp = first.val;
+      first.val = second.val;
+      second.val = temp;
+
+      return head;
+    };
+
+    // Example linked list: 1 -> 2 -> 3 -> 4 -> 5
+    const head = new ListNode(
+      1,
+      new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))
+    );
+
+    const k = 2;
+    const result = swapNodes(head, k);
+
+    // The result will be: 1 -> 4 -> 3 -> 2 -> 5
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/swapping-nodes-in-a-linked-list/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

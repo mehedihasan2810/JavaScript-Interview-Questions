@@ -3194,6 +3194,89 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/merge-k-sorted-lists/)
 
+40. ### ❓ **_Reverse Nodes in k-Group:-_** Given the head of a linked list, reverse the nodes of the list `k` at a time, and return the modified list. `k` is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of `k` then left-out nodes, in the end, should remain as it is. You may not alter the values in the list's nodes, only nodes themselves may be changed.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: head = [1,2,3,4,5], k = 2
+    Output: [2,1,4,3,5]
+
+    Example 2:
+    Input: head = [1,2,3,4,5], k = 3
+    Output: [3,2,1,4,5]
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    //  Time O(N) | Space O(N)
+    class ListNode {
+      constructor(val, next) {
+        this.val = val;
+        this.next = next;
+      }
+    }
+
+    const reverseKGroup = (head, k) => {
+      const sentinel = new ListNode(0, head);
+      let tail = sentinel;
+
+      while (true) {
+        let [start, last] = moveNode(tail, k);
+        if (!last) break;
+
+        reverse([start, tail.next, start]);
+
+        const next = tail.next;
+        tail.next = last;
+        tail = next;
+      }
+
+      return sentinel.next;
+    };
+
+    const moveNode = (curr, k) => {
+      const canMove = () => k && curr;
+      while (canMove()) {
+        curr = curr.next;
+        k--;
+      }
+
+      return [curr?.next || null, curr];
+    };
+
+    const reverse = ([prev, curr, start]) => {
+      const isSame = () => curr === start;
+      while (!isSame()) {
+        const next = curr.next;
+        curr.next = prev;
+
+        prev = curr;
+        curr = next;
+      }
+    };
+
+    const result = reverseKGroup(
+      new ListNode(
+        1,
+        new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))
+      ),
+      2
+    );
+
+    console.log(result); // [2, 1, 4, 3, 5]
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/reverse-nodes-in-k-group/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

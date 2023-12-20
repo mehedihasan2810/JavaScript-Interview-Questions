@@ -3424,6 +3424,99 @@ NeetCode 150 Questions & Solutions start
 [🔼 Back to top](#table-of-contents)
 
  <!------------------
+     Trees Start
+ ------------------->
+
+## Trees
+
+43. ### ❓ **_Invert Binary Tree:-_** Given the root of a binary tree, invert the tree, and return its root.
+
+> To invert a binary tree, you can perform a simple depth-first traversal (pre-order, in-order, or post-order) and swap the left and right children at each node. Here's a
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: root = [4,2,7,1,3,6,9]
+    Output: [4,7,2,9,6,3,1]
+
+    Example 2:
+    Input: root = [2,1,3]
+    Output: [2,3,1]
+
+    Example 3:
+    Input: root = []
+    Output: []
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    class TreeNode {
+        constructor(val, left = null, right = null) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+    const invertTree = function(root) {
+        // Base case: If the current node is null, return null
+        if (!root) {
+            return null;
+        }
+
+        // Swap the left and right children
+        const temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+
+        // Recursively invert the left and right subtrees
+        invertTree(root.left);
+        invertTree(root.right);
+
+        return root;
+    };
+
+    // Example binary tree:
+    //        1
+    //       / \
+    //      2   3
+    //     / \ / \
+    //    4  5 6  7
+    const root = new TreeNode(1,
+        new TreeNode(2, new TreeNode(4), new TreeNode(5)),
+        new TreeNode(3, new TreeNode(6), new TreeNode(7))
+    );
+
+    const invertedRoot = invertTree(root);
+
+    // The inverted tree will be:
+    //        1
+    //       / \
+    //      3   2
+    //     / \ / \
+    //    7  6 5  4
+
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/invert-binary-tree/)
+
+<br>
+
+[🔼 Back to top](#table-of-contents)
+
+ <!------------------
+     Trees End
+ ------------------->
+
+ <!------------------
  Design System Start
  ------------------->
 

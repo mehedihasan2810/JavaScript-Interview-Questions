@@ -10,6 +10,7 @@
   - [Stack](#stack)
   - [Binary Search](#binary-search)
   - [Linked List](#linkedlist)
+  - [Trees](#trees)
   - [Design System](#design-system)
   - [Misc](#misc)
 - [General JS Coding Questions & Solutions](#general-js-coding-questions--solutions)
@@ -3431,7 +3432,7 @@ NeetCode 150 Questions & Solutions start
 
 43. ### ❓ **_Invert Binary Tree:-_** Given the root of a binary tree, invert the tree, and return its root.
 
-> To invert a binary tree, you can perform a simple depth-first traversal (pre-order, in-order, or post-order) and swap the left and right children at each node. Here's a
+    > To invert a binary tree, you can perform a simple depth-first traversal (pre-order, in-order, or post-order) and swap the left and right children at each node. Here's a
 
     <details>
     <summary>Examples 👉</summary>
@@ -3457,29 +3458,31 @@ NeetCode 150 Questions & Solutions start
 
     ```js
     class TreeNode {
-        constructor(val, left = null, right = null) {
-            this.val = val;
-            this.left = left;
-            this.right = right;
-        }
+      constructor(val, left = null, right = null) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+      }
     }
 
-    const invertTree = function(root) {
-        // Base case: If the current node is null, return null
-        if (!root) {
-            return null;
-        }
+    // Depth First Search
+    // TIme O(N) | Space O(N)
+    const invertTree = function (root) {
+      // Base case: If the current node is null, return null
+      if (!root) {
+        return null;
+      }
 
-        // Swap the left and right children
-        const temp = root.left;
-        root.left = root.right;
-        root.right = temp;
+      // Swap the left and right children
+      const temp = root.left;
+      root.left = root.right;
+      root.right = temp;
 
-        // Recursively invert the left and right subtrees
-        invertTree(root.left);
-        invertTree(root.right);
+      // Recursively invert the left and right subtrees
+      invertTree(root.left);
+      invertTree(root.right);
 
-        return root;
+      return root;
     };
 
     // Example binary tree:
@@ -3488,9 +3491,10 @@ NeetCode 150 Questions & Solutions start
     //      2   3
     //     / \ / \
     //    4  5 6  7
-    const root = new TreeNode(1,
-        new TreeNode(2, new TreeNode(4), new TreeNode(5)),
-        new TreeNode(3, new TreeNode(6), new TreeNode(7))
+    const root = new TreeNode(
+      1,
+      new TreeNode(2, new TreeNode(4), new TreeNode(5)),
+      new TreeNode(3, new TreeNode(6), new TreeNode(7))
     );
 
     const invertedRoot = invertTree(root);
@@ -3501,12 +3505,111 @@ NeetCode 150 Questions & Solutions start
     //      3   2
     //     / \ / \
     //    7  6 5  4
-
     ```
 
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/invert-binary-tree/)
+
+44. ### ❓ **_Maximum Depth of Binary Tree:-_** Given the root of a binary tree, return its maximum depth. A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: root = [3,9,20,null,null,15,7]
+    Output: 3
+
+    Example 2:
+    Input: root = [1,null,2]
+    Output: 2
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    class TreeNode {
+      constructor(val, left = null, right = null) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+      }
+    }
+    
+    /////////////////////////
+    // Depth First Search
+    ////////////////////////
+    const maxDepth = function (root) {
+      // Base case: If the current node is null, the depth is 0
+      if (!root) {
+        return 0;
+      }
+
+      // Recursively calculate the depth of the left and right subtrees
+      const leftDepth = maxDepth(root.left);
+      const rightDepth = maxDepth(root.right);
+
+      // The depth of the current subtree is the maximum depth of its left and right subtrees, plus 1 for the current node
+      return Math.max(leftDepth, rightDepth) + 1;
+    };
+
+    // Example binary tree:
+    //        3
+    //       / \
+    //      9  20
+    //        /  \
+    //       15   7
+    const root = new TreeNode(
+      3,
+      new TreeNode(9),
+      new TreeNode(20, new TreeNode(15), new TreeNode(7))
+    );
+
+    const depth = maxDepth(root);
+    console.log(depth); // Output: 3
+
+    // -------------------------------------------------------
+
+    ////////////////////////
+    // Breadth First Search
+    ////////////////////////
+    const maxDepthBFS = function (root) {
+      if (!root) {
+        return 0;
+      }
+
+      const queue = [root];
+      let depth = 0;
+
+      while (queue.length > 0) {
+        const levelSize = queue.length;
+
+        for (let i = 0; i < levelSize; i++) {
+          const currentNode = queue.shift();
+
+          if (currentNode.left) {
+            queue.push(currentNode.left);
+          }
+
+          if (currentNode.right) {
+            queue.push(currentNode.right);
+          }
+        }
+
+        depth++;
+      }
+
+      return depth;
+    };
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/maximum-depth-of-binary-tree/)
 
 <br>
 

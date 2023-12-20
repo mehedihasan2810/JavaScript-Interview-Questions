@@ -3466,7 +3466,7 @@ NeetCode 150 Questions & Solutions start
     }
 
     // Depth First Search
-    // TIme O(N) | Space O(N)
+    // Time O(N) | Space O(N)
     const invertTree = function (root) {
       // Base case: If the current node is null, return null
       if (!root) {
@@ -3505,6 +3505,39 @@ NeetCode 150 Questions & Solutions start
     //      3   2
     //     / \ / \
     //    7  6 5  4
+
+    //////////////////////////////////////////
+
+    ////////////////////////////
+    // Breadth First Search
+    // Time O(N) | Space O(N)
+    /////////////////////////////
+    const invertTree = function (root) {
+      if (!root) {
+        return null;
+      }
+
+      const queue = [root];
+
+      while (queue.length > 0) {
+        const currentNode = queue.shift();
+
+        // Swap left and right children
+        const temp = currentNode.left;
+        currentNode.left = currentNode.right;
+        currentNode.right = temp;
+
+        if (currentNode.left) {
+          queue.push(currentNode.left);
+        }
+
+        if (currentNode.right) {
+          queue.push(currentNode.right);
+        }
+      }
+
+      return root;
+    };
     ```
 
     </details>
@@ -3539,9 +3572,10 @@ NeetCode 150 Questions & Solutions start
         this.right = right;
       }
     }
-    
+
     /////////////////////////
     // Depth First Search
+    // Time O(N) | Space O(N)
     ////////////////////////
     const maxDepth = function (root) {
       // Base case: If the current node is null, the depth is 0
@@ -3572,10 +3606,12 @@ NeetCode 150 Questions & Solutions start
     const depth = maxDepth(root);
     console.log(depth); // Output: 3
 
-    // -------------------------------------------------------
+    //////////////////////////////////////////////////////////////////////
 
     ////////////////////////
     // Breadth First Search
+    // Level of Order
+    // Time O(N) | Space O(N)
     ////////////////////////
     const maxDepthBFS = function (root) {
       if (!root) {
@@ -3610,6 +3646,98 @@ NeetCode 150 Questions & Solutions start
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/maximum-depth-of-binary-tree/)
+
+45. ### ❓ **_Minimum Depth of Binary Tree:-_** Given a binary tree, find its minimum depth. The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node. Note: A leaf is a node with no children.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: root = [3,9,20,null,null,15,7]
+    Output: 2
+
+    Example 2:
+    Input: root = [2,null,3,null,4,null,5,null,6]
+    Output: 5
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    ////////////////////////
+    // Breadth First Search
+    // Level of Order
+    // Time O(N) | Space O(N)
+    ////////////////////////
+    const minDepth = function (root) {
+      if (!root) {
+        return 0;
+      }
+
+      const queue = [root];
+      let depth = 1;
+
+      while (queue.length > 0) {
+        const levelSize = queue.length;
+
+        for (let i = 0; i < levelSize; i++) {
+          const currentNode = queue.shift();
+
+          if (!currentNode.left && !currentNode.right) {
+            // We found the first leaf node, return the current depth
+            return depth;
+          }
+
+          if (currentNode.left) {
+            queue.push(currentNode.left);
+          }
+
+          if (currentNode.right) {
+            queue.push(currentNode.right);
+          }
+        }
+
+        depth++;
+      }
+
+      return depth;
+    };
+
+    /////////////////////////////////////////////////
+
+    /////////////////////////
+    // Depth First Search
+    // Time O(N) | Space O(N)
+    ////////////////////////
+    const minDepth = function (root) {
+      if (!root) {
+        return 0;
+      }
+
+      if (!root.left && !root.right) {
+        // If the node is a leaf, return 1
+        return 1;
+      }
+
+      let minDepthValue = Number.POSITIVE_INFINITY;
+
+      if (root.left) {
+        minDepthValue = Math.min(minDepth(root.left), minDepthValue);
+      }
+
+      if (root.right) {
+        minDepthValue = Math.min(minDepth(root.right), minDepthValue);
+      }
+
+      return minDepthValue + 1;
+    };
+    ```
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/minimum-depth-of-binary-tree/)
 
 <br>
 

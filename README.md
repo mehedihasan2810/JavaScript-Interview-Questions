@@ -3277,6 +3277,74 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/reverse-nodes-in-k-group/)
 
+41. ### ❓ **_Swap Nodes in Pairs:-_** Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: head = [1,2,3,4]
+    Output: [2,1,4,3]
+
+    Example 2:
+    Input: head = []
+    Output: []
+
+    Example 3:
+    Input: head = [1]
+    Output: [1]
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    class ListNode {
+      constructor(val, next = null) {
+        this.val = val;
+        this.next = next;
+      }
+    }
+
+    const swapPairs = function (head) {
+      const dummy = new ListNode(0);
+      dummy.next = head;
+      let current = dummy;
+
+      while (current.next && current.next.next) {
+        const first = current.next;
+        const second = current.next.next;
+
+        // Swap the pairs
+        first.next = second.next;
+        second.next = first;
+        current.next = second;
+
+        // Move to the next pair
+        current = first;
+      }
+
+      return dummy.next;
+    };
+
+    // Example linked list: 1 -> 2 -> 3 -> 4
+    const head = new ListNode(
+      1,
+      new ListNode(2, new ListNode(3, new ListNode(4)))
+    );
+
+    const swappedHead = swapPairs(head);
+
+    // The result will be: 2 -> 1 -> 4 -> 3
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/swap-nodes-in-pairs/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

@@ -3736,8 +3736,9 @@ NeetCode 150 Questions & Solutions start
       return minDepthValue + 1;
     };
     ```
+
     </details>
- 
+
     [Original Problem in LeetCode](https://leetcode.com/problems/minimum-depth-of-binary-tree/)
 
 46. ### ❓ **_Diameter of Binary Tree:-_** Given the root of a binary tree, return the length of the diameter of the tree. The diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root. The length of a path between two nodes is represented by the number of edges between them.
@@ -3812,6 +3813,7 @@ NeetCode 150 Questions & Solutions start
     const result = diameterOfBinaryTree(root);
     console.log(result); // Output: 3
     ```
+
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/diameter-of-binary-tree/)
@@ -3895,12 +3897,90 @@ NeetCode 150 Questions & Solutions start
 
     console.log(isBalanced(root)); // Output: false
     ```
-    
+
     > This code defines a TreeNode class representing a node in the binary tree and a function isBalanced to check if the tree is height-balanced. The getHeight helper function calculates the height of the subtree rooted at a given node and checks for balance conditions.
 
     </details>
-  
+
     [Original Problem in LeetCode](https://leetcode.com/problems/balanced-binary-tree/)
+
+48. ### ❓ **_Same Tree:-_** Given the roots of two binary trees p and q, write a function to check if they are the same or not. Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: p = [1,2,3], q = [1,2,3]
+    Output: true
+
+    Example 2:
+    Input: p = [1,2], q = [1,null,2]
+    Output: false
+
+    Example 3:
+    Input: p = [1,2,1], q = [1,1,2]
+    Output: false
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    ////////////////////////
+    // Depth First Search
+    // Time O(N) | Space O(H)
+    ////////////////////////
+    class TreeNode {
+      constructor(val) {
+        this.val = val;
+        this.left = this.right = null;
+      }
+    }
+
+    function isSameTree(p, q) {
+      // If both trees are null, they are the same
+      if (!p && !q) {
+        return true;
+      }
+
+      // If one of the trees is null and the other is not, they are different
+      if (!p || !q) {
+        return false;
+      }
+
+      // Check if the values are the same
+      if (p.val !== q.val) {
+        return false;
+      }
+
+      // recursively check the left and right subtrees
+      const left = isSameTree(p.left, q.left);
+      const right = isSameTree(p.right, q.right);
+
+      // If either the left or right subtree is different, the trees are different
+      return left && right;
+    }
+
+    // Example usage:
+    const tree1 = new TreeNode(1);
+    tree1.left = new TreeNode(2);
+    tree1.right = new TreeNode(3);
+
+    const tree2 = new TreeNode(1);
+    tree2.left = new TreeNode(2);
+    tree2.right = new TreeNode(3);
+
+    console.log(isSameTree(tree1, tree2)); // Output: true
+    ```
+
+    > In this code, the isSameTree function checks if two trees are the same by comparing their root values and recursively checking the left and right subtrees. If both trees are null, they are considered the same. If one is null and the other is not, they are different.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/same-tree/)
 
 <br>
 

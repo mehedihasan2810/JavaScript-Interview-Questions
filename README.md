@@ -3736,7 +3736,8 @@ NeetCode 150 Questions & Solutions start
       return minDepthValue + 1;
     };
     ```
-
+    </details>
+ 
     [Original Problem in LeetCode](https://leetcode.com/problems/minimum-depth-of-binary-tree/)
 
 46. ### ❓ **_Diameter of Binary Tree:-_** Given the root of a binary tree, return the length of the diameter of the tree. The diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root. The length of a path between two nodes is represented by the number of edges between them.
@@ -3763,7 +3764,7 @@ NeetCode 150 Questions & Solutions start
     ```js
     ////////////////////////
     // Depth First Search
-    // Time O(N) | Space O(1)
+    // Time O(N) | Space O(N)
     ////////////////////////
     class TreeNode {
       constructor(val, left = null, right = null) {
@@ -3811,8 +3812,95 @@ NeetCode 150 Questions & Solutions start
     const result = diameterOfBinaryTree(root);
     console.log(result); // Output: 3
     ```
+    </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/diameter-of-binary-tree/)
+
+47. ### ❓ **_Balanced Binary Tree:-_** Given a binary tree, determine if it is height-balanced.
+
+    > To determine if a binary tree is height-balanced, you need to check if the heights of the left and right subtrees of every node differ by no more than 1, and both subtrees are also balanced.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: root = [3,9,20,null,null,15,7]
+    Output: true
+
+    Example 2:
+    Input: root = [1,2,2,3,3,null,null,4,4]
+    Output: false
+
+    Example 3:
+    Input: root = []
+    Output: true
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    ////////////////////////
+    // Depth First Search
+    // Time O(N) | Space O(H)
+    ////////////////////////
+    class TreeNode {
+      constructor(val) {
+        this.val = val;
+        this.left = this.right = null;
+      }
+    }
+
+    function isBalanced(root) {
+      if (!root) {
+        return true; // An empty tree is always balanced
+      }
+
+      // Helper function to calculate the height of a tree
+      const getHeight = (node) => {
+        if (!node) {
+          return 0;
+        }
+
+        const leftHeight = getHeight(node.left);
+        const rightHeight = getHeight(node.right);
+
+        // If at any node, the subtree is not balanced, return -1
+        if (
+          leftHeight === -1 ||
+          rightHeight === -1 ||
+          Math.abs(leftHeight - rightHeight) > 1
+        ) {
+          return -1;
+        }
+
+        // Return the height of the current subtree
+        return Math.max(leftHeight, rightHeight) + 1;
+      };
+
+      // If the height of the tree is -1, it means the tree is not balanced
+      return getHeight(root) !== -1;
+    }
+
+    // Example usage:
+    const root = new TreeNode(1);
+    root.left = new TreeNode(2);
+    root.right = new TreeNode(3);
+    root.left.left = new TreeNode(4);
+    root.left.right = new TreeNode(5);
+    root.right.right = new TreeNode(6);
+
+    console.log(isBalanced(root)); // Output: false
+    ```
+    
+    > This code defines a TreeNode class representing a node in the binary tree and a function isBalanced to check if the tree is height-balanced. The getHeight helper function calculates the height of the subtree rooted at a given node and checks for balance conditions.
+
+    </details>
+  
+    [Original Problem in LeetCode](https://leetcode.com/problems/balanced-binary-tree/)
 
 <br>
 

@@ -3739,6 +3739,81 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/minimum-depth-of-binary-tree/)
 
+46. ### ❓ **_Diameter of Binary Tree:-_** Given the root of a binary tree, return the length of the diameter of the tree. The diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root. The length of a path between two nodes is represented by the number of edges between them.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: root = [1,2,3,4,5]
+    Output: 3
+    Explanation: 3 is the length of the path [4,2,1,3] or [5,2,1,3].
+
+    Example 2:
+    Input: root = [1,2]
+    Output: 1
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    ////////////////////////
+    // Depth First Search
+    // Time O(N) | Space O(1)
+    ////////////////////////
+    class TreeNode {
+      constructor(val, left = null, right = null) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+      }
+    }
+
+    const diameterOfBinaryTree = function (root) {
+      let diameter = 0;
+
+      const depth = function (node) {
+        if (!node) {
+          return 0;
+        }
+
+        const leftDepth = depth(node.left);
+        const rightDepth = depth(node.right);
+
+        // Update the diameter with the sum of heights for each node
+        diameter = Math.max(diameter, leftDepth + rightDepth);
+
+        // Return the height of the subtree rooted at the current node
+        return 1 + Math.max(leftDepth, rightDepth);
+      };
+
+      depth(root);
+      return diameter;
+    };
+
+    // Example usage:
+    // Binary tree:
+    //        1
+    //       / \
+    //      2   3
+    //     / \
+    //    4   5
+    const root = new TreeNode(
+      1,
+      new TreeNode(2, new TreeNode(4), new TreeNode(5)),
+      new TreeNode(3)
+    );
+
+    const result = diameterOfBinaryTree(root);
+    console.log(result); // Output: 3
+    ```
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/diameter-of-binary-tree/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

@@ -4321,6 +4321,93 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/binary-tree-level-order-traversal/)
 
+53. ### ❓ **_Binary Tree Right Side View:-_** Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: root = [1,2,3,null,5,null,4]
+    Output: [1,3,4]
+    
+    Example 2:
+    Input: root = [1,null,3]
+    Output: [1,3]
+    
+    Example 3:
+    Input: root = []
+    Output: []
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    ///////////////////////////
+    // Time O(N) | Space O(M)
+    //////////////////////////
+        class TreeNode {
+      constructor(val) {
+        this.val = val;
+        this.left = this.right = null;
+      }
+    }
+
+    function rightSideView(root) {
+      if (!root) {
+        return [];
+      }
+
+      const result = [];
+      const queue = [root];
+
+      while (queue.length > 0) {
+        const levelSize = queue.length;
+
+        for (let i = 0; i < levelSize; i++) {
+          const node = queue.shift();
+
+          // Record the last node's value in each level
+          if (i === levelSize - 1) {
+            result.push(node.val);
+          }
+
+          if (node.left) {
+            queue.push(node.left);
+          }
+
+          if (node.right) {
+            queue.push(node.right);
+          }
+        }
+      }
+
+      return result;
+    }
+
+    // Example usage:
+    const root = new TreeNode(1);
+    root.left = new TreeNode(2);
+    root.right = new TreeNode(3);
+    root.left.right = new TreeNode(5);
+    root.right.right = new TreeNode(4);
+
+    console.log(rightSideView(root));
+    // Output: [1, 3, 4]
+
+    ```
+
+    > In this code, we perform a level-order traversal using a queue. At each level, we record the value of the last node encountered (the rightmost node at that level) in the result array. The example usage demonstrates the right-side view of a binary tree and prints the result as an array of values ordered from top to bottom.
+
+    > The time complexity of the provided solution is O(N), where N is the number of nodes in the binary tree. The space complexity is O(M), where M is the maximum number of nodes at any level in the binary tree. 
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/binary-tree-right-side-view/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

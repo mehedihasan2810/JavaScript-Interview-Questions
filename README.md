@@ -4152,6 +4152,86 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/)
 
+51. ### ❓ **_Lowest Common Ancestor of a Binary Tree:-_** Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree. According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
+    Output: 3
+    Explanation: The LCA of nodes 5 and 1 is 3.
+
+    Example 2:
+    Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4
+    Output: 5
+    Explanation: The LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.
+
+    Example 3:
+    Input: root = [1,2], p = 1, q = 2
+    Output: 1
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    ///////////////////////////
+    // Time O(N) | Space O(H)
+    //////////////////////////
+    class TreeNode {
+      constructor(val) {
+        this.val = val;
+        this.left = this.right = null;
+      }
+    }
+
+    function lowestCommonAncestor(root, p, q) {
+      // Base case: If the current node is null or is one of the target nodes, return the current node
+      if (!root || root === p || root === q) {
+        return root;
+      }
+
+      // Recursively search the left and right subtrees
+      const leftLCA = lowestCommonAncestor(root.left, p, q);
+      const rightLCA = lowestCommonAncestor(root.right, p, q);
+
+      // If both left and right subtrees have a common ancestor, the current node is the LCA
+      if (leftLCA && rightLCA) {
+        return root;
+      }
+
+      // If only one subtree has a common ancestor, return that ancestor
+      return leftLCA || rightLCA;
+    }
+
+    // Example usage:
+    const root = new TreeNode(3);
+    root.left = new TreeNode(5);
+    root.right = new TreeNode(1);
+    root.left.left = new TreeNode(6);
+    root.left.right = new TreeNode(2);
+    root.right.left = new TreeNode(0);
+    root.right.right = new TreeNode(8);
+    root.left.right.left = new TreeNode(7);
+    root.left.right.right = new TreeNode(4);
+
+    const p = root.left; // Node with value 5
+    const q = root.right; // Node with value 1
+
+    const lca = lowestCommonAncestor(root, p, q);
+    console.log(lca.val); // Output: 3
+    ```
+
+    > In this code, the lowestCommonAncestor function recursively searches the left and right subtrees for the nodes p and q. It returns the lowest common ancestor once it's found. The base case checks if the current node is null or is one of the target nodes, in which case it returns the current node. The example usage demonstrates finding the lowest common ancestor of two nodes (p and q) in a binary tree.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

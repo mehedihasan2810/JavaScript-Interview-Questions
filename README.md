@@ -4531,6 +4531,90 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/count-good-nodes-in-binary-tree/)
 
+55. ### ❓ **_Validate Binary Search Tree:-_** Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+
+    ```smart
+    A valid BST is defined as follows:
+
+    - The left subtree of a node contains only nodes with keys less than the node's key.
+    - The right subtree of a node contains only nodes with keys greater than the node's key.
+    - Both the left and right subtrees must also be binary search trees.
+    ```
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: root = [2,1,3]
+    Output: true
+
+    Example 2:
+    Input: root = [5,1,4,null,null,3,6]
+    Output: false
+    Explanation: The root node's value is 5 but its right child's value is 4.
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    ///////////////////////////
+    // Depth First Search
+    // Time O(N) | Space O(H)
+    //////////////////////////
+    class TreeNode {
+      constructor(val) {
+        this.val = val;
+        this.left = this.right = null;
+      }
+    }
+
+    function isValidBST(root) {
+      // Helper function for recursive traversal with range checking
+      const isBSTUtil = (node, min, max) => {
+        if (!node) {
+          return true; // An empty tree is a valid BST
+        }
+
+        // Check if the current node's value is within the valid range
+        if (node.val <= min || node.val >= max) {
+          return false;
+        }
+
+        // Recursively check the left and right subtrees with updated ranges
+        return (
+          isBSTUtil(node.left, min, node.val) &&
+          isBSTUtil(node.right, node.val, max)
+        );
+      };
+
+      // Start the recursive traversal with an initial range of negative and positive infinity
+      return isBSTUtil(
+        root,
+        Number.NEGATIVE_INFINITY,
+        Number.POSITIVE_INFINITY
+      );
+    }
+
+    // Example usage:
+    const root = new TreeNode(2);
+    root.left = new TreeNode(1);
+    root.right = new TreeNode(3);
+
+    console.log(isValidBST(root)); // Output: true
+    ```
+
+    > In this implementation, the isValidBST function uses a helper function isBSTUtil for recursive traversal. The min and max parameters represent the valid range for the current node. As the traversal progresses, the range is updated accordingly. If, at any point, the current node's value falls outside the valid range, the function returns false. Otherwise, it continues to check the left and right subtrees.
+
+    > This approach has a time complexity of O(N), where N is the number of nodes in the binary tree, and a space complexity of O(H), where H is the height of the tree.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/validate-binary-search-tree/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

@@ -4615,6 +4615,112 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/validate-binary-search-tree/)
 
+56. ### ❓ **_Kth Smallest Element in a BST:-_** Given the root of a binary search tree, and an integer k, return the kth smallest value (1-indexed) of all the values of the nodes in the tree.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: root = [3,1,4,null,2], k = 1
+    Output: 1
+
+    Example 2:
+    Input: root = [5,3,6,2,4,null,null,1], k = 3
+    Output: 3
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    class TreeNode {
+      constructor(val) {
+        this.val = val;
+        this.left = this.right = null;
+      }
+    }
+
+    ///////////////////////////
+    // Iterative Approach
+    // Time O(N + K) | Space O(H)
+    //////////////////////////
+    function kthSmallest(root, k) {
+      const stack = [];
+
+      while (root || stack.length > 0) {
+        // Traverse to the leftmost node
+        while (root) {
+          stack.push(root);
+          root = root.left;
+        }
+
+        // Process the current node
+        root = stack.pop();
+        k--;
+
+        // If k becomes 0, we've found the kth smallest element
+        if (k === 0) {
+          return root.val;
+        }
+
+        // Move to the right subtree
+        root = root.right;
+      }
+
+      return null; // In case k is greater than the number of nodes
+    }
+
+    ///////////////////////////
+    // Depth First Search
+    // Time O(N + K) | Space O(H)
+    //////////////////////////
+    function kthSmallest(root, k) {
+      let count = 0;
+      let result = null;
+
+      // Helper function for in-order traversal
+      const inorderTraversal = (node) => {
+        if (!node || count >= k) {
+          return;
+        }
+
+        inorderTraversal(node.left);
+
+        count++;
+        if (count === k) {
+          result = node.val;
+          return;
+        }
+
+        inorderTraversal(node.right);
+      };
+
+      inorderTraversal(root);
+
+      return result;
+    }
+
+    // Example usage:
+    const root = new TreeNode(3);
+    root.left = new TreeNode(1);
+    root.right = new TreeNode(4);
+    root.left.right = new TreeNode(2);
+
+    console.log(kthSmallest(root, 1)); // Output: 1 (1st smallest)
+    console.log(kthSmallest(root, 3)); // Output: 3 (3rd smallest)
+    ```
+
+    > In this implementation, the algorithm simulates the process of in-order traversal using a stack. It starts from the root, traverses as far left as possible while pushing nodes onto the stack, processes nodes when popping them off the stack, and then moves to the right subtree.
+
+    > The loop continues until the stack is empty and all nodes have been processed. The k variable is decremented for each processed node, and when k becomes 0, the algorithm has found the kth smallest element, and it returns the corresponding value.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/kth-smallest-element-in-a-bst/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

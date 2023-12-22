@@ -4232,6 +4232,95 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/)
 
+52. ### ❓ **_Binary Tree Level Order Traversal:-_** Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: root = [3,9,20,null,null,15,7]
+    Output: [[3],[9,20],[15,7]]
+
+    Example 2:
+    Input: root = [1]
+    Output: [[1]]
+
+    Example 3:
+    Input: root = []
+    Output: []
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    ///////////////////////////
+    // Time O(N) | Space O(H)
+    //////////////////////////
+    class TreeNode {
+      constructor(val) {
+        this.val = val;
+        this.left = this.right = null;
+      }
+    }
+
+    function levelOrderTraversal(root) {
+      if (!root) {
+        return [];
+      }
+
+      const result = [];
+      const queue = [root];
+
+      while (queue.length > 0) {
+        const levelSize = queue.length;
+        const currentLevel = [];
+
+        for (let i = 0; i < levelSize; i++) {
+          const node = queue.shift();
+          currentLevel.push(node.val);
+
+          if (node.left) {
+            queue.push(node.left);
+          }
+
+          if (node.right) {
+            queue.push(node.right);
+          }
+        }
+
+        result.push(currentLevel);
+      }
+
+      return result;
+    }
+
+    // Example usage:
+    const root = new TreeNode(3);
+    root.left = new TreeNode(9);
+    root.right = new TreeNode(20);
+    root.right.left = new TreeNode(15);
+    root.right.right = new TreeNode(7);
+
+    console.log(levelOrderTraversal(root));
+    // Output: [[3], [9, 20], [15, 7]]
+    ```
+
+    **In this code:**
+
+    - We use a queue to traverse the tree level by level.
+    - For each level, we dequeue nodes, enqueue their children (if any), and collect values in the current level.
+    - The outer loop continues until the queue is empty, and we collect the values for each level in the result array.
+
+    > The example usage demonstrates the level order traversal of a binary tree and prints the result as an array of arrays, where each sub-array represents a level in the tree.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/binary-tree-level-order-traversal/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

@@ -4059,13 +4059,98 @@ NeetCode 150 Questions & Solutions start
 
     > In this code, the isSameTree function checks if two trees are the same. The isSubtreeAtNode function checks if there is a subtree with the same structure and node values starting from the current node. The main function, isSubtree, then calls isSubtreeAtNode for each node in the root tree. If any subtree is found to be the same as the subRoot tree, the function returns true; otherwise, it returns false.
 
-    >The time complexity of the provided solution is O(m * n), where m is the number of nodes in the root tree, and n is the number of nodes in the subRoot tree. In the worst case, the algorithm needs to traverse all nodes in both trees to check if there is a subtree with the same structure and node values.
-    
-    >The space complexity is O(max(m, n)), where max(m, n) is the maximum depth of the recursive call stack.
+    > The time complexity of the provided solution is O(m \* n), where m is the number of nodes in the root tree, and n is the number of nodes in the subRoot tree. In the worst case, the algorithm needs to traverse all nodes in both trees to check if there is a subtree with the same structure and node values.
+
+    > The space complexity is O(max(m, n)), where max(m, n) is the maximum depth of the recursive call stack.
 
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/subtree-of-another-tree/)
+
+50. ### ❓ **_Lowest Common Ancestor of a Binary Search Tree:-_** Given a binary search tree (BST), find the lowest common ancestor (LCA) node of two given nodes in the BST. According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8
+    Output: 6
+    Explanation: The LCA of nodes 2 and 8 is 6.
+
+    Example 2:
+    Input: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4
+    Output: 2
+    Explanation: The LCA of nodes 2 and 4 is 2, since a node can be a descendant of itself according to the LCA definition.
+
+    Example 3:
+    Input: root = [2,1], p = 2, q = 1
+    Output: 2
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    ///////////////////////////
+    // Time O(N) | Space O(1)
+    //////////////////////////
+    class TreeNode {
+      constructor(val) {
+        this.val = val;
+        this.left = this.right = null;
+      }
+    }
+
+    function lowestCommonAncestor(root, p, q) {
+      // Ensure p and q are in the correct order (p should be smaller than q)
+      if (p.val > q.val) {
+        [p, q] = [q, p];
+      }
+
+      // Traverse the tree starting from the root
+      while (root) {
+        // If both nodes are in the left subtree, move to the left
+        if (root.val > q.val) {
+          root = root.left;
+        }
+        // If both nodes are in the right subtree, move to the right
+        else if (root.val < p.val) {
+          root = root.right;
+        }
+        // If the current node is between p and q, or one of them is equal to the current node,
+        // then the current node is the LCA
+        else {
+          return root;
+        }
+      }
+
+      return null; // No common ancestor found
+    }
+
+    // Example usage:
+    const root = new TreeNode(20);
+    root.left = new TreeNode(10);
+    root.right = new TreeNode(30);
+    root.left.left = new TreeNode(5);
+    root.left.right = new TreeNode(15);
+    root.right.left = new TreeNode(25);
+    root.right.right = new TreeNode(35);
+
+    const p = new TreeNode(5);
+    const q = new TreeNode(15);
+
+    const lca = lowestCommonAncestor(root, p, q);
+    console.log(lca.val); // Output: 10
+    ```
+
+    > In this code, the lowestCommonAncestor function iterates through the BST starting from the root. It moves left or right based on the values of p and q and finds the LCA when it encounters a node where p.val <= node.val <= q.val.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/)
 
 <br>
 

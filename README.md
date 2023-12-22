@@ -4330,11 +4330,11 @@ NeetCode 150 Questions & Solutions start
     Example 1:
     Input: root = [1,2,3,null,5,null,4]
     Output: [1,3,4]
-    
+
     Example 2:
     Input: root = [1,null,3]
     Output: [1,3]
-    
+
     Example 3:
     Input: root = []
     Output: []
@@ -4349,7 +4349,7 @@ NeetCode 150 Questions & Solutions start
     ///////////////////////////
     // Time O(N) | Space O(M)
     //////////////////////////
-        class TreeNode {
+    class TreeNode {
       constructor(val) {
         this.val = val;
         this.left = this.right = null;
@@ -4397,16 +4397,139 @@ NeetCode 150 Questions & Solutions start
 
     console.log(rightSideView(root));
     // Output: [1, 3, 4]
-
     ```
 
     > In this code, we perform a level-order traversal using a queue. At each level, we record the value of the last node encountered (the rightmost node at that level) in the result array. The example usage demonstrates the right-side view of a binary tree and prints the result as an array of values ordered from top to bottom.
 
-    > The time complexity of the provided solution is O(N), where N is the number of nodes in the binary tree. The space complexity is O(M), where M is the maximum number of nodes at any level in the binary tree. 
+    > The time complexity of the provided solution is O(N), where N is the number of nodes in the binary tree. The space complexity is O(M), where M is the maximum number of nodes at any level in the binary tree.
 
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/binary-tree-right-side-view/)
+
+54. ### ❓ **_Count Good Nodes in Binary Tree:-_** Given a binary tree root, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X. Return the number of good nodes in the binary tree.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: root = [3,1,4,3,null,1,5]
+    Output: 4
+    Explanation: Nodes in blue are good.
+    Root Node (3) is always a good node.
+    Node 4 -> (3,4) is the maximum value in the path starting from the root.
+    Node 5 -> (3,4,5) is the maximum value in the path
+    Node 3 -> (3,1,3) is the maximum value in the path.
+
+    Example 2:
+    Input: root = [3,3,null,4,2]
+    Output: 3
+    Explanation: Node 2 -> (3, 3, 2) is not good, because "3" is higher than it.
+
+    Example 3:
+    Input: root = [1]
+    Output: 1
+    Explanation: Root is considered as good.
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    class TreeNode {
+      constructor(val) {
+        this.val = val;
+        this.left = this.right = null;
+      }
+    }
+
+    ///////////////////////////
+    // Breadth First Search
+    // Time O(N) | Space O(H)
+    //////////////////////////
+    function goodNodes(root) {
+      if (!root) {
+        return 0;
+      }
+
+      let count = 0;
+      const queue = [{ node: root, maxValue: root.val }];
+
+      while (queue.length > 0) {
+        const { node, maxValue } = queue.shift();
+
+        // Check if the current node is a good node
+        if (node.val >= maxValue) {
+          count++;
+        }
+
+        // Update the maximum value encountered along the path
+        const updatedMaxValue = Math.max(maxValue, node.val);
+
+        // Enqueue the left and right children if they exist
+        if (node.left) {
+          queue.push({ node: node.left, maxValue: updatedMaxValue });
+        }
+
+        if (node.right) {
+          queue.push({ node: node.right, maxValue: updatedMaxValue });
+        }
+      }
+
+      return count;
+    }
+
+    ///////////////////////////
+    // Depth First Search
+    // Time O(N) | Space O(H)
+    //////////////////////////
+    function goodNodes(root) {
+      if (!root) {
+        return 0;
+      }
+
+      // Helper function for DFS traversal
+      const dfs = (node, maxValue) => {
+        if (!node) {
+          return 0;
+        }
+
+        // Check if the current node is a good node
+        const isGoodNode = node.val >= maxValue;
+
+        // Update the maximum value encountered along the path
+        const updatedMaxValue = Math.max(maxValue, node.val);
+
+        // Recursively traverse the left and right subtrees
+        const leftGoodNodes = dfs(node.left, updatedMaxValue);
+        const rightGoodNodes = dfs(node.right, updatedMaxValue);
+
+        // Return the total count of good nodes in the subtree
+        return isGoodNode + leftGoodNodes + rightGoodNodes;
+      };
+
+      return dfs(root, root.val);
+    }
+
+    // Example usage:
+    const root = new TreeNode(3);
+    root.left = new TreeNode(1);
+    root.right = new TreeNode(4);
+    root.left.left = new TreeNode(3);
+    root.right.left = new TreeNode(1);
+    root.right.right = new TreeNode(5);
+
+    console.log(goodNodes(root)); // Output: 4
+    ```
+
+    > In this implementation, the goodNodes function initializes the DFS traversal with the root node and the root's value. The dfs helper function is responsible for recursively traversing the tree, updating the maximum value along the path, and counting the number of good nodes. The example usage demonstrates the computation of good nodes in a binary tree.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/count-good-nodes-in-binary-tree/)
 
 <br>
 

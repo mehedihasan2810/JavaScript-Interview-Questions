@@ -3982,6 +3982,91 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/same-tree/)
 
+49. ### ❓ **_Subtree of Another Tree:-_** Given the roots of two binary trees root and subRoot, return true if there is a subtree of root with the same structure and node values of subRoot and false otherwise. A subtree of a binary tree tree is a tree that consists of a node in tree and all of this node's descendants. The tree tree could also be considered as a subtree of itself.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: root = [3,4,5,1,2], subRoot = [4,1,2]
+    Output: true
+
+    Example 2:
+    Input: root = [3,4,5,1,2,null,null,null,null,0], subRoot = [4,1,2]
+    Output: false
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    //////////////////////////////////////
+    // Time O(m * n) | Space O(max(m, n))
+    /////////////////////////////////////
+    class TreeNode {
+      constructor(val) {
+        this.val = val;
+        this.left = this.right = null;
+      }
+    }
+
+    function isSubtree(root, subRoot) {
+      // Helper function to check if two trees are the same
+      const isSameTree = (p, q) => {
+        if (!p && !q) {
+          return true;
+        }
+        if (!p || !q) {
+          return false;
+        }
+        return (
+          p.val === q.val &&
+          isSameTree(p.left, q.left) &&
+          isSameTree(p.right, q.right)
+        );
+      };
+
+      // Helper function to check if there is a subtree with the same structure and node values
+      const isSubtreeAtNode = (node) => {
+        if (!node) {
+          return false;
+        }
+        if (isSameTree(node, subRoot)) {
+          return true;
+        }
+        return isSubtreeAtNode(node.left) || isSubtreeAtNode(node.right);
+      };
+
+      return isSubtreeAtNode(root);
+    }
+
+    // Example usage:
+    const root = new TreeNode(3);
+    root.left = new TreeNode(4);
+    root.right = new TreeNode(5);
+    root.left.left = new TreeNode(1);
+    root.left.right = new TreeNode(2);
+
+    const subRoot = new TreeNode(4);
+    subRoot.left = new TreeNode(1);
+    subRoot.right = new TreeNode(2);
+
+    console.log(isSubtree(root, subRoot)); // Output: true
+    ```
+
+    > In this code, the isSameTree function checks if two trees are the same. The isSubtreeAtNode function checks if there is a subtree with the same structure and node values starting from the current node. The main function, isSubtree, then calls isSubtreeAtNode for each node in the root tree. If any subtree is found to be the same as the subRoot tree, the function returns true; otherwise, it returns false.
+
+    >The time complexity of the provided solution is O(m * n), where m is the number of nodes in the root tree, and n is the number of nodes in the subRoot tree. In the worst case, the algorithm needs to traverse all nodes in both trees to check if there is a subtree with the same structure and node values.
+    
+    >The space complexity is O(max(m, n)), where max(m, n) is the maximum depth of the recursive call stack.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/subtree-of-another-tree/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

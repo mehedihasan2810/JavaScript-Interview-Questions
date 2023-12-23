@@ -4721,6 +4721,118 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/kth-smallest-element-in-a-bst/)
 
+57. ### ❓ **_Construct Binary Tree from Preorder and Inorder Traversal:-_** Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
+    Output: [3,9,20,null,null,15,7]
+
+    Example 2:
+    Input: preorder = [-1], inorder = [-1]
+    Output: [-1]
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    class TreeNode {
+      constructor(val) {
+        this.val = val;
+        this.left = this.right = null;
+      }
+    }
+
+    //////////////////////////
+    // Time O(N) | Space(H)
+    /////////////////////////
+    function buildTree(preorder, inorder) {
+      // Use a hashmap to store indices of elements in the inorder array
+      const indexMap = new Map();
+      inorder.forEach((val, index) => indexMap.set(val, index));
+
+      // Helper function for recursive construction
+      const buildTreeHelper = (preStart, preEnd, inStart, inEnd) => {
+        if (preStart > preEnd || inStart > inEnd) {
+          return null;
+        }
+
+        const rootVal = preorder[preStart];
+        const root = new TreeNode(rootVal);
+
+        const rootIndexInInorder = indexMap.get(rootVal);
+        const leftSubtreeSize = rootIndexInInorder - inStart;
+
+        root.left = buildTreeHelper(
+          preStart + 1,
+          preStart + leftSubtreeSize,
+          inStart,
+          rootIndexInInorder - 1
+        );
+        root.right = buildTreeHelper(
+          preStart + leftSubtreeSize + 1,
+          preEnd,
+          rootIndexInInorder + 1,
+          inEnd
+        );
+
+        return root;
+      };
+
+      return buildTreeHelper(0, preorder.length - 1, 0, inorder.length - 1);
+    }
+    ////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////
+    // Time O(N^2) | Space(H)
+    /////////////////////////
+    function buildTree(preorder, inorder) {
+      if (preorder.length === 0 || inorder.length === 0) {
+        return null;
+      }
+
+      // The first element in preorder is the root
+      const rootVal = preorder.shift();
+      const root = new TreeNode(rootVal);
+
+      // Find the index of the root value in inorder array
+      const rootIndexInInorder = inorder.indexOf(rootVal);
+
+      // Recursively build the left and right subtrees
+      root.left = buildTree(preorder, inorder.slice(0, rootIndexInInorder));
+      root.right = buildTree(preorder, inorder.slice(rootIndexInInorder + 1));
+
+      return root;
+    }
+
+    // Example usage:
+    const preorder = [3, 9, 20, 15, 7];
+    const inorder = [9, 3, 15, 20, 7];
+
+    const root = buildTree(preorder, inorder);
+    console.log(root);
+    ```
+
+    **In this code:**
+
+    - The indexMap is a hashmap that stores the indices of elements in the inorder array.
+    - The buildTreeHelper function is a recursive helper function that takes the indices of the current subtree in both the preorder and inorder arrays.
+    - Instead of using the indexOf method, it directly retrieves the index of the root value from the indexMap.
+    - The function then calculates the size of the left subtree and recursively builds the left and right subtrees.
+    - The final root of the binary tree is returned.
+
+    > This optimized solution has a time complexity of O(n) and a space complexity of O(n) due to the hashmap.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

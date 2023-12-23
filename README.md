@@ -5007,6 +5007,145 @@ NeetCode 150 Questions & Solutions start
  ------------------->
 
  <!------------------
+     Tries Start
+ ------------------->
+
+## Tries
+
+60. ### [❓ **Implement Trie (Prefix Tree)**](https://github.com/mehedihasan2810/JavaScript-Data-Structures-and-Algorithms?tab=readme-ov-file#trie)
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/implement-trie-prefix-tree/)
+
+61. ### ❓ **_Design Add and Search Words Data Structure:-_** Design a data structure that supports adding new words and finding if a string matches any previously added string.
+
+    ```smart
+    Implement the WordDictionary class:
+
+    - WordDictionary() Initializes the object.
+    - void addWord(word) Adds word to the data structure, it can be matched later.
+    - bool search(word) Returns true if there is any string in the data structure that matches word or false otherwise. word may contain dots '.' where dots can be matched with any letter.
+    ```
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example:
+    Input
+    ["WordDictionary","addWord","addWord","addWord","search","search","search","search"]
+    [[],["bad"],["dad"],["mad"],["pad"],["bad"],[".ad"],["b.."]]
+    Output
+    [null,null,null,null,false,true,true,true]
+
+    Explanation
+    WordDictionary wordDictionary = new WordDictionary();
+    wordDictionary.addWord("bad");
+    wordDictionary.addWord("dad");
+    wordDictionary.addWord("mad");
+    wordDictionary.search("pad"); // return False
+    wordDictionary.search("bad"); // return True
+    wordDictionary.search(".ad"); // return True
+    wordDictionary.search("b.."); // return True
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    /////////////////////////
+    // Time O(L) | Space O(N)
+    // L is the length of the word.
+    // N is the total number of characters in all the words.
+    /////////////////////////
+    class TrieNode {
+      constructor() {
+        this.children = new Map();
+        this.isEndOfWord = false;
+      }
+    }
+
+    class WordDictionary {
+      constructor() {
+        this.root = new TrieNode();
+      }
+
+      addWord(word) {
+        let node = this.root;
+        for (const char of word) {
+          if (!node.children.has(char)) {
+            node.children.set(char, new TrieNode());
+          }
+          node = node.children.get(char);
+        }
+        node.isEndOfWord = true;
+      }
+
+      search(word) {
+        return this.searchRecursive(this.root, word, 0);
+      }
+
+      searchRecursive(node, word, index) {
+        if (index === word.length) {
+          return node.isEndOfWord;
+        }
+
+        const char = word[index];
+        if (char === ".") {
+          // If the character is a wildcard, try all possible children
+          for (const childNode of node.children.values()) {
+            if (this.searchRecursive(childNode, word, index + 1)) {
+              return true;
+            }
+          }
+        } else {
+          // If the character is a regular letter, move to the next node
+          const nextNode = node.children.get(char);
+          if (nextNode) {
+            return this.searchRecursive(nextNode, word, index + 1);
+          }
+        }
+
+        return false;
+      }
+    }
+
+    // Example usage:
+    const wordDictionary = new WordDictionary();
+    wordDictionary.addWord("bad");
+    wordDictionary.addWord("dad");
+    wordDictionary.addWord("mad");
+
+    console.log(wordDictionary.search("pad")); // Output: false
+    console.log(wordDictionary.search("bad")); // Output: true
+    console.log(wordDictionary.search(".ad")); // Output: true
+    console.log(wordDictionary.search("b..")); // Output: true
+    ```
+
+    **In this implementation:**
+
+    - The TrieNode class represents a node in the Trie.
+    - The WordDictionary class uses a Trie to store words.
+    - The addWord method adds a word to the Trie.
+    - The search method searches for a word in the Trie, considering wildcard characters ('.').
+    - The searchRecursive helper function is used for the recursive search with wildcard support.
+
+    > This implementation allows adding words and searching for words with wildcard characters in O(L) time complexity, where L is the length of the word.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/design-add-and-search-words-data-structure/)
+
+<br>
+
+[🔼 Back to top](#table-of-contents)
+
+ <!------------------
+     Tries End
+ ------------------->
+
+ <!------------------
  Design System Start
  ------------------->
 

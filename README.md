@@ -4833,6 +4833,82 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
 
+58. ### ❓ **_Binary Tree Maximum Path Sum:-_** A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence at most once. Note that the path does not need to pass through the root. The path sum of a path is the sum of the node's values in the path. Given the root of a binary tree, return the maximum path sum of any non-empty path.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: root = [1,2,3]
+    Output: 6
+    Explanation: The optimal path is 2 -> 1 -> 3 with a path sum of 2 + 1 + 3 = 6.
+
+    Example 2:
+    Input: root = [-10,9,20,null,null,15,7]
+    Output: 42
+    Explanation: The optimal path is 15 -> 20 -> 7 with a path sum of 15 + 20 + 7 = 42.
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    /////////////////////////
+    // Time O(N) | Space O(H)
+    /////////////////////////
+    class TreeNode {
+      constructor(val) {
+        this.val = val;
+        this.left = this.right = null;
+      }
+    }
+
+    let maxSum = Number.NEGATIVE_INFINITY;
+
+    function maxPathSum(root) {
+      maxSum = Number.NEGATIVE_INFINITY; // Reset the global variable
+      findMaxPathSum(root);
+      return maxSum;
+    }
+
+    function findMaxPathSum(node) {
+      if (!node) {
+        return 0;
+      }
+
+      // Calculate the maximum path sum for the left and right subtrees
+      const leftMax = Math.max(0, findMaxPathSum(node.left));
+      const rightMax = Math.max(0, findMaxPathSum(node.right));
+
+      // Update the maximum path sum considering the current node
+      maxSum = Math.max(maxSum, leftMax + rightMax + node.val);
+
+      // Return the maximum path sum starting from the current node
+      return Math.max(leftMax, rightMax) + node.val;
+    }
+
+    // Example usage:
+    const root = new TreeNode(10);
+    root.left = new TreeNode(2);
+    root.right = new TreeNode(10);
+    root.left.left = new TreeNode(20);
+    root.left.right = new TreeNode(1);
+    root.right.right = new TreeNode(-25);
+    root.right.right.left = new TreeNode(3);
+    root.right.right.right = new TreeNode(4);
+
+    console.log(maxPathSum(root)); // Output: 42
+    ```
+
+    > In this code, the maxPathSum function initializes the global variable maxSum and calls the recursive function findMaxPathSum to compute the maximum path sum for each node. The findMaxPathSum function calculates the maximum path sum for the left and right subtrees, updates the global maximum considering the current node, and returns the maximum path sum starting from the current node.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/binary-tree-maximum-path-sum/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

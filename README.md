@@ -4909,6 +4909,95 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/binary-tree-maximum-path-sum/)
 
+59. ### ❓ **_Serialize and Deserialize Binary Tree:-_** Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
+
+    > Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.
+
+    > **Clarification:** The input/output format is the same as how LeetCode serializes a binary tree. You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: root = [1,2,3,null,null,4,5]
+    Output: [1,2,3,null,null,4,5]
+
+    Example 2:
+    Input: root = []
+    Output: []
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    > To serialize and deserialize a binary tree, you can use a pre-order traversal approach. The idea is to perform a depth-first traversal of the binary tree and serialize the nodes into a string. During deserialization, you can reconstruct the binary tree from the serialized string.
+
+    ```js
+    /////////////////////////
+    // Time O(N) | Space O(H)
+    /////////////////////////
+    class TreeNode {
+      constructor(val) {
+        this.val = val;
+        this.left = this.right = null;
+      }
+    }
+
+    function serialize(root) {
+      if (!root) {
+        return "null";
+      }
+
+      const leftSerialized = serialize(root.left);
+      const rightSerialized = serialize(root.right);
+
+      return `${root.val},${leftSerialized},${rightSerialized}`;
+    }
+
+    function deserialize(data) {
+      const nodes = data.split(",");
+
+      const buildTree = () => {
+        const val = nodes.shift();
+        if (val === "null") {
+          return null;
+        }
+
+        const node = new TreeNode(parseInt(val));
+        node.left = buildTree();
+        node.right = buildTree();
+        return node;
+      };
+
+      return buildTree();
+    }
+
+    // Example usage:
+    const root = new TreeNode(1);
+    root.left = new TreeNode(2);
+    root.right = new TreeNode(3);
+    root.right.left = new TreeNode(4);
+    root.right.right = new TreeNode(5);
+
+    const serializedTree = serialize(root);
+    console.log(serializedTree); // Output: "1,2,null,null,3,4,null,null,5,null,null"
+
+    const deserializedRoot = deserialize(serializedTree);
+    console.log(deserializedRoot);
+    ```
+
+    **In this implementation:**
+
+    > The serialize function recursively converts the binary tree into a comma-separated string representation. It represents null for null nodes.
+    > The deserialize function splits the string into an array of values and uses a recursive helper function (buildTree) to reconstruct the binary tree.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

@@ -5379,50 +5379,50 @@ NeetCode 150 Questions & Solutions start
     <details>
     <summary>Solutions 👉</summary>
 
-    To solve this problem, you can use a `greedy approach`. The idea is to schedule the tasks in such a way that you minimize the idle time between tasks. Here is a step-by-step algorithm:
-
-    - Create a frequency map to count the occurrences of each task.
-    - Sort the tasks in descending order based on their frequencies.
-    - Initialize a variable maxFrequency to store the frequency of the most frequent task.
-    - Iterate through the sorted tasks and distribute them in a way that minimizes idle time.
-    - Use the formula maxFrequency - 1 to calculate the number of idle slots needed (excluding the last iteration).
-    - For each task, decrement its frequency, and update maxFrequency if the current task has a higher frequency.
-    - Update the result by adding the maximum between 0 and the number of idle slots.
-    - Return the total time needed.
+    To solve this problem, you can use a `greedy approach`. The idea is to schedule the tasks in such a way that you minimize the idle time between tasks.
 
     **_Implementation_**
 
     ```js
     function leastInterval(tasks, n) {
-      // Step 1: Create a frequency map
-      const frequencyMap = new Map();
-      for (const task of tasks) {
-        frequencyMap.set(task, (frequencyMap.get(task) || 0) + 1);
-      }
+      const frequencyMap = getFrequencyMap(tasks);
+      const maxFrequency = getMaxFrequency(frequencyMap);
+      const mostFrequentTask = getMostFrequentTask(frequencyMap, maxFrequency);
+      const interval = (maxFrequency - 1) * (n + 1) + mostFrequentTask;
 
-      // Step 2: Sort tasks in descending order based on frequencies
-      const sortedTasks = Array.from(frequencyMap.values()).sort(
-        (a, b) => b - a
-      );
-
-      // Step 3: Initialize variables
-      let maxFrequency = sortedTasks[0];
-      let idleTime = (maxFrequency - 1) * n;
-
-      // Step 4: Distribute tasks and minimize idle time
-      for (let i = 1; i < sortedTasks.length; i++) {
-        const currentFrequency = sortedTasks[i];
-
-        // Decrement frequency and update maxFrequency if needed
-        maxFrequency = Math.max(maxFrequency - 1, currentFrequency);
-
-        // Update idle time
-        idleTime -= Math.min(maxFrequency, currentFrequency);
-      }
-
-      // Step 5: Return the total time needed
-      return Math.max(0, tasks.length + idleTime);
+      return Math.max(tasks.length, interval);
     }
+
+    const getFrequencyMap = (tasks, frequencyMap = new Array(26).fill(0)) => {
+      for (const task of tasks) {
+        const index = task.charCodeAt(0) - "A".charCodeAt(0);
+
+        frequencyMap[index]++;
+      }
+
+      return frequencyMap;
+    };
+
+    const getMaxFrequency = (frequencyMap, maxFrequency = 0) => {
+      for (const frequency of frequencyMap) {
+        maxFrequency = Math.max(maxFrequency, frequency);
+      }
+
+      return maxFrequency;
+    };
+
+    const getMostFrequentTask = (
+      frequencyMap,
+      maxFrequency,
+      mostFrequentTask = 0
+    ) => {
+      for (const frequency of frequencyMap) {
+        const isSame = frequency === maxFrequency;
+        if (isSame) mostFrequentTask++;
+      }
+
+      return mostFrequentTask;
+    };
     ```
 
     </details>

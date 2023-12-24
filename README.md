@@ -5145,6 +5145,92 @@ NeetCode 150 Questions & Solutions start
      Tries End
  ------------------->
 
+ <!-----------------------------
+   Heap / Priority Queue Start
+ ------------------------------>
+
+## Heap / Priority Queue
+
+62. ### ❓ **_Kth Largest Element in a Stream:-_** Design a class to find the kth largest element in a stream. Note that it is the kth largest element in the sorted order, not the kth distinct element.
+
+    ```smart
+    Implement KthLargest class:
+
+    - KthLargest(int k, int[] nums) Initializes the object with the integer k and the stream of integers nums.
+    - int add(int val) Appends the integer val to the stream and returns the element representing the kth largest element in the stream.
+    ```
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+
+    Input
+    ["KthLargest", "add", "add", "add", "add", "add"]
+    [[3, [4, 5, 8, 2]], [3], [5], [10], [9], [4]]
+    Output
+    [null, 4, 5, 5, 8, 8]
+
+    Explanation
+    KthLargest kthLargest = new KthLargest(3, [4, 5, 8, 2]);
+    kthLargest.add(3);   // return 4
+    kthLargest.add(5);   // return 5
+    kthLargest.add(10);  // return 5
+    kthLargest.add(9);   // return 8
+    kthLargest.add(4);   // return 8
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    // Time O(N * (K * log(K))) | Space O(K)
+    class KthLargest {
+      constructor(k, nums) {
+        this.k = k;
+        this.minHeap = new MinPriorityQueue();
+
+        nums.forEach((num) => this.add(num));
+      }
+
+      add(val, { minHeap } = this) {
+        const isUnderCapacity = minHeap.size() < this.k;
+        if (isUnderCapacity) {
+          minHeap.enqueue(val);
+
+          return this.top();
+        }
+
+        const isLarger = this.top() < val;
+        if (isLarger) {
+          minHeap.dequeue();
+          minHeap.enqueue(val);
+        }
+
+        return this.top();
+      }
+
+      top({ minHeap } = this) {
+        return minHeap.front()?.element || 0;
+      }
+    }
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/kth-largest-element-in-a-stream/)
+
+ <!-----------------------------
+   Heap / Priority Queue End
+ ------------------------------>
+
+<br>
+
+[🔼 Back to top](#table-of-contents)
+
  <!------------------
  Design System Start
  ------------------->

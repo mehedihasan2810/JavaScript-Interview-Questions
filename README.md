@@ -5293,6 +5293,56 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/last-stone-weight/)
 
+64. ### ❓ **_Kth Largest Element in an Array:- Given an integer array nums and an integer k, return the kth largest element in the array. Note that it is the kth largest element in the sorted order, not the kth distinct element. Can you solve it without sorting?_**
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: nums = [3,2,1,5,6,4], k = 2
+    Output: 5
+
+    Example 2:
+    Input: nums = [3,2,3,1,2,4,5,5,6], k = 4
+    Output: 4
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    [Min Priority Queue](https://github.com/mehedihasan2810/JavaScript-Data-Structures-and-Algorithms?tab=readme-ov-file#priority-queue)
+
+    ```js
+    // Time O(N * log(K)) | Space O(K)
+    // Define a function findKthLargest that takes an array of numbers (nums) and an integer (k).
+    function findKthLargest(nums, k) {
+      // Create a min priority queue (minQueue) to maintain the k smallest elements.
+      const minQueue = new MinPriorityQueue();
+
+      // Iterate over each number (num) in the array (nums).
+      for (const num of nums) {
+        // Enqueue the current number into the min priority queue.
+        minQueue.enqueue(num);
+
+        // Check if the size of the min priority queue exceeds k.
+        if (minQueue.size() > k) {
+          // If the size exceeds k, dequeue the smallest element.
+          minQueue.dequeue();
+        }
+      }
+
+      // Return the element at the front of the min priority queue, which is the kth largest element.
+      return minQueue.front().element;
+    }
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/kth-largest-element-in-an-array/)
+
  <!-----------------------------
    Heap / Priority Queue End
  ------------------------------>

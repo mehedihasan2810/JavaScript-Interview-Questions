@@ -5523,6 +5523,105 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/design-twitter/)
 
+67. ### ❓ **_Find Median from Data Stream:-_** The median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value, and the median is the mean of the two middle values.
+
+- For example, for arr = [2,3,4], the median is 3.
+- For example, for arr = [2,3], the median is (2 + 3) / 2 = 2.5.
+
+  **_Implement the MedianFinder class:_**
+
+- MedianFinder() initializes the MedianFinder object.
+- void addNum(int num) adds the integer num from the data stream to the data structure.
+- double findMedian() returns the median of all elements so far. Answers within 10-5 of the actual answer will be accepted.
+
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input
+    ["MedianFinder", "addNum", "addNum", "findMedian", "addNum", "findMedian"]
+    [[], [1], [2], [], [3], []]
+    Output
+    [null, null, null, 1.5, null, 2.0]
+
+    Explanation
+    MedianFinder medianFinder = new MedianFinder();
+    medianFinder.addNum(1);    // arr = [1]
+    medianFinder.addNum(2);    // arr = [1, 2]
+    medianFinder.findMedian(); // return 1.5 (i.e., (1 + 2) / 2)
+    medianFinder.addNum(3);    // arr[1, 2, 3]
+    medianFinder.findMedian(); // return 2.0
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    **_Implementation_**
+
+    ```js
+      class MedianFinder {
+      constructor() {
+        // Two heaps to maintain the lower half and upper half of the elements
+        this.maxHeap = new MaxPriorityQueue(); // Max heap for the lower half
+        this.minHeap = new MinPriorityQueue(); // Min heap for the upper half
+      }
+
+      addNum(num) {
+        // Add the number to one of the heaps
+        if (this.maxHeap.isEmpty() || num < this.maxHeap.front().element) {
+          // If the lower half is empty or the number is less than or equal to the maximum in the lower half
+          this.maxHeap.enqueue(num);
+        } else {
+          // Otherwise, add to the upper half
+          this.minHeap.enqueue(num);
+        }
+
+        // Balance the heaps
+        this.balanceHeaps();
+      }
+
+      findMedian() {
+        // Check the sizes of the heaps
+        const totalSize = this.maxHeap.size() + this.minHeap.size();
+
+        if (this.maxHeap.size() === this.minHeap.size()) {
+          // If even, return the average of the two middle elements
+          return (this.maxHeap.front().element + this.minHeap.front().element) / 2;
+        }
+
+        // if odd that means median is the root of maxHeap
+        return this.maxHeap.front().element;
+      }
+
+      balanceHeaps() {
+        // Ensure the size difference between the heaps is at most 1
+        if (this.maxHeap.size() > this.minHeap.size() + 1) {
+          // If the size difference is more than 1, move the maximum from the lower half to the upper half
+          this.minHeap.enqueue(this.maxHeap.dequeue().element);
+        } else if (this.minHeap.size() > this.maxHeap.size()) {
+          // If the size difference is more than 1, move the minimum from the upper half to the lower half
+          this.maxHeap.enqueue(this.minHeap.dequeue().element);
+        }
+      }
+    }
+    // Example usage:
+    const medianFinder = new MedianFinder();
+    medianFinder.addNum(1);
+    medianFinder.addNum(2);
+    console.log(medianFinder.findMedian()); // Output: 1.5
+    medianFinder.addNum(3);
+    console.log(medianFinder.findMedian()); // Output: 2.0
+
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/find-median-from-data-stream/)
+
  <!-----------------------------
    Heap / Priority Queue End
  ------------------------------>

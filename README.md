@@ -11,6 +11,7 @@
   - [Binary Search](#binary-search)
   - [Linked List](#linkedlist)
   - [Trees](#trees)
+  - [Heap / Priority Queue](#heap--priority-queue)
   - [Design System](#design-system)
   - [Misc](#misc)
 - [General JS Coding Questions & Solutions](#general-js-coding-questions--solutions)
@@ -5186,6 +5187,8 @@ NeetCode 150 Questions & Solutions start
     <details>
     <summary>Solutions 👉</summary>
 
+    [Min Priority Queue](https://github.com/mehedihasan2810/JavaScript-Data-Structures-and-Algorithms?tab=readme-ov-file#priority-queue)
+
     ```js
     // Time O(N * (K * log(K))) | Space O(K)
     class KthLargest {
@@ -5222,6 +5225,73 @@ NeetCode 150 Questions & Solutions start
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/kth-largest-element-in-a-stream/)
+
+63. ### ❓ **_Last Stone Weight:-_**
+
+    You are given an array of integers stones where stones[i] is the weight of the ith stone.
+
+    We are playing a game with the stones. On each turn, we choose the heaviest two stones and smash them together. Suppose the heaviest two stones have weights x and y with x <= y. The result of this smash is:
+
+    - If x == y, both stones are destroyed, and
+    - If x != y, the stone of weight x is destroyed, and the stone of weight y has new weight y - x.
+    - At the end of the game, there is at most one stone left.
+
+    Return the weight of the last remaining stone. If there are no stones left, return 0.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: stones = [2,7,4,1,8,1]
+    Output: 1
+    Explanation:
+    We combine 7 and 8 to get 1 so the array converts to [2,4,1,1,1] then,
+    we combine 2 and 4 to get 2 so the array converts to [2,1,1,1] then,
+    we combine 2 and 1 to get 1 so the array converts to [1,1,1] then,
+    we combine 1 and 1 to get 0 so the array converts to [1] then that's the value of the last stone.
+
+    Example 2:
+    Input: stones = [1]
+    Output: 1
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    [Max Priority Queue](https://github.com/mehedihasan2810/JavaScript-Data-Structures-and-Algorithms?tab=readme-ov-file#max-priority-queue)
+
+    ```js
+    // Time O(N * log(N)) | Space O(N)
+    function lastStoneWeight(stones) {
+      const maxHeap = new MaxPriorityQueue();
+
+      // Populate the max heap with initial stones.
+      for (const stone of stones) {
+        maxHeap.enqueue(stone);
+      }
+
+      // Continue smashing stones until there is one or no stones left.
+      while (maxHeap.heap.length > 1) {
+        const heaviest1 = maxHeap.dequeue();
+        const heaviest2 = maxHeap.dequeue();
+
+        if (heaviest1 !== heaviest2) {
+          const newStone = Math.abs(heaviest1 - heaviest2);
+          maxHeap.enqueue(newStone);
+        }
+      }
+
+      // Return the weight of the last remaining stone, or 0 if no stones are left.
+      return maxHeap.isEmpty() ? 0 : maxHeap.heap[0];
+    }
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/last-stone-weight/)
 
  <!-----------------------------
    Heap / Priority Queue End

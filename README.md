@@ -5293,7 +5293,7 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/last-stone-weight/)
 
-64. ### ❓ **_Kth Largest Element in an Array:- Given an integer array nums and an integer k, return the kth largest element in the array. Note that it is the kth largest element in the sorted order, not the kth distinct element. Can you solve it without sorting?_**
+64. ### ❓ **_Kth Largest Element in an Array:-_** Given an integer array nums and an integer k, return the kth largest element in the array. Note that it is the kth largest element in the sorted order, not the kth distinct element. Can you solve it without sorting?
 
     <details>
     <summary>Examples 👉</summary>
@@ -5342,6 +5342,92 @@ NeetCode 150 Questions & Solutions start
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/kth-largest-element-in-an-array/)
+
+65. ### ❓ **_Task Scheduler:-_** Given a characters array tasks, representing the tasks a CPU needs to do, where each letter represents a different task. Tasks could be done in any order. Each task is done in one unit of time. For each unit of time, the CPU could complete either one task or just be idle.However, there is a non-negative integer n that represents the cooldown period between two same tasks (the same letter in the array), that is that there must be at least n units of time between any two same tasks. Return the least number of units of times that the CPU will take to finish all the given tasks.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: tasks = ["A","A","A","B","B","B"], n = 2
+    Output: 8
+    Explanation:
+    A -> B -> idle -> A -> B -> idle -> A -> B
+    There is at least 2 units of time between any two same tasks.
+
+    Example 2:
+    Input: tasks = ["A","A","A","B","B","B"], n = 0
+    Output: 6
+    Explanation: On this case any permutation of size 6 would work since n = 0.
+    ["A","A","A","B","B","B"]
+    ["A","B","A","B","A","B"]
+    ["B","B","B","A","A","A"]
+    ...
+    And so on.
+
+    Example 3:
+    Input: tasks = ["A","A","A","A","A","A","B","C","D","E","F","G"], n = 2
+    Output: 16
+    Explanation:
+    One possible solution is
+    A -> B -> C -> A -> D -> E -> A -> F -> G -> A -> idle -> idle -> A -> idle -> idle -> A
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    To solve this problem, you can use a `greedy approach`. The idea is to schedule the tasks in such a way that you minimize the idle time between tasks. Here is a step-by-step algorithm:
+
+    - Create a frequency map to count the occurrences of each task.
+    - Sort the tasks in descending order based on their frequencies.
+    - Initialize a variable maxFrequency to store the frequency of the most frequent task.
+    - Iterate through the sorted tasks and distribute them in a way that minimizes idle time.
+    - Use the formula maxFrequency - 1 to calculate the number of idle slots needed (excluding the last iteration).
+    - For each task, decrement its frequency, and update maxFrequency if the current task has a higher frequency.
+    - Update the result by adding the maximum between 0 and the number of idle slots.
+    - Return the total time needed.
+
+    **_Implementation_**
+
+    ```js
+    function leastInterval(tasks, n) {
+      // Step 1: Create a frequency map
+      const frequencyMap = new Map();
+      for (const task of tasks) {
+        frequencyMap.set(task, (frequencyMap.get(task) || 0) + 1);
+      }
+
+      // Step 2: Sort tasks in descending order based on frequencies
+      const sortedTasks = Array.from(frequencyMap.values()).sort(
+        (a, b) => b - a
+      );
+
+      // Step 3: Initialize variables
+      let maxFrequency = sortedTasks[0];
+      let idleTime = (maxFrequency - 1) * n;
+
+      // Step 4: Distribute tasks and minimize idle time
+      for (let i = 1; i < sortedTasks.length; i++) {
+        const currentFrequency = sortedTasks[i];
+
+        // Decrement frequency and update maxFrequency if needed
+        maxFrequency = Math.max(maxFrequency - 1, currentFrequency);
+
+        // Update idle time
+        idleTime -= Math.min(maxFrequency, currentFrequency);
+      }
+
+      // Step 5: Return the total time needed
+      return Math.max(0, tasks.length + idleTime);
+    }
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/task-scheduler/)
 
  <!-----------------------------
    Heap / Priority Queue End

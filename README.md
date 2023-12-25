@@ -6142,6 +6142,50 @@ NeetCode 150 Questions & Solutions start
 
     ```js
     //////////////////////////////
+    // Second Approach
+    // Time O(N^2) | Space O(1)
+    //////////////////////////////
+    // Helper function to search for the indices of the longest palindrome in the string
+    const findLongestPalindrome = (s) => {
+      let left = 0,
+        right = 0;
+
+      // Iterate through each character in the string
+      for (let index = 0; index < s.length; index++) {
+        // Calculate palindrome lengths expanding from the current index
+        // Expand around the center for odd-length palindromes
+        const len1 = expandAroundCenter(s, index, index);
+
+        // Expand around the center for even-length palindromes
+        const len2 = expandAroundCenter(s, index, index + 1);
+
+        // Determine the maximum palindrome length and the current window size
+        const [length, window] = [Math.max(len1, len2), right - left];
+
+        // Check if the current palindrome can be skipped based on window size
+        if (length > window) {
+          left = index - Math.floor((length - 1) / 2);
+          right = index + Math.floor(length / 2);
+        }
+      }
+
+      // Return the indices of the longest palindrome
+      return [left, right];
+    };
+
+    // Helper function to calculate the length of a palindrome expanding from the given indices
+    const expandAroundCenter = (s, left, right) => {
+      // Continue expanding the palindrome while the characters are the same
+      while (left >= 0 && right < s.length && s[left] === s[right]) {
+        left--;
+        right++;
+      }
+
+      // Calculate and return the length of the palindrome
+      return right - left - 1;
+    };
+
+    //////////////////////////////
     // First Approach
     // Time O(N^2) | Space O(N^2)
     //////////////////////////////
@@ -6208,47 +6252,6 @@ NeetCode 150 Questions & Solutions start
       // Return the longest palindrome substring using the found indices
       return s.slice(left, right + 1);
     };
-
-    //////////////////////////////
-    // Second Approach
-    // Time O(N^2) | Space O(1)
-    //////////////////////////////
-    // Helper function to search for the indices of the longest palindrome in the string
-    const findLongestPalindrome = (s) => {
-      let left = 0,
-        right = 0;
-
-      // Iterate through each character in the string
-      for (let index = 0; index < s.length; index++) {
-        // Calculate palindrome lengths expanding from the current index
-        const len1 = expandAroundCenter(s, index, index);
-        const len2 = expandAroundCenter(s, index, index + 1);
-
-        // Determine the maximum palindrome length and the current window size
-        const [length, window] = [Math.max(len1, len2), right - left];
-
-        // Check if the current palindrome can be skipped based on window size
-        if (length > window) {
-          left = index - Math.floor((length - 1) / 2);
-          right = index + Math.floor(length / 2);
-        }
-      }
-
-      // Return the indices of the longest palindrome
-      return [left, right];
-    };
-
-    // Helper function to calculate the length of a palindrome expanding from the given indices
-    const expandAroundCenter = (s, left, right) => {
-      // Continue expanding the palindrome while the characters are the same
-      while (left >= 0 && right < s.length && s[left] === s[right]) {
-        left--;
-        right++;
-      }
-
-      // Calculate and return the length of the palindrome
-      return right - left - 1;
-    };
     ```
 
     </details>
@@ -6280,23 +6283,14 @@ NeetCode 150 Questions & Solutions start
     **_Implementation_**
 
     ```js
-    //////////////////////////////
+    ////////////////////////////
     // Time O(N^2) | Space O(1)
-    //////////////////////////////
+    ///////////////////////////
     function countSubstrings(s) {
       let count = 0;
 
-      // Helper function to expand around the center for odd-length palindromes
-      const expandAroundCenterOdd = (left, right) => {
-        while (left >= 0 && right < s.length && s[left] === s[right]) {
-          count++;
-          left--;
-          right++;
-        }
-      };
-
-      // Helper function to expand around the center for even-length palindromes
-      const expandAroundCenterEven = (left, right) => {
+      // Helper function to expand around the center for even-length and odd-length palindromes
+      const expandAroundCenter = (left, right) => {
         while (left >= 0 && right < s.length && s[left] === s[right]) {
           count++;
           left--;
@@ -6307,10 +6301,10 @@ NeetCode 150 Questions & Solutions start
       // Iterate through each character in the string as a potential center
       for (let center = 0; center < s.length; center++) {
         // Expand around the center for odd-length palindromes
-        expandAroundCenterOdd(center, center);
+        expandAroundCenter(center, center);
 
         // Expand around the center for even-length palindromes
-        expandAroundCenterEven(center, center + 1);
+        expandAroundCenter(center, center + 1);
       }
 
       return count;

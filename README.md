@@ -5945,11 +5945,11 @@ NeetCode 150 Questions & Solutions start
         // Update curr to the maximum value of robbing the current house or skipping it
         curr = Math.max(temp + num, curr);
 
+        // OR
+
         // Destructuring assignment to update prev and curr simultaneously
         // [prev, curr] = [curr, Math.max(prev + num, curr)];
       }
-
-      // OR
 
       // Return the maximum value after iterating through all the houses
       return curr;
@@ -6051,6 +6051,7 @@ NeetCode 150 Questions & Solutions start
 
           // OR
 
+          // Destructuring assignment to update prev and curr simultaneously
           // [prev, curr] = [curr, Math.max(prev + num, curr)];
         }
 
@@ -6115,6 +6116,91 @@ NeetCode 150 Questions & Solutions start
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/house-robber-ii/)
+
+73. ### ❓ **_Longest Palindromic Substring:-_** Given a string s, return the longest palindromic substring in s.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: s = "babad"
+    Output: "bab"
+    Explanation: "aba" is also a valid answer.
+
+    Example 2:
+    Input: s = "cbbd"
+    Output: "bb"
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    **_Implementation_**
+
+    ```js
+    //////////////////////////////
+    // First Approach
+    // Time O(N^2) | Space O(N^2)
+    //////////////////////////////
+    function longestPalindrome(s) {
+      // Check for edge cases: empty string or a string with a single character
+      if (!s || s.length <= 1) {
+        return s;
+      }
+
+      // Initialize a 2D array to store palindrome information
+      const dp = Array.from({ length: s.length }, () =>
+        Array(s.length).fill(false)
+      );
+
+      let start = 0; // Start index of the longest palindrome
+      let maxLength = 1; // Length of the longest palindrome
+
+      // All substrings of length 1 are palindromes
+      for (let i = 0; i < s.length; i++) {
+        dp[i][i] = true;
+      }
+
+      // Check for substrings of length 2
+      for (let i = 0; i < s.length - 1; i++) {
+        if (s[i] === s[i + 1]) {
+          dp[i][i + 1] = true;
+          start = i;
+          maxLength = 2;
+        }
+      }
+
+      // Check for substrings of length 3 and greater
+      for (let len = 3; len <= s.length; len++) {
+        for (let i = 0; i <= s.length - len; i++) {
+          const j = i + len - 1; // Ending index of the current substring
+
+          // Check if the current substring is a palindrome
+          if (dp[i + 1][j - 1] && s[i] === s[j]) {
+            dp[i][j] = true;
+
+            // Update the start index and maximum length if a longer palindrome is found
+            start = i;
+            maxLength = len;
+          }
+        }
+      }
+
+      // Return the longest palindromic substring using the start index and length
+      return s.substring(start, start + maxLength);
+    }
+
+    // Example usage:
+    const inputString = "babad";
+    console.log(longestPalindrome(inputString)); // Output: "bab" or "aba"
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/longest-palindromic-substring/)
 
 <br>
 

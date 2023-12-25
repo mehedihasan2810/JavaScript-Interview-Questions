@@ -6141,10 +6141,22 @@ NeetCode 150 Questions & Solutions start
     **_Implementation_**
 
     ```js
-    //////////////////////////////
-    // Second Approach
+    ////////////////////////////
+    // First Approach
     // Time O(N^2) | Space O(1)
-    //////////////////////////////
+    ////////////////////////////
+    // Function to find the longest palindrome substring in the given string
+    const longestPalindrome = (s) => {
+      // Check if the input string is empty
+      if (s.length === 0) return "";
+
+      // Helper function to search for the longest palindrome indices
+      const [left, right] = findLongestPalindrome(s);
+
+      // Return the longest palindrome substring using the found indices
+      return s.slice(left, right + 1);
+    };
+
     // Helper function to search for the indices of the longest palindrome in the string
     const findLongestPalindrome = (s) => {
       let left = 0,
@@ -6186,7 +6198,7 @@ NeetCode 150 Questions & Solutions start
     };
 
     //////////////////////////////
-    // First Approach
+    // Second Approach
     // Time O(N^2) | Space O(N^2)
     //////////////////////////////
     function longestPalindrome(s) {
@@ -6240,18 +6252,6 @@ NeetCode 150 Questions & Solutions start
     // Example usage:
     const inputString = "babad";
     console.log(longestPalindrome(inputString)); // Output: "bab" or "aba"
-
-    // Function to find the longest palindrome substring in the given string
-    const longestPalindrome = (s) => {
-      // Check if the input string is empty
-      if (s.length === 0) return "";
-
-      // Helper function to search for the longest palindrome indices
-      const [left, right] = findLongestPalindrome(s);
-
-      // Return the longest palindrome substring using the found indices
-      return s.slice(left, right + 1);
-    };
     ```
 
     </details>
@@ -6318,6 +6318,109 @@ NeetCode 150 Questions & Solutions start
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/palindromic-substrings/)
+
+75. ### ❓ **_Coin Change:-_** You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money. Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1. You may assume that you have an infinite number of each kind of coin.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: coins = [1,2,5], amount = 11
+    Output: 3
+    Explanation: 11 = 5 + 5 + 1
+
+    Example 2:
+    Input: coins = [2], amount = 3
+    Output: -1
+
+    Example 3:
+    Input: coins = [1], amount = 0
+    Output: 0
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    **_Implementation_**
+
+    ```js
+    ////////////////////////////
+    // DP - Bottom Up
+    // Array - Tabulation
+    // Time O(N) | Space O(N)
+    ///////////////////////////
+    var coinChange = (coins, amount) => {
+      // Initialize an array to store the fewest number of coins needed for each amount
+      const tabu = initTabu(amount);
+
+      // Iterate through each amount starting from 1 to the target amount
+      for (let _amount = 1; _amount <= amount; _amount++) {
+        // Iterate through each coin denomination
+        for (let coin = 0; coin < coins.length; coin++) {
+          // Check if the current coin can contribute to the current amount
+          const canUpdate = coins[coin] <= _amount;
+          if (!canUpdate) continue;
+
+          // Calculate the difference between the current amount and the coin denomination
+          const difference = _amount - coins[coin];
+
+          // Calculate the minimum number of coins needed for the current amount
+          const min = tabu[difference] + 1;
+
+          // Update the tabulation array with the minimum value
+          tabu[_amount] = Math.min(tabu[_amount], min);
+        }
+      }
+
+      // If the final value in the tabulation array is greater than the target amount, return -1
+      return tabu[amount] <= amount ? tabu[amount] : -1;
+    };
+
+    // Helper function to initialize the tabulation array
+    const initTabu = (amount) => {
+      // Initialize an array with all elements set to (amount + 1)
+      const tabu = Array(amount + 1).fill(amount + 1);
+
+      // The fewest number of coins needed for amount 0 is 0
+      tabu[0] = 0;
+
+      return tabu;
+    };
+
+    ////////////////////////////
+    // DP - Bottom Up
+    // Array - Tabulation
+    // Time O(N * M) | Space O(N)
+    ///////////////////////////
+    var coinChange = function (coins, amount) {
+      // Initialize an array to store the fewest number of coins needed for each amount
+      const dp = new Array(amount + 1).fill(Infinity);
+
+      // The fewest number of coins needed for amount 0 is 0
+      dp[0] = 0;
+
+      // Iterate through each coin denomination
+      for (const coin of coins) {
+        // Iterate through each amount starting from the current coin denomination
+        for (let i = coin; i <= amount; i++) {
+          // Update the fewest number of coins needed for the current amount
+          // Take the minimum between the current value and 1 + the value at (current amount - current coin)
+          dp[i] = Math.min(dp[i], 1 + dp[i - coin]);
+        }
+      }
+
+      // If dp[amount] is still Infinity, it means the amount cannot be made up by any combination of coins
+      // Otherwise, return the fewest number of coins needed for the target amount
+      return dp[amount] === Infinity ? -1 : dp[amount];
+    };
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/coin-change/submissions/)
 
 <br>
 

@@ -6196,11 +6196,134 @@ NeetCode 150 Questions & Solutions start
     // Example usage:
     const inputString = "babad";
     console.log(longestPalindrome(inputString)); // Output: "bab" or "aba"
+
+    // Function to find the longest palindrome substring in the given string
+    const longestPalindrome = (s) => {
+      // Check if the input string is empty
+      if (s.length === 0) return "";
+
+      // Helper function to search for the longest palindrome indices
+      const [left, right] = findLongestPalindrome(s);
+
+      // Return the longest palindrome substring using the found indices
+      return s.slice(left, right + 1);
+    };
+
+    //////////////////////////////
+    // Second Approach
+    // Time O(N^2) | Space O(1)
+    //////////////////////////////
+    // Helper function to search for the indices of the longest palindrome in the string
+    const findLongestPalindrome = (s) => {
+      let left = 0,
+        right = 0;
+
+      // Iterate through each character in the string
+      for (let index = 0; index < s.length; index++) {
+        // Calculate palindrome lengths expanding from the current index
+        const len1 = expandAroundCenter(s, index, index);
+        const len2 = expandAroundCenter(s, index, index + 1);
+
+        // Determine the maximum palindrome length and the current window size
+        const [length, window] = [Math.max(len1, len2), right - left];
+
+        // Check if the current palindrome can be skipped based on window size
+        if (length > window) {
+          left = index - Math.floor((length - 1) / 2);
+          right = index + Math.floor(length / 2);
+        }
+      }
+
+      // Return the indices of the longest palindrome
+      return [left, right];
+    };
+
+    // Helper function to calculate the length of a palindrome expanding from the given indices
+    const expandAroundCenter = (s, left, right) => {
+      // Continue expanding the palindrome while the characters are the same
+      while (left >= 0 && right < s.length && s[left] === s[right]) {
+        left--;
+        right++;
+      }
+
+      // Calculate and return the length of the palindrome
+      return right - left - 1;
+    };
     ```
 
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/longest-palindromic-substring/)
+
+74. ### ❓ **_Palindromic Substrings:-_** Given a string s, return the number of palindromic substrings in it. A string is a palindrome when it reads the same backward as forward. A substring is a contiguous sequence of characters within the string.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: s = "abc"
+    Output: 3
+    Explanation: Three palindromic strings: "a", "b", "c".
+
+    Example 2:
+    Input: s = "aaa"
+    Output: 6
+    Explanation: Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa".
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    **_Implementation_**
+
+    ```js
+    //////////////////////////////
+    // Time O(N^2) | Space O(1)
+    //////////////////////////////
+    function countSubstrings(s) {
+      let count = 0;
+
+      // Helper function to expand around the center for odd-length palindromes
+      const expandAroundCenterOdd = (left, right) => {
+        while (left >= 0 && right < s.length && s[left] === s[right]) {
+          count++;
+          left--;
+          right++;
+        }
+      };
+
+      // Helper function to expand around the center for even-length palindromes
+      const expandAroundCenterEven = (left, right) => {
+        while (left >= 0 && right < s.length && s[left] === s[right]) {
+          count++;
+          left--;
+          right++;
+        }
+      };
+
+      // Iterate through each character in the string as a potential center
+      for (let center = 0; center < s.length; center++) {
+        // Expand around the center for odd-length palindromes
+        expandAroundCenterOdd(center, center);
+
+        // Expand around the center for even-length palindromes
+        expandAroundCenterEven(center, center + 1);
+      }
+
+      return count;
+    }
+
+    // Example usage:
+    const inputString = "abc";
+    console.log(countSubstrings(inputString)); // Output: 3
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/palindromic-substrings/)
 
 <br>
 

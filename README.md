@@ -5534,25 +5534,131 @@ NeetCode 150 Questions & Solutions start
 - void addNum(int num) adds the integer num from the data stream to the data structure.
 - double findMedian() returns the median of all elements so far. Answers within 10-5 of the actual answer will be accepted.
 
+    <details>
+    <summary>Examples 👉</summary>
+
+  ```smart
+  Example 1:
+  Input
+  ["MedianFinder", "addNum", "addNum", "findMedian", "addNum", "findMedian"]
+  [[], [1], [2], [], [3], []]
+  Output
+  [null, null, null, 1.5, null, 2.0]
+
+  Explanation
+  MedianFinder medianFinder = new MedianFinder();
+  medianFinder.addNum(1);    // arr = [1]
+  medianFinder.addNum(2);    // arr = [1, 2]
+  medianFinder.findMedian(); // return 1.5 (i.e., (1 + 2) / 2)
+  medianFinder.addNum(3);    // arr[1, 2, 3]
+  medianFinder.findMedian(); // return 2.0
+  ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+  **_Implementation_**
+
+  ```js
+  class MedianFinder {
+    constructor() {
+      // Two heaps to maintain the lower half and upper half of the elements
+      this.maxHeap = new MaxPriorityQueue(); // Max heap for the lower half
+      this.minHeap = new MinPriorityQueue(); // Min heap for the upper half
+    }
+
+    addNum(num) {
+      // Add the number to one of the heaps
+      if (this.maxHeap.isEmpty() || num < this.maxHeap.front().element) {
+        // If the lower half is empty or the number is less than or equal to the maximum in the lower half
+        this.maxHeap.enqueue(num);
+      } else {
+        // Otherwise, add to the upper half
+        this.minHeap.enqueue(num);
+      }
+
+      // Balance the heaps
+      this.balanceHeaps();
+    }
+
+    findMedian() {
+      // Check the sizes of the heaps
+      const totalSize = this.maxHeap.size() + this.minHeap.size();
+
+      if (this.maxHeap.size() === this.minHeap.size()) {
+        // If even, return the average of the two middle elements
+        return (
+          (this.maxHeap.front().element + this.minHeap.front().element) / 2
+        );
+      }
+
+      // if odd that means median is the root of maxHeap
+      return this.maxHeap.front().element;
+    }
+
+    balanceHeaps() {
+      // Ensure the size difference between the heaps is at most 1
+      if (this.maxHeap.size() > this.minHeap.size() + 1) {
+        // If the size difference is more than 1, move the maximum from the lower half to the upper half
+        this.minHeap.enqueue(this.maxHeap.dequeue().element);
+      } else if (this.minHeap.size() > this.maxHeap.size()) {
+        // If the size difference is more than 1, move the minimum from the upper half to the lower half
+        this.maxHeap.enqueue(this.minHeap.dequeue().element);
+      }
+    }
+  }
+  // Example usage:
+  const medianFinder = new MedianFinder();
+  medianFinder.addNum(1);
+  medianFinder.addNum(2);
+  console.log(medianFinder.findMedian()); // Output: 1.5
+  medianFinder.addNum(3);
+  console.log(medianFinder.findMedian()); // Output: 2.0
+  ```
+
+    </details>
+
+  [Original Problem in LeetCode](https://leetcode.com/problems/find-median-from-data-stream/)
+
+<br>
+
+[🔼 Back to top](#table-of-contents)
+
+ <!-----------------------------
+   Heap / Priority Queue End
+ ------------------------------>
+
+<!---------------
+   Graph Starts
+---------------->
+
+## Graph
+
+68. ### ❓ **_Number of Islands:-_** Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
 
     <details>
     <summary>Examples 👉</summary>
 
     ```smart
     Example 1:
-    Input
-    ["MedianFinder", "addNum", "addNum", "findMedian", "addNum", "findMedian"]
-    [[], [1], [2], [], [3], []]
-    Output
-    [null, null, null, 1.5, null, 2.0]
+    Input: grid = [
+      ["1","1","1","1","0"],
+      ["1","1","0","1","0"],
+      ["1","1","0","0","0"],
+      ["0","0","0","0","0"]
+    ]
+    Output: 1
 
-    Explanation
-    MedianFinder medianFinder = new MedianFinder();
-    medianFinder.addNum(1);    // arr = [1]
-    medianFinder.addNum(2);    // arr = [1, 2]
-    medianFinder.findMedian(); // return 1.5 (i.e., (1 + 2) / 2)
-    medianFinder.addNum(3);    // arr[1, 2, 3]
-    medianFinder.findMedian(); // return 2.0
+    Example 2:
+    Input: grid = [
+      ["1","1","0","0","0"],
+      ["1","1","0","0","0"],
+      ["0","0","1","0","0"],
+      ["0","0","0","1","1"]
+    ]
+    Output: 3
     ```
 
     </details>
@@ -5563,68 +5669,79 @@ NeetCode 150 Questions & Solutions start
     **_Implementation_**
 
     ```js
-      class MedianFinder {
-      constructor() {
-        // Two heaps to maintain the lower half and upper half of the elements
-        this.maxHeap = new MaxPriorityQueue(); // Max heap for the lower half
-        this.minHeap = new MinPriorityQueue(); // Min heap for the upper half
+    // Depth-First Search (DFS)
+    // Time O(M * N) | Space O(M * N)
+    function numIslands(grid) {
+      // Check if the grid is empty or not defined
+      if (!grid || grid.length === 0) {
+        return 0;
       }
 
-      addNum(num) {
-        // Add the number to one of the heaps
-        if (this.maxHeap.isEmpty() || num < this.maxHeap.front().element) {
-          // If the lower half is empty or the number is less than or equal to the maximum in the lower half
-          this.maxHeap.enqueue(num);
-        } else {
-          // Otherwise, add to the upper half
-          this.minHeap.enqueue(num);
+      // Get the number of rows and columns in the grid
+      const numRows = grid.length;
+      const numCols = grid[0].length;
+
+      // Initialize a counter for the number of islands
+      let count = 0;
+
+      // DFS function to explore an island and mark visited cells as '0'
+      const dfs = (i, j) => {
+        // Base case: Check if the current cell is out of bounds or water ('0')
+        if (
+          i < 0 ||
+          i >= numRows ||
+          j < 0 ||
+          j >= numCols ||
+          grid[i][j] === "0"
+        ) {
+          return;
         }
 
-        // Balance the heaps
-        this.balanceHeaps();
-      }
+        // Mark the current cell as visited by changing its value to '0'
+        grid[i][j] = "0";
 
-      findMedian() {
-        // Check the sizes of the heaps
-        const totalSize = this.maxHeap.size() + this.minHeap.size();
+        // Explore adjacent cells in all four directions
+        dfs(i - 1, j);
+        dfs(i + 1, j);
+        dfs(i, j - 1);
+        dfs(i, j + 1);
+      };
 
-        if (this.maxHeap.size() === this.minHeap.size()) {
-          // If even, return the average of the two middle elements
-          return (this.maxHeap.front().element + this.minHeap.front().element) / 2;
-        }
-
-        // if odd that means median is the root of maxHeap
-        return this.maxHeap.front().element;
-      }
-
-      balanceHeaps() {
-        // Ensure the size difference between the heaps is at most 1
-        if (this.maxHeap.size() > this.minHeap.size() + 1) {
-          // If the size difference is more than 1, move the maximum from the lower half to the upper half
-          this.minHeap.enqueue(this.maxHeap.dequeue().element);
-        } else if (this.minHeap.size() > this.maxHeap.size()) {
-          // If the size difference is more than 1, move the minimum from the upper half to the lower half
-          this.maxHeap.enqueue(this.minHeap.dequeue().element);
+      // Iterate through each cell in the grid
+      for (let i = 0; i < numRows; i++) {
+        for (let j = 0; j < numCols; j++) {
+          // If a land cell is encountered, start DFS to explore the island
+          if (grid[i][j] === "1") {
+            count++;
+            dfs(i, j);
+          }
         }
       }
+
+      // Return the total count of islands
+      return count;
     }
-    // Example usage:
-    const medianFinder = new MedianFinder();
-    medianFinder.addNum(1);
-    medianFinder.addNum(2);
-    console.log(medianFinder.findMedian()); // Output: 1.5
-    medianFinder.addNum(3);
-    console.log(medianFinder.findMedian()); // Output: 2.0
 
+    // Example usage:
+    const grid = [
+      ["1", "1", "0", "0", "0"],
+      ["1", "1", "0", "0", "0"],
+      ["0", "0", "1", "0", "0"],
+      ["0", "0", "0", "1", "1"],
+    ];
+
+    console.log(numIslands(grid)); // Output: 3
     ```
+
+    > This code defines a numIslands function that uses Depth-First Search (DFS) to traverse and mark islands in the grid. The dfs function is a recursive helper function that explores the current island and marks visited cells as '0'. The main function iterates through each cell in the grid and starts DFS when a land cell is encountered, incrementing the island count.
 
     </details>
 
-    [Original Problem in LeetCode](https://leetcode.com/problems/find-median-from-data-stream/)
+    [Original Problem in LeetCode](https://leetcode.com/problems/number-of-islands/)
 
- <!-----------------------------
-   Heap / Priority Queue End
- ------------------------------>
+<!---------------
+   Graph Ends
+---------------->
 
 <br>
 

@@ -5739,6 +5739,79 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/number-of-islands/)
 
+69. ### ❓ **_Clone Graph:-_**
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    **_Implementation_**
+
+    ```js
+    // Time O(V + E) | Space O(N)
+    function cloneGraph(node) {
+      // Handle the case where the input node is null
+      if (!node) {
+        return null;
+      }
+
+      // Create a map to store the cloned nodes, preventing infinite recursion
+      const visited = new Map();
+
+      // Helper function to perform DFS and clone the graph
+      const dfs = function (originalNode) {
+        // Check if the node has already been cloned
+        if (visited.has(originalNode)) {
+          return visited.get(originalNode);
+        }
+
+        // Create a copy of the current node
+        const clonedNode = new Node(originalNode.val, []);
+
+        // Mark the original node as visited to avoid duplicate cloning
+        visited.set(originalNode, clonedNode);
+
+        // Iterate through the neighbors of the original node
+        for (const neighbor of originalNode.neighbors) {
+          // Recursively clone each neighbor and add to the cloned node's neighbors
+          clonedNode.neighbors.push(dfs(neighbor));
+        }
+
+        return clonedNode;
+      };
+
+      // Start DFS from the input node to clone the entire graph
+      return dfs(node);
+    }
+    ```
+
+    **Explanation of the code:**
+
+    - The cloneGraph function takes the starting node of the original graph as an argument and returns the starting node of the cloned graph.
+
+    - A check is performed to handle the case where the input node is null, in which case the function returns null.
+
+    - A visited map is created to keep track of nodes that have been visited during the cloning process to avoid infinite recursion.
+
+    - The dfs function is a recursive helper function that performs depth-first search to clone the graph. It takes an original node as an argument and returns the corresponding cloned node.
+
+    - Inside the dfs function, it checks if the original node has already been cloned by checking the visited map. If so, it returns the cloned node.
+
+    - If the original node has not been visited, a new cloned node is created with the same value but an empty array for neighbors.
+
+    - The original node is marked as visited by storing the mapping in the visited map.
+
+    - The function then iterates through the neighbors of the original node and recursively clones each neighbor using the dfs function. The cloned neighbors are added to the neighbors array of the cloned node.
+
+    - The cloned node is returned.
+
+    - Finally, the cloneGraph function is invoked with the input node to start the depth-first search and clone the entire graph. The cloned graph's starting node is returned.
+
+    - This approach ensures that each node is cloned exactly once, and the cloned nodes are connected in the same way as the original nodes.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/clone-graph/)
+
 <!---------------
    Graph Ends
 ---------------->

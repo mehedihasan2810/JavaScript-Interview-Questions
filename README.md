@@ -5857,6 +5857,7 @@ NeetCode 150 Questions & Solutions start
 
     ```js
     // Function to calculate the number of distinct ways to climb stairs
+    // Time O(N) | Space O(N)
     function climbStairs(n) {
       // Base case: If there are 0 or 1 steps, there is only one way (doing nothing or taking one step)
       if (n <= 1) {
@@ -5888,6 +5889,76 @@ NeetCode 150 Questions & Solutions start
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/climbing-stairs/)
+
+71. ### ❓ **_House Robber:-_** You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night. Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: nums = [1,2,3,1]
+    Output: 4
+    Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
+    Total amount you can rob = 1 + 3 = 4.
+
+    Example 2:
+    Input: nums = [2,7,9,3,1]
+    Output: 12
+    Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
+    Total amount you can rob = 2 + 9 + 1 = 12.
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    **_Implementation_**
+
+    ```js
+    // Time O(N) | Space O(N)
+    // Function to calculate the maximum amount of money that can be robbed without alerting the police
+    function rob(nums) {
+      // Get the length of the input array
+      const n = nums.length;
+
+      // Edge case: If there are no houses, return 0
+      if (n === 0) {
+        return 0;
+      }
+
+      // Edge case: If there is only one house, return the money in that house
+      if (n === 1) {
+        return nums[0];
+      }
+
+      // Create an array to store the maximum money that can be robbed up to the current house
+      const dp = new Array(n);
+
+      // Initialize the dynamic programming array with the first two houses
+      dp[0] = nums[0];
+      dp[1] = Math.max(nums[0], nums[1]);
+
+      // Dynamic Programming loop to calculate the maximum money for each house
+      for (let i = 2; i < n; i++) {
+        // The maximum money at the current house is the maximum of robbing the current house
+        // or skipping the current house and taking the maximum money from the previous house
+        dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i]);
+      }
+
+      // Result: Return the maximum money that can be robbed from the last house
+      return dp[n - 1];
+    }
+
+    // Example usage:
+    const nums = [2, 7, 9, 3, 1];
+    console.log(rob(nums)); // Output: 12
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/house-robber/)
 
 <br>
 

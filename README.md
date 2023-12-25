@@ -12,7 +12,8 @@
   - [Linked List](#linkedlist)
   - [Trees](#trees)
   - [Heap / Priority Queue](#heap--priority-queue)
-  - [Design System](#design-system)
+  - [Graph](#graph)
+  - [Dynamic Programming](#dynamic-programming)
   - [Misc](#misc)
 - [General JS Coding Questions & Solutions](#general-js-coding-questions--solutions)
 
@@ -5917,7 +5918,47 @@ NeetCode 150 Questions & Solutions start
     **_Implementation_**
 
     ```js
+    ///////////////////////////
+    // First Approach
+    // Time O(N) | Space O(1)
+    //////////////////////////
+    function rob(nums) {
+      // Get the length of the input array
+      const n = nums.length;
+
+      // Base cases: if there are no houses to rob, return 0; if there is only one house, return its value
+      if (n === 0) return 0;
+      if (n === 1) return nums[0];
+
+      // Initialize variables to track the maximum value of robbing the previous and current houses
+      let prev = 0; // Represents the maximum value of robbing the house before the current one
+      let curr = 0; // Represents the maximum value of robbing the current house
+
+      // Iterate through the array of house values
+      for (const num of nums) {
+        // Temporary variable to store the value of prev before it gets updated
+        let temp = prev;
+
+        // Update prev to the previous value of curr
+        prev = curr;
+
+        // Update curr to the maximum value of robbing the current house or skipping it
+        curr = Math.max(temp + num, curr);
+
+        // Destructuring assignment to update prev and curr simultaneously
+        // [prev, curr] = [curr, Math.max(prev + num, curr)];
+      }
+
+      // OR
+
+      // Return the maximum value after iterating through all the houses
+      return curr;
+    }
+
+    //////////////////////////
+    // Second Approach
     // Time O(N) | Space O(N)
+    //////////////////////////
     // Function to calculate the maximum amount of money that can be robbed without alerting the police
     function rob(nums) {
       // Get the length of the input array
@@ -5959,6 +6000,121 @@ NeetCode 150 Questions & Solutions start
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/house-robber/)
+
+72. ### ❓ **_House Robber II:-_** You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are arranged in a circle. That means the first house is the neighbor of the last one. Meanwhile, adjacent houses have a security system connected, and it will automatically contact the police if two adjacent houses were broken into on the same night. Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: nums = [2,3,2]
+    Output: 3
+    Explanation: You cannot rob house 1 (money = 2) and then rob house 3 (money = 2), because they are adjacent houses.
+
+    Example 2:
+    Input: nums = [1,2,3,1]
+    Output: 4
+    Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
+    Total amount you can rob = 1 + 3 = 4.
+
+    Example 3:
+    Input: nums = [1,2,3]
+    Output: 3
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    **_Implementation_**
+
+    ```js
+    ///////////////////////////
+    // First Approach
+    // Time O(N) | Space O(1)
+    //////////////////////////
+    function rob(nums) {
+      // Helper function to calculate the maximum amount using the same logic as the non-circular case
+      var robHelper = function (nums) {
+        // Initialize two variables to keep track of the maximum amounts
+        let prev = 0;
+        let curr = 0;
+
+        // Iterate through each house to calculate the maximum amount that can be robbed
+        for (const num of nums) {
+          // Update prev and curr based on the current house
+          let temp = prev;
+          prev = curr;
+          curr = Math.max(curr, temp + num);
+
+          // OR
+
+          // [prev, curr] = [curr, Math.max(prev + num, curr)];
+        }
+
+        // Return the maximum amount after iterating through all the houses
+        return curr;
+      };
+
+      // Check for edge cases: if there are no houses to rob, return 0; if there is only one house, return its value
+      if (!nums || nums.length === 0) {
+        return 0;
+      } else if (nums.length === 1) {
+        return nums[0];
+      } else {
+        // Choose the maximum amount between robbing from the first house to the second-to-last house
+        // and robbing from the second house to the last house.
+        return Math.max(robHelper(nums.slice(0, -1)), robHelper(nums.slice(1)));
+      }
+    }
+
+    // Example usage:
+    const nums = [2, 3, 2];
+    console.log(rob(nums)); // Output: 3
+
+    //////////////////////////
+    // Second Approach
+    // Time O(N) | Space O(N)
+    //////////////////////////
+    function rob(nums) {
+      // Helper function to calculate the maximum amount using the same logic as the non-circular case
+      function robHelper(nums) {
+        // Get the length of the input array
+        const n = nums.length;
+        // Initialize an array to store the maximum amounts at each house
+        const dp = new Array(n + 1).fill(0);
+
+        // Base cases: the first two elements are treated separately
+        dp[0] = nums[0];
+        dp[1] = Math.max(nums[0], nums[1]);
+
+        // Iterate through the array to calculate the maximum amount at each house
+        for (let i = 2; i < n; i++) {
+          dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i]);
+        }
+
+        // Return the maximum amount after iterating through all the houses
+        return dp[n - 1];
+      }
+
+      // Check for edge cases: if there are no houses to rob, return 0; if there is only one house, return its value
+      if (!nums || nums.length === 0) {
+        return 0;
+      } else if (nums.length === 1) {
+        return nums[0];
+      } else {
+        // Choose the maximum amount between robbing from the first house to the second-to-last house
+        // and robbing from the second house to the last house.
+        return Math.max(robHelper(nums.slice(0, -1)), robHelper(nums.slice(1)));
+      }
+    }
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/house-robber-ii/)
 
 <br>
 

@@ -6391,8 +6391,7 @@ NeetCode 150 Questions & Solutions start
     };
 
     ////////////////////////////
-    // DP - Bottom Up
-    // Array - Tabulation
+    // DP
     // Time O(N * M) | Space O(N)
     ///////////////////////////
     var coinChange = function (coins, amount) {
@@ -6421,6 +6420,74 @@ NeetCode 150 Questions & Solutions start
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/coin-change/submissions/)
+
+76. ### ❓ **_Maximum Product Subarray:-_** Given an integer array nums, find a subarray that has the largest product, and return the product. The test cases are generated so that the answer will fit in a 32-bit integer.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: nums = [2,3,-2,4]
+    Output: 6
+    Explanation: [2,3] has the largest product 6.
+
+    Example 2:
+    Input: nums = [-2,0,-1]
+    Output: 0
+    Explanation: The result cannot be 2, because [-2,-1] is not a subarray.
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    **_Implementation_**
+
+    ```js
+    ////////////////////////////
+    // Greedy
+    // Time O(N) | Space O(1)
+    ///////////////////////////
+    // Define a function maxProduct that takes an array of numbers (nums) as input.
+    var maxProduct = (nums) => {
+      // Check if the array is empty.
+      const isEmpty = nums.length === 0;
+      // If the array is empty, return 0.
+      if (isEmpty) return 0;
+
+      // Call the greedySearch function and return its result.
+      return greedySearch(nums); /* Time O(N) */
+    };
+
+    // Define a helper function greedySearch that takes an array of numbers (nums) as input.
+    const greedySearch = (nums) => {
+      // Initialize variables min, max, and product with the first element of the array.
+      let min = (max = product = nums[0]);
+
+      // Iterate through the array starting from the second element.
+      for (let num = 1; num < nums.length; num++) {
+        /* Time O(N) */
+        // Calculate the products of the current element with min and max.
+        const [minProduct, maxProduct] = [min * nums[num], max * nums[num]];
+
+        // Update min and max by considering the current element and the calculated products.
+        min = Math.min(maxProduct, minProduct, nums[num]);
+        max = Math.max(maxProduct, minProduct, nums[num]);
+
+        // Update the overall product by considering the current max value.
+        product = Math.max(product, max);
+      }
+
+      // Return the maximum product.
+      return product;
+    };
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/maximum-product-subarray/)
 
 <br>
 

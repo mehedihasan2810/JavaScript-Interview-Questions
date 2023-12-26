@@ -6564,7 +6564,7 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/word-break/)
 
-78. ### ❓ **_ Longest Increasing Subsequence:-_** Given an integer array nums, return the length of the longest strictly increasing subsequence.
+78. ### ❓ **_Longest Increasing Subsequence:-_** Given an integer array nums, return the length of the longest strictly increasing subsequence.
 
     <details>
     <summary>Examples 👉</summary>
@@ -6697,6 +6697,81 @@ NeetCode 150 Questions & Solutions start
 <!--------------------------
   Dynamic Programming Ends
 --------------------------->
+
+<!-------------
+  Greedy Starts
+-------------->
+
+## Greedy
+
+79. ### ❓ **_Maximum Subarray:-_** Given an integer array nums, return the length of the longest strictly increasing subsequence.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+    Output: 6
+    Explanation: The subarray [4,-1,2,1] has the largest sum 6.
+
+    Example 2:
+    Input: nums = [1]
+    Output: 1
+    Explanation: The subarray [1] has the largest sum 1.
+
+    Example 3:
+    Input: nums = [5,4,-1,7,8]
+    Output: 23
+    Explanation: The subarray [5,4,-1,7,8] has the largest sum 23.
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    **_Implementation_**
+
+    ```js
+    //////////////////////////
+    // Time O(N) | Space O(1)
+    //////////////////////////
+    function maxSubArray(nums) {
+      // Initialize variables to keep track of the current sum and maximum sum.
+      let currentSum = nums[0];
+      let maxSum = nums[0];
+
+      // Iterate through the array starting from the second element.
+      for (let i = 1; i < nums.length; i++) {
+        // Update the current sum to include the current element or start a new subarray.
+        currentSum = Math.max(nums[i], currentSum + nums[i]);
+
+        // Update the maximum sum if the current sum is greater.
+        maxSum = Math.max(maxSum, currentSum);
+      }
+
+      // Return the maximum subarray sum.
+      return maxSum;
+    }
+
+    // Example usage:
+    const nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4];
+    const result = maxSubArray(nums);
+    console.log(result); // Output: 6
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/maximum-subarray/)
+
+<br>
+
+[🔼 Back to top](#table-of-contents)
+
+<!-------------
+  Greedy Ends
+-------------->
 
  <!------------------
  Design System Start

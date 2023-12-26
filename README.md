@@ -6464,7 +6464,9 @@ NeetCode 150 Questions & Solutions start
     // Define a helper function greedySearch that takes an array of numbers (nums) as input.
     const greedySearch = (nums) => {
       // Initialize variables min, max, and product with the first element of the array.
-      let min = (max = product = nums[0]);
+      let min = nums[0];
+      let max = nums[0];
+      let product = nums[0];
 
       // Iterate through the array starting from the second element.
       for (let num = 1; num < nums.length; num++) {
@@ -6488,6 +6490,79 @@ NeetCode 150 Questions & Solutions start
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/maximum-product-subarray/)
+
+77. ### ❓ **_Word Break:-_** Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words. Note that the same word in the dictionary may be reused multiple times in the segmentation.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: s = "leetcode", wordDict = ["leet","code"]
+    Output: true
+    Explanation: Return true because "leetcode" can be segmented as "leet code".
+
+    Example 2:
+    Input: s = "applepenapple", wordDict = ["apple","pen"]
+    Output: true
+    Explanation: Return true because "applepenapple" can be segmented as "apple pen apple".
+    Note that you are allowed to reuse a dictionary word.
+
+    Example 3:
+    Input: s = "catsandog", wordDict = ["cats","dog","sand","and","cat"]
+    Output: false
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    **_Implementation_**
+
+    ```js
+    ////////////////////////////
+    // DP
+    // Time O(N^2) | Space O(N)
+    ///////////////////////////
+    // Function to check if a string can be segmented into words from a dictionary.
+    function wordBreak(s, wordDict) {
+      // Get the length of the input string.
+      const n = s.length;
+
+      // Create an array to store whether a substring ending at index i can be segmented.
+      const dp = new Array(n + 1).fill(false);
+      // An empty string can always be segmented, so set dp[0] to true.
+      dp[0] = true;
+
+      // Iterate through the string to check if any substring ending at index i can be segmented.
+      for (let i = 1; i <= n; i++) {
+        // Nested loop to check substrings ending at index i.
+        for (let j = 0; j < i; j++) {
+          // Check if dp[j] is true (substring ending at index j can be segmented)
+          // and if the substring s.substring(j, i) is in the word dictionary.
+          if (dp[j] && wordDict.includes(s.substring(j, i))) {
+            // If the condition is met, set dp[i] to true and break out of the loop.
+            dp[i] = true;
+            break;
+          }
+        }
+      }
+
+      // The result is stored at the last index of the dp array.
+      return dp[n];
+    }
+
+    // Example usage:
+    const s = "leetcode";
+    const wordDict = ["leet", "code"];
+    const result = wordBreak(s, wordDict);
+    console.log(result); // Output: true
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/word-break/)
 
 <br>
 

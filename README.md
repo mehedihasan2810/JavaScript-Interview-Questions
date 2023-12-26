@@ -6825,6 +6825,63 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/jump-game/)
 
+81. ### ❓ **_Jump Game II:-_**
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: nums = [2,3,1,1,4]
+    Output: 2
+    Explanation: The minimum number of jumps to reach the last index is 2. Jump 1 step from index 0 to 1, then 3 steps to the last index.
+
+    Example 2:
+    Input: nums = [2,3,0,1,4]
+    Output: 2
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    **_Implementation_**
+
+    ```js
+    //////////////////////////
+    // Time O(N) | Space O(1)
+    //////////////////////////
+    function jump(nums) {
+      let jumps = 0;
+      let maxReach = 0;
+      let currentEnd = 0;
+
+      // Iterate through the array except for the last element.
+      for (let i = 0; i < nums.length - 1; i++) {
+        // Update the maximum reach after each jump.
+        maxReach = Math.max(maxReach, i + nums[i]);
+
+        // If you have reached the currentEnd, make a jump and update currentEnd to the maxReach.
+        if (i === currentEnd) {
+          jumps++;
+          currentEnd = maxReach;
+        }
+      }
+
+      return jumps;
+    }
+
+    // Example usage:
+    const nums = [2, 3, 1, 1, 4];
+    const result = jump(nums);
+    console.log(result); // Output: 2
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/jump-game-ii/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

@@ -6564,6 +6564,132 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/word-break/)
 
+78. ### ❓ **_ Longest Increasing Subsequence:-_** Given an integer array nums, return the length of the longest strictly increasing subsequence.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: nums = [10,9,2,5,3,7,101,18]
+    Output: 4
+    Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4.
+
+    Example 2:
+    Input: nums = [0,1,0,3,2,3]
+    Output: 4
+
+    Example 3:
+    Input: nums = [7,7,7,7,7,7,7]
+    Output: 1
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    **_Implementation_**
+
+    ```js
+    ///////////////////////////////////
+    // Array - Subsequence
+    // Time O(N * log(N)) | Space O(N)
+    ///////////////////////////////////
+    // Function to find the length of the Longest Increasing Subsequence (LIS)
+    var lengthOfLIS = (nums) => {
+      // Use the logarithmicSort function to get the increasing subsequence
+      const subsequence = logarithmicSort(nums);
+
+      // Return the length of the obtained subsequence
+      return subsequence.length;
+    };
+
+    // Function to perform a logarithmic sort and find the increasing subsequence
+    var logarithmicSort = (nums, subsequence = []) => {
+      // Iterate through each number in the input array
+      for (const num of nums) {
+        // Get the maximum value in the current subsequence
+        const max = subsequence[subsequence.length - 1];
+
+        // Check if the current number can be added to the subsequence
+        const canAdd = max < num;
+        if (canAdd) {
+          subsequence.push(num);
+          continue;
+        }
+
+        // If not, perform a binary search to find the correct position
+        const index = binarySearch(num, subsequence);
+
+        // Update the subsequence with the current number
+        subsequence[index] = num;
+      }
+
+      // Return the final increasing subsequence
+      return subsequence;
+    };
+
+    // Function to perform binary search and find the correct position for the current number
+    const binarySearch = (num, subsequence) => {
+      let [left, right] = [0, subsequence.length - 1];
+
+      // Binary search loop
+      while (left < right) {
+        const mid = (left + right) >> 1;
+        const guess = subsequence[mid];
+
+        // Check if the current number is equal to the guess
+        const isNumTarget = num === guess;
+        if (isNumTarget) return mid;
+
+        // Adjust the search boundaries based on the comparison with the guess
+        const isNumGreater = guess < num;
+        if (isNumGreater) left = mid + 1;
+
+        const isNumLess = num < guess;
+        if (isNumLess) right = mid;
+      }
+
+      // Return the left position as the correct position for insertion
+      return left;
+    };
+
+    ///////////////////////////////////
+    // DP
+    // Time O(N^2) | Space O(N)
+    ///////////////////////////////////
+    function lengthOfLIS(nums) {
+      const n = nums.length;
+
+      // Create an array to store the length of the LIS ending at each index.
+      const dp = new Array(n).fill(1);
+
+      // Iterate through the array to compute the length of LIS ending at each index.
+      for (let i = 1; i < n; i++) {
+        for (let j = 0; j < i; j++) {
+          // Check if the current element is greater than the element at index j.
+          if (nums[i] > nums[j]) {
+            // Update the length of LIS ending at index i.
+            dp[i] = Math.max(dp[i], dp[j] + 1);
+          }
+        }
+      }
+
+      // The result is the maximum value in the dp array.
+      return Math.max(...dp, 0);
+    }
+
+    // Example usage:
+    const nums = [10, 9, 2, 5, 3, 7, 101, 18];
+    const result = lengthOfLIS(nums);
+    console.log(result); // Output: 4
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/longest-increasing-subsequence/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

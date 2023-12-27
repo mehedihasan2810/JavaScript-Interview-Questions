@@ -6967,6 +6967,79 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/merge-intervals/)
 
+83. ### ❓ **_Non-overlapping Intervals:-_** Given an array of intervals intervals where intervals[i] = [starti, endi], return the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1
+    Input: intervals = [[1,2],[2,3],[3,4],[1,3]]
+    Output: 1
+    Explanation: [1,3] can be removed and the rest of the intervals are non-overlapping.
+
+    Example 2:
+    Input: intervals = [[1,2],[1,2],[1,2]]
+    Output: 2
+    Explanation: You need to remove two [1,2] to make the rest of the intervals non-overlapping.
+
+    Example 3:
+    Input: intervals = [[1,2],[2,3]]
+    Output: 0
+    Explanation: You don't need to remove any of the intervals since they're already non-overlapping.
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    **_Implementation_**
+
+    ```js
+    //////////////////////////////////
+    // Time O(N * log N) | Space O(1)
+    //////////////////////////////////
+    function eraseOverlapIntervals(intervals) {
+      if (intervals.length <= 1) {
+        return 0; // No removal needed for 0 or 1 interval.
+      }
+
+      // Sort intervals based on their end points.
+      intervals.sort((a, b) => a[1] - b[1]);
+
+      let nonOverlappingCount = 1; // Initialize with the first interval.
+      let end = intervals[0][1];
+
+      for (let i = 1; i < intervals.length; i++) {
+        const currentStart = intervals[i][0];
+
+        // If the current interval doesn't overlap with the previous one, update end and increment count.
+        if (currentStart >= end) {
+          nonOverlappingCount++;
+          end = intervals[i][1];
+        }
+      }
+
+      // Calculate the number of intervals to remove.
+      const removals = intervals.length - nonOverlappingCount;
+      return removals;
+    }
+
+    // Example usage:
+    const intervals = [
+      [1, 2],
+      [2, 3],
+      [3, 4],
+      [1, 3],
+    ];
+    const result = eraseOverlapIntervals(intervals);
+    console.log(result); // Output: 1
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/non-overlapping-intervals/)
 
 <br>
 

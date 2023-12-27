@@ -16,6 +16,7 @@
   - [Dynamic Programming](#dynamic-programming)
   - [Greedy](#greedy)
   - [Intervals](#intervals)
+  - [Math & Geometry](#math--geometry)
   - [Misc](#misc)
 - [General JS Coding Questions & Solutions](#general-js-coding-questions--solutions)
 
@@ -7186,6 +7187,76 @@ NeetCode 150 Questions & Solutions start
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/rotate-image/)
+
+86. ### ❓ **_Spiral Matrix:-_** Given an m x n matrix, return all elements of the matrix in spiral order.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+    Output: [1,2,3,6,9,8,7,4,5]
+
+    Example 2:
+    Input: matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+    Output: [1,2,3,4,8,12,11,10,9,5,6,7]
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    **_Implementation_**
+
+    ```js
+    /////////////////////////////
+    // Time O(M * N) | Space O(1)
+    /////////////////////////////
+    function spiralOrder(matrix) {
+      const result = [];
+
+      while (matrix.length > 0 && matrix[0].length > 0) {
+        // Traverse top row from left to right.
+        result.push(...matrix.shift());
+
+        // Traverse right column from top to bottom.
+        if (matrix.length > 0 && matrix[0].length > 0) {
+          for (let i = 0; i < matrix.length; i++) {
+            result.push(matrix[i].pop());
+          }
+        }
+
+        // Traverse bottom row from right to left.
+        if (matrix.length > 0 && matrix[0].length > 0) {
+          result.push(...matrix.pop().reverse());
+        }
+
+        // Traverse left column from bottom to top.
+        if (matrix.length > 0 && matrix[0].length > 0) {
+          for (let i = matrix.length - 1; i >= 0; i--) {
+            result.push(matrix[i].shift());
+          }
+        }
+      }
+
+      return result;
+    }
+
+    // Example usage:
+    const matrix = [
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9],
+    ];
+    const result = spiralOrder(matrix);
+    console.log(result); // Output: [1, 2, 3, 6, 9, 8, 7, 4, 5]
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/spiral-matrix/)
 
 <br>
 

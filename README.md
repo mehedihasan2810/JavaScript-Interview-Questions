@@ -7118,6 +7118,82 @@ NeetCode 150 Questions & Solutions start
 <!----------------
   Interval Ends
 ------------------>
+<!-----------------------
+  Math & Geometry Starts
+------------------------>
+
+## Math & Geometry
+
+85. ### ❓ **_Rotate Image:-_** You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise). You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+    Output: [[7,4,1],[8,5,2],[9,6,3]]
+
+    Example 2:
+    Input: matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]
+    Output: [[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    **_Implementation_**
+
+    ```js
+    //////////////////////////////////
+    // Time O(N^2) | Space O(1)
+    //////////////////////////////////
+    function rotate(matrix) {
+      const n = matrix.length;
+
+      // Transpose the matrix.
+      for (let i = 0; i < n; i++) {
+        for (let j = i + 1; j < n; j++) {
+          // Swap matrix[i][j] with matrix[j][i].
+          [matrix[i][j], matrix[j][i]] = [matrix[j][i], matrix[i][j]];
+        }
+      }
+
+      // Reverse each row of the transposed matrix.
+      for (let i = 0; i < n; i++) {
+        matrix[i].reverse();
+      }
+    }
+
+    // Example usage:
+    const matrix = [
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9],
+    ];
+    rotate(matrix);
+    console.log(matrix);
+    // Output:
+    // [
+    //   [7, 4, 1],
+    //   [8, 5, 2],
+    //   [9, 6, 3]
+    // ]
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/rotate-image/)
+
+<br>
+
+[🔼 Back to top](#table-of-contents)
+
+<!---------------------
+  Math & Geometry Ends
+---------------------->
 
  <!------------------
  Design System Start

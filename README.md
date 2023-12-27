@@ -7378,6 +7378,71 @@ NeetCode 150 Questions & Solutions start
   Math & Geometry Ends
 ---------------------->
 
+<!------------------------
+  Bit Manipulation Starts
+------------------------->
+
+## Bit Manipulation
+
+88. ### ❓ **_Single Number:-_** Given a non-empty array of integers nums, every element appears twice except for one. Find that single one. You must implement a solution with a linear runtime complexity and use only constant extra space.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: nums = [2,2,1]
+    Output: 1
+
+    Example 2:
+    Input: nums = [4,1,2,1,2]
+    Output: 4
+
+    Example 3:
+    Input: nums = [1]
+    Output: 1
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    **_Implementation_**
+
+    ```js
+    /////////////////////////////
+    // Time O(N) | Space O(1)
+    /////////////////////////////
+    function singleNumber(nums) {
+      let result = 0;
+
+      // Use XOR operation to find the single element.
+      for (const num of nums) {
+        result ^= num;
+      }
+
+      return result;
+    }
+
+    // Example usage:
+    const nums = [2, 2, 1];
+    const result = singleNumber(nums);
+    console.log(result); // Output: 1
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/single-number/)
+
+<br>
+
+[🔼 Back to top](#table-of-contents)
+
+<!------------------------
+  Bit Manipulation Ends
+------------------------->
+
  <!------------------
  Design System Start
  ------------------->

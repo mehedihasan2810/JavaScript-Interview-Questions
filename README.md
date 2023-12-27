@@ -17,6 +17,7 @@
   - [Greedy](#greedy)
   - [Intervals](#intervals)
   - [Math & Geometry](#math--geometry)
+  - [Bit Manipulation](#bit-manipulation)
   - [Misc](#misc)
 - [General JS Coding Questions & Solutions](#general-js-coding-questions--solutions)
 
@@ -7434,6 +7435,101 @@ NeetCode 150 Questions & Solutions start
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/single-number/)
+
+89. ### ❓ **_Missing Number:-_** Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: nums = [3,0,1]
+    Output: 2
+    Explanation: n = 3 since there are 3 numbers, so all numbers are in the range [0,3]. 2 is the missing number in the range since it does not appear in nums.
+
+    Example 2:
+    Input: nums = [0,1]
+    Output: 2
+    Explanation: n = 2 since there are 2 numbers, so all numbers are in the range [0,2]. 2 is the missing number in the range since it does not appear in nums.
+
+    Example 3:
+    Input: nums = [9,6,4,2,3,5,7,0,1]
+    Output: 8
+    Explanation: n = 9 since there are 9 numbers, so all numbers are in the range [0,9]. 8 is the missing number in the range since it does not appear in nums.
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    **_Implementation_**
+
+    ```js
+    //////////////////////////
+    // Time O(1) | Space O(N)
+    //////////////////////////
+    function missingNumber(nums) {
+      const n = nums.length;
+      // Calculate the expected sum of the first n natural numbers.
+      const expectedSum = (n * (n + 1)) / 2;
+
+      // Calculate the actual sum of the elements in the array.
+      const actualSum = nums.reduce((sum, num) => sum + num, 0);
+
+      // The missing number is the difference between the expected sum and the actual sum.
+      return expectedSum - actualSum;
+    }
+
+    // Example usage:
+    const nums = [3, 0, 1];
+    const result = missingNumber(nums);
+    console.log(result); // Output: 2
+
+    //////////////////////////
+    // Time O(N) | Space O(1)
+    //////////////////////////
+    // Function to find the missing number in an array of distinct numbers.
+    function missingNumber(nums) {
+      let result = nums.length; // Initialize with n, as the array has distinct numbers in the range [0, n].
+
+      // Iterate through the array using a loop.
+      for (let i = 0; i < nums.length; i++) {
+        // Calculate the XOR (^) of the current index i and the corresponding element in the array.
+        let xor = i ^ nums[i];
+
+        // Update the result by XORing it with the calculated XOR value.
+        result ^= xor;
+      }
+
+      // The final result is the missing number.
+      return result;
+    }
+
+    // Example usage:
+    const nums = [3, 0, 1];
+    const result = missingNumber(nums);
+    console.log(result); // Output: 2
+
+    //////////////////////////
+    // Time O(N^2) | Space O(1)
+    //////////////////////////
+    // Function to find the missing number in an array of distinct numbers.
+    const missingNumber = function (nums) {
+      // Iterate from 0 to nums.length (inclusive).
+      for (let i = 0; i <= nums.length; i++) {
+        // Check if the current number i is not present in the array.
+        if (nums.indexOf(i) === -1) {
+          // If i is not present, it is the missing number. Return it.
+          return i;
+        }
+      }
+    };
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/missing-number/)
 
 <br>
 

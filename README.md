@@ -7258,6 +7258,118 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/spiral-matrix/)
 
+87. ### ❓ **_Set Matrix Zeroes:-_** Given an m x n integer matrix matrix, if an element is 0, set its entire row and column to 0's. You must do it in place.
+
+    <details>
+    <summary>Examples 👉</summary>
+
+    ```smart
+    Example 1:
+    Input: matrix = [[1,1,1],[1,0,1],[1,1,1]]
+    Output: [[1,0,1],[0,0,0],[1,0,1]]
+
+    Example 2:
+    Input: matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]
+    Output: [[0,0,0,0],[0,4,5,0],[0,3,1,0]]
+    ```
+
+    </details>
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    **_Implementation_**
+
+    ```js
+    /////////////////////////////
+    // Time O(M * N) | Space O(1)
+    /////////////////////////////
+    function setZeroes(matrix) {
+      const m = matrix.length;
+      const n = matrix[0].length;
+
+      let firstRowZero = false;
+      let firstColZero = false;
+
+      // Check if the first row contains a 0.
+      for (let j = 0; j < n; j++) {
+        if (matrix[0][j] === 0) {
+          firstRowZero = true;
+          break;
+        }
+      }
+
+      // Check if the first column contains a 0.
+      for (let i = 0; i < m; i++) {
+        if (matrix[i][0] === 0) {
+          firstColZero = true;
+          break;
+        }
+      }
+
+      // Mark rows and columns to be set to 0.
+      for (let i = 1; i < m; i++) {
+        for (let j = 1; j < n; j++) {
+          if (matrix[i][j] === 0) {
+            matrix[i][0] = 0;
+            matrix[0][j] = 0;
+          }
+        }
+      }
+
+      // Set marked rows to 0.
+      for (let i = 1; i < m; i++) {
+        if (matrix[i][0] === 0) {
+          for (let j = 1; j < n; j++) {
+            matrix[i][j] = 0;
+          }
+        }
+      }
+
+      // Set marked columns to 0.
+      for (let j = 1; j < n; j++) {
+        if (matrix[0][j] === 0) {
+          for (let i = 1; i < m; i++) {
+            matrix[i][j] = 0;
+          }
+        }
+      }
+
+      // Set first row to 0 if needed.
+      if (firstRowZero) {
+        for (let j = 0; j < n; j++) {
+          matrix[0][j] = 0;
+        }
+      }
+
+      // Set first column to 0 if needed.
+      if (firstColZero) {
+        for (let i = 0; i < m; i++) {
+          matrix[i][0] = 0;
+        }
+      }
+    }
+
+    // Example usage:
+    const matrix = [
+      [1, 2, 3],
+      [4, 0, 6],
+      [7, 8, 9],
+    ];
+    setZeroes(matrix);
+    console.log(matrix);
+    // Output:
+    // [
+    //   [1, 0, 3],
+    //   [0, 0, 0],
+    //   [7, 0, 9]
+    // ]
+    ```
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/set-matrix-zeroes/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

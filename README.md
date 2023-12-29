@@ -5004,6 +5004,107 @@ NeetCode 150 Questions & Solutions start
 
     [Original Problem in LeetCode](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)
 
+60. ### ❓ **_InOrder Successor in Binary Search Tree or Binary Tree:-_** Given the root of a binary tree and a node in it, return the in-order successor of that node in the BST. If the given node has no in-order successor in the tree, return null.
+
+    <details>
+    <summary>Solutions 👉</summary>
+
+    ```js
+    class TreeNode {
+      constructor(val) {
+        this.val = val;
+        this.left = this.right = null;
+      }
+    }
+
+    //////////////////////////////////////////////
+    // Recursive Approach
+    // Applicable of for both BST and Binary Tree
+    // Time O(N) | Space O(H)
+    // N is number of nodes in the tree
+    // H is the height of the tree
+    //////////////////////////////////////////////
+    function inorderSuccessor(root, p) {
+      let successor = null;
+      let found = false;
+
+      // Helper function to perform in-order traversal.
+      function inorderTraversal(node) {
+        if (!node) {
+          return;
+        }
+
+        inorderTraversal(node.left);
+
+        // If the given node is found, set the flag and update the successor.
+        if (node === p) {
+          found = true;
+        } else if (found && !successor) {
+          successor = node;
+          return;
+        }
+
+        inorderTraversal(node.right);
+      }
+
+      // Start in-order traversal from the root.
+      inorderTraversal(root);
+
+      return successor;
+    }
+
+    //////////////////////////////////////////////
+    // Iterative Approach
+    // Applicable of for only Binary Search Tree
+    // Time O(H) | Space O(1)
+    // H is the height of the tree
+    //////////////////////////////////////////////
+    function inorderSuccessor(root, p) {
+      let successor = null;
+
+      // Traverse the BST to find the successor.
+      while (root) {
+        if (p.val < root.val) {
+          // If the key of the current node is greater than the key of the given node,
+          // update the successor and move to the left subtree.
+          successor = root;
+          root = root.left;
+        } else {
+          // If the key of the current node is less than or equal to the key of the given node,
+          // move to the right subtree.
+          root = root.right;
+        }
+      }
+
+      return successor;
+    }
+
+    // Example usage:
+    // Constructing a binary tree for testing
+    const root = new TreeNode(1);
+    root.left = new TreeNode(2);
+    root.right = new TreeNode(3);
+    root.left.left = new TreeNode(4);
+    root.left.right = new TreeNode(5);
+    root.right.left = new TreeNode(6);
+    root.right.right = new TreeNode(7);
+
+    const givenNode = root.left.right; // Example: Node with value 5
+    const result = inorderSuccessor(root, givenNode);
+    console.log(result ? result.val : null); // Output: 6 (in-order successor of 5)
+    ```
+
+    **In this implementation:**
+
+    > The serialize function recursively converts the binary tree into a comma-separated string representation. It represents null for null nodes.
+    > The deserialize function splits the string into an array of values and uses a recursive helper function (buildTree) to reconstruct the binary tree.
+
+    </details>
+
+    [Original Problem in LeetCode](https://leetcode.com/problems/inorder-successor-in-bst/)
+
+    [Solution and Explanation in GeeksForGeeks](https://www.geeksforgeeks.org/inorder-successor-in-binary-search-tree/)
+
 <br>
 
 [🔼 Back to top](#table-of-contents)

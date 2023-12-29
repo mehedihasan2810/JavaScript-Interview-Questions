@@ -5094,11 +5094,6 @@ NeetCode 150 Questions & Solutions start
     console.log(result ? result.val : null); // Output: 6 (in-order successor of 5)
     ```
 
-    **In this implementation:**
-
-    > The serialize function recursively converts the binary tree into a comma-separated string representation. It represents null for null nodes.
-    > The deserialize function splits the string into an array of values and uses a recursive helper function (buildTree) to reconstruct the binary tree.
-
     </details>
 
     [Original Problem in LeetCode](https://leetcode.com/problems/inorder-successor-in-bst/)

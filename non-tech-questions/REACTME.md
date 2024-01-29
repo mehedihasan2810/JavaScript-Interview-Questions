@@ -1,0 +1,1 @@
+# Some Frequently Asked Non-Tech Interview Questions

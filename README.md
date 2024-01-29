@@ -1,3 +1,5 @@
+# [Non-Tech Interview Questions Are Here ➡️](./non-tech-questions/REACTME.md)
+
 # JavaScript Interview Questions
 
 [Want to get a good grasp on **_DSA_** in JavaScript? Check out this doc.](https://github.com/mehedihasan2810/JavaScript-Data-Structures-and-Algorithms)

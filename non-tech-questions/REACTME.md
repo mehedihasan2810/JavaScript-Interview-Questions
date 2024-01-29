@@ -17,3 +17,12 @@
   > One of my greatest strengths is that I am an active and thoughtful listener. In my current position, I received a call from a client that needed help but had been frustrated with receiving help prior to reaching me. I listened to her concerns, clarified that I understood what the problem was and explained to her how we could resolve the issue. I then spoke with the colleagues that could help with the resolution and verified it was taken care of for her. She was appreciative that I had resolved the problem for her.
 
     </details>
+
+- ### What are your weaknesses?
+
+    <details>
+    <summary>Sample Ans: </summary>
+
+  > I find I am often too critical of myself and the work I produce, which can make it difficult for me to accept praise. At my last job, I was told I'd be receiving company-wide recognition for a project I had just completed, and I felt I had not done as well as I should have. Initially, I felt I should turn down the opportunity to be recognized, however, I realized that I had done work I should be proud of and that I should use my self-criticism to push myself to do better on the next project.
+
+    </details>

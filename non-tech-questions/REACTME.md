@@ -26,3 +26,12 @@
   > I find I am often too critical of myself and the work I produce, which can make it difficult for me to accept praise. At my last job, I was told I'd be receiving company-wide recognition for a project I had just completed, and I felt I had not done as well as I should have. Initially, I felt I should turn down the opportunity to be recognized, however, I realized that I had done work I should be proud of and that I should use my self-criticism to push myself to do better on the next project.
 
     </details>
+
+- ### Tell me about yourself
+
+    <details>
+    <summary>Sample Ans: </summary>
+
+  > I graduated summa cum laude from Western University a few years ago with a Bachelor of Science in Computer Science. I then pursued a career in development through an internship at Jessup Tech, where I learned a great deal about the software development business through assisting on software like Street School. After graduation, I got a position as an entry-level software developer at Rufus Media while also pursuing a certificate in Amazon Web Services from Fisher University.
+
+    </details>
